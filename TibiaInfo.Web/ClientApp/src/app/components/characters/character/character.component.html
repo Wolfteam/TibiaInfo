@@ -1,0 +1,41 @@
+<mat-card class="character-card mat-elevation-z8">
+  <!-- Card header -->
+  <mat-card-header class="row">
+    <div class="col-md-12">
+      <img class="float-left character-img" [src]='character.vocation | vocationImage:character.sex'>
+      <div class="row">
+        <div class="col-md-9">
+          <p> <span [matTooltip]='character.isOnline ? "Online" : "Offline"' [class.character-status-online]="character.isOnline"
+              [class.character-status-offline]="!character.isOnline" class="character-status"></span>
+            {{character.name}}</p>
+          <p>Level: {{character.level}}</p>
+        </div>
+        <div class="col-md-3">
+          <button color="warn" mat-icon-button>
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card-header>
+
+  <!-- Card content -->
+  <mat-card-content>
+    <mat-chip-list>
+      <mat-chip selectable="false" color="primary" selected>Vocation: {{character.vocation | vocationTitle}}</mat-chip>
+      <mat-chip selectable="false" color="accent" selected>World: {{character.world}}</mat-chip>
+    </mat-chip-list>
+  </mat-card-content>
+
+  <!-- Card Actions -->
+  <mat-card-actions>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" mat-stroked-button matTooltip="Get more details about this character">
+          <mat-icon>chevron_right</mat-icon>
+          Details
+        </button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

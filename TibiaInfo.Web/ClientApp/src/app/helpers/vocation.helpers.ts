@@ -1,4 +1,4 @@
-import { VocationType } from '../models/vocationType.enum';
+import { VocationType } from '../enums/vocation-type.enum';
 
 export class VocationHelper {
     public static toVocationType(vocation: string): VocationType {

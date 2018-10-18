@@ -1,32 +1,60 @@
-import { Component, OnInit } from '@angular/core';
-import { Character } from '../../../models/character.model';
-import { SexType } from '../../../models/sexType.enum';
-import { VocationType } from '../../../models/vocationType.enum';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { SimpleCharacter } from '../../../models//characters/simple-character.model';
+import { SexType } from '../../../enums/sex-type.enum';
+import { VocationType } from '../../../enums/vocation-type.enum';
 import { CharacterService } from '../../../services/character.service';
-
+import { pipe, Subscription } from 'rxjs'
+import { AppService } from '../../../services/app.service';
+import { reserveSlots } from '@angular/core/src/render3/instructions';
 
 @Component({
   selector: 'app-character-list',
   templateUrl: './character-list.component.html',
   styleUrls: ['./character-list.component.css']
 })
-export class CharacterListComponent implements OnInit {
+export class CharacterListComponent implements OnInit, OnDestroy {
 
-  characters: Character[] = [];
+  subscriptions: Subscription[] = [];
+  characters: SimpleCharacter[] = [];
 
-  constructor(private characterService: CharacterService) { }
+  constructor(private appService: AppService, private characterService: CharacterService) { }
 
   ngOnInit() {
-    var charNames = this.characterService.getCachedCharacterNames()
-    charNames.forEach(charName => {
-      this.characterService.getCharacter(charName)
-        .subscribe(response => {
-          if (response.succeed) {
-            console.log(response.result);
-            this.characters.push(response.result)
-          }
-        });
-    });
+    this.appService.changeMaintTitle('Characters');
+    this.appService.showMainProgressBar(true)
+    const charNames: string = this.characterService.getCachedCharacterNames()
+    this.subscriptions.push(this.characterService.getCharacters(charNames)
+      .subscribe(response => {
+        if (response.succeed) {
+          console.log(response.result);
+          this.characters = response.result.sort((c1, c2) => {
+            if (c1.name > c2.name)
+              return 1;
+
+            if (c1.name < c2.name)
+              return -1;
+
+            return 0;
+          });
+        } else {
+          this.appService.showMessage('An error occurred while trying to get the character. ' + response.message);
+        }
+      },
+        (error) => this.appService.showMessage('An unknown error occurred while trying to get the character. ' + error),
+        () => this.appService.showMainProgressBar(false)
+      ));
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  onCharacterRemoved(character: SimpleCharacter): void {
+    this.characterService.removeCachedCharacterName(character.name);
+    const index = this.characters.findIndex(c => c.name === character.name);
+    if (index > -1) {
+      this.characters.splice(index, 1);
+      this.appService.showMessage(`${character.name} was removed from your favorite list`);
+    }
+  }
 }

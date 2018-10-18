@@ -14,7 +14,7 @@
 
 <mat-sidenav-container>
   <!-- Side nav -->
-  <mat-sidenav #side [fixedInViewport]="true" mode="push">
+  <mat-sidenav #side [fixedInViewport]="true" mode="push" [(opened)]="isSideNavOpened">
     <div class="side-nav-image-container">
       <img class="side-nav-main-image" src="../assets/images/tibia_logo.jpg">
       <div class="bottom-left">Players Online: {{playersOnline}}</div>
@@ -22,7 +22,7 @@
 
     <mat-divider></mat-divider>
     <mat-nav-list>
-      <a mat-list-item *ngFor="let item of sideNavItems" (click)="onSideNavItemClick(item.id)">
+      <a mat-list-item *ngFor="let item of sideNavItems" (click)="onSideNavItemClick(item.id)" [routerLink] ="item.url">
         <mat-icon>{{item.icon}}</mat-icon>
         <span class="align-middle side-nav-item">{{item.text}}</span>
       </a>

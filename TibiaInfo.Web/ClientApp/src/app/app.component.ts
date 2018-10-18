@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { SideNavItem } from './models/sideNavItem.model';
+import { SideNavItem } from './models/side-nav-item.model';
+import { AppService } from './services/app.service';
+import { MatSnackBar } from '@angular/material';
+import { Subscription } from 'rxjs';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { LocationStrategy } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -8,52 +14,75 @@ import { SideNavItem } from './models/sideNavItem.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  isSideNavOpened: boolean = false;
   sideNavItems: SideNavItem[] = [
     {
       icon: 'people',
       id: 1,
-      text: 'Characters'
+      text: 'Characters',
+      url: 'characters'
     },
     {
       icon: 'public',
       id: 2,
-      text: 'Worlds'
+      text: 'Worlds',
+      url: 'worlds'
     },
     {
       icon: 'account_balance',
       id: 3,
-      text: 'Guilds'
+      text: 'Guilds',
+      url: 'guilds'
     },
     {
       icon: 'home',
       id: 4,
-      text: 'Houses'
+      text: 'Houses',
+      url: 'houses'
     },
     {
       icon: 'trending_up',
       id: 5,
-      text: 'Highscores'
+      text: 'Highscores',
+      url: 'highscores'
     },
     {
       icon: 'waves',
       id: 6,
-      text: 'News'
+      text: 'News',
+      url: 'news'
     }];
   isProgressBarVisible = false;
   isBackButtonVisible = false;
-  title = 'Characters';
+  title: string = '';
   playersOnline = 19550;
 
-
-  private onSideNavItemClick(itemID: number) {
-    console.log(itemID);
+  constructor(
+    private appService: AppService,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {
+    this.appService.changeMainTitleSource.subscribe(async msg => this.changeToolbarTitle(await msg));
+    this.appService.showMainProgressBarSource.subscribe(async show => this.showProgressBar(await show));
+    this.appService.showMainMessageSource.subscribe(async msg => this.showMessage(await msg));
   }
 
-  private changeToolbarTitle(title: string) {
+  private onSideNavItemClick(itemID: number): void {
+    console.log("Click on side nav item id: " + itemID)
+    this.isSideNavOpened = !this.isSideNavOpened;
+  }
+
+  private changeToolbarTitle(title: string): void {
     this.title = title;
   }
 
-  private changeProgressBarVisibility(isVisible: boolean) {
+  private showProgressBar(isVisible: boolean): void {
     this.isProgressBarVisible = isVisible;
+  }
+
+  showMessage(message: string, action: string = 'Ok'): void {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
 }

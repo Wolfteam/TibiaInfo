@@ -5,13 +5,14 @@
       <img class="float-left character-img" [src]='character.vocation | vocationImage:character.sex'>
       <div class="row">
         <div class="col-md-9">
-          <p> <span [matTooltip]='character.isOnline ? "Online" : "Offline"' [class.character-status-online]="character.isOnline"
-              [class.character-status-offline]="!character.isOnline" class="character-status"></span>
+          <p> <span [matTooltip]='character.status == 1 ? "Online" : "Offline"'
+                    [class.character-status-online]="character.status == 1"
+                    [class.character-status-offline]="character.status == 0" class="character-status"></span>
             {{character.name}}</p>
           <p>Level: {{character.level}}</p>
         </div>
         <div class="col-md-3">
-          <button color="warn" mat-icon-button>
+          <button color="warn" mat-icon-button (click)="removeCharacter()">
             <mat-icon>favorite</mat-icon>
           </button>
         </div>
@@ -31,7 +32,7 @@
   <mat-card-actions>
     <div class="row">
       <div class="col-md-12">
-        <button class="float-right" mat-stroked-button matTooltip="Get more details about this character">
+        <button class="float-right" mat-stroked-button matTooltip="Get more details about this character" (click)="showDetails()">
           <mat-icon>chevron_right</mat-icon>
           Details
         </button>

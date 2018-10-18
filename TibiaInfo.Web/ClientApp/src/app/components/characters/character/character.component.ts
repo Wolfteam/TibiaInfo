@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Character } from '../../../models/character.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { SimpleCharacter } from '../../../models/characters/simple-character.model';
+import { CharacterService } from '../../../services/character.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-character',
@@ -8,11 +10,19 @@ import { Character } from '../../../models/character.model';
 })
 export class CharacterComponent implements OnInit {
 
-  @Input() character: Character;
+  @Input() character: SimpleCharacter;
+  @Output() characterRemoved: EventEmitter<SimpleCharacter> = new EventEmitter<SimpleCharacter>();
 
-  constructor() { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
   }
 
+  removeCharacter(): void {
+    this.characterRemoved.emit(this.character);
+  }
+
+  showDetails() {
+    this.router.navigate(['/character', this.character.name])
+  }
 }

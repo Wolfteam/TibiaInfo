@@ -1,6 +1,6 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { VocationType } from '../models/vocationType.enum';
-import { SexType } from '../models/sexType.enum';
+import { VocationType } from '../enums/vocation-type.enum';
+import { SexType } from '../enums/sex-type.enum';
 
 @Pipe({
     name: 'vocationImage'

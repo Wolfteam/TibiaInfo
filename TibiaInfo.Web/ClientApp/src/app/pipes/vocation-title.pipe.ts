@@ -1,5 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { VocationType } from '../models/vocationType.enum';
+import { VocationType } from '../enums/vocation-type.enum';
 
 @Pipe({
     name: 'vocationTitle'

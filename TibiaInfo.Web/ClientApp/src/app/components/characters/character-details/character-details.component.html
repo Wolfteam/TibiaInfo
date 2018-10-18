@@ -1,0 +1,124 @@
+<div class="row favorite-row" *ngIf="isPageLoaded">
+
+  <div class="col-md-12">
+    <div class="float-left">
+      <h4>{{character.name}}'s Information</h4>
+    </div>
+    <div class="float-right">
+      <button mat-mini-fab matTooltip="Add this character to your favorite list" (click)="saveToFavorites()">
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="isPageLoaded">
+  <div class="col-md-6">
+    <mat-accordion multi="true">
+      <!--General information-->
+      <mat-expansion-panel expanded="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h5>Character Information</h5>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="row">
+          <div class="col-md-6">
+            <p>Name: {{character.name}}</p>
+            <p>Sex: {{character.sex | sex}}</p>
+            <p>Vocation: {{character.vocation | vocationTitle}}</p>
+
+          </div>
+          <div class="col-md-6">
+            <p>Achievement Points: {{character.achievementPoints}}</p>
+            <p>World: {{character.world}}</p>
+            <p *ngIf="character.marriedTo">MarriedTo: {{character.marriedTo}}</p>
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+      <!--Achievemnts information-->
+      <mat-expansion-panel expanded="true" *ngIf="character.achievements">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h5>Achievemnts - Total: {{character.achievementPoints}}</h5> 
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list *ngIf="character.achievements.length > 0">
+          <mat-list-item *ngFor="let achievement of character.achievements">
+            <mat-icon matListIcon *ngFor="let i of getStarsArray(achievement.stars)">star</mat-icon>
+            <h5 matLine> {{achievement.name}} </h5>
+          </mat-list-item>
+        </mat-list>
+        <p *ngIf="character.achievements.length === 0">There are no achievements set to be displayed for this character.</p>
+      </mat-expansion-panel>
+
+      <!--Account information-->
+      <mat-expansion-panel expanded="true" *ngIf="character.accountInformation">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h5>Account Information</h5>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>Loyalty Title: {{character.accountInformation.loyaltyTitle}}</p>
+        <p>Created: {{character.accountInformation.createdAt.date | date:'MMMM dd yyyy, H:mm:ss'}}  {{character.accountInformation.createdAt.timezone}}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="col-md-6">
+    <mat-accordion multi="true">
+      <!--Character deaths information-->
+      <mat-expansion-panel expanded="true" *ngIf="character.deaths && character.deaths.length > 0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h5>Character Deaths</h5>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list>
+          <mat-list-item *ngFor="let death of character.deaths">
+            <p>{{death.diedAt.date | date:'MMMM dd yyyy, HH:mm:ss'}} {{death.diedAt.timezone}}  {{death.reason}}</p>
+          </mat-list-item>
+        </mat-list>
+      </mat-expansion-panel>
+
+      <!--Other characters information-->
+      <mat-expansion-panel expanded="true" *ngIf="character.otherCharacters && character.otherCharacters.length > 0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h5>Characters</h5>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="col-md-12">
+          </div>
+        </div>
+        <table mat-table [dataSource]="character.otherCharacters" class="mat-elevation-z1">
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let element"><a [routerLink]="['/character', element.name]">{{element.name}}</a> </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="world">
+            <mat-header-cell mat-header-cell *matHeaderCellDef>World</mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element">{{element.world}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <mat-header-cell mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+            <mat-cell mat-cell
+                      *matCellDef="let element"
+                      [class.online-status]="element.status === 1"
+                      [class.offline-status]="element.status === 0">{{element.status | status}}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </table>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
+
+

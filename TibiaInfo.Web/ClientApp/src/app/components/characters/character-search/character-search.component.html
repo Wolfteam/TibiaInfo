@@ -1,0 +1,12 @@
+<form class="row">
+  <div class="col-md-12">
+    <div class="float-right">
+      <mat-form-field>
+        <input name="characterSearch" [(ngModel)]="characterSearch" matInput placeholder="Search a character....">
+      </mat-form-field>
+      <button mat-mini-fab (click)="searchCharacter()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+  </div>
+</form>

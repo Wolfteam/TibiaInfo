@@ -26,11 +26,20 @@ namespace TibiaInfo.Web.Helpers
             CreateMap<BaseCreatedInformation, CreatedInformationDTO>();
 
             #region Character related
+            CreateMap<CharacterResponse, SimpleCharacterDTO>()
+                .ForMember(d => d.Level, opt => opt.MapFrom(s => s.Character.Level))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Character.Name))
+                .ForMember(d => d.Residence, opt => opt.MapFrom(s => s.Character.Residence))
+                .ForMember(d => d.Sex, opt => opt.MapFrom(s => s.Character.Sex.GetSexType()))
+                .ForMember(d => d.Status, opt => opt.MapFrom(s => s.Character.Status.GetStatusType()))
+                .ForMember(d => d.Vocation, opt => opt.MapFrom(s => s.Character.Vocation.GetVocationType()))
+                .ForMember(d => d.World, opt => opt.MapFrom(s => s.Character.World));
             CreateMap<DeathInvolved, DeathInvolvedDTO>();
             CreateMap<Death, CharacterDeathDTO>();
             CreateMap<AccountInformation, AccountInformationDTO>();
             CreateMap<Achievement, AchievementDTO>();
-            CreateMap<CharacterHouse, CharacterHouseDTO>();
+            CreateMap<CharacterHouse, CharacterHouseDTO>()
+                .ForMember(d => d.Town, opt => opt.MapFrom(s => s.Town.GetTownType()));
             CreateMap<Guid, GuildMemberDTO>();
             CreateMap<OtherCharacter, BaseCharacterBDTO>();
             CreateMap<CharacterResponse, CharacterDTO>()

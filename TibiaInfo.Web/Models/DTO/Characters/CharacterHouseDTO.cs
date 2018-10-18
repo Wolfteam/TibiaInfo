@@ -1,4 +1,5 @@
 ﻿using System;
+using TibiaInfo.Web.Enums;
 
 namespace TibiaInfo.Web.Models.DTO
 {
@@ -8,7 +9,7 @@ namespace TibiaInfo.Web.Models.DTO
 
         public string Name { get; set; }
 
-        public string Town { get; set; }
+        public TownType Town { get; set; }
 
         public DateTime PaidUntil { get; set; }
 

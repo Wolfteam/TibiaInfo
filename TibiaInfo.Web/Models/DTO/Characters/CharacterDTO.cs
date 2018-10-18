@@ -5,7 +5,7 @@ using TibiaInfo.Web.Models.DTO.Shared;
 
 namespace TibiaInfo.Web.Models.DTO
 {
-    public class CharacterDTO : Shared.BaseCharacterADTO
+    public class CharacterDTO : BaseCharacterADTO
     {
         public string World { get; set; }
 

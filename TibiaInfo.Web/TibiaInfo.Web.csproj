@@ -33,13 +33,55 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\enums\account-status-type.enum.ts" />
+    <None Remove="ClientApp\src\app\enums\highscore-type.enum.ts" />
+    <None Remove="ClientApp\src\app\enums\house-type.enum.ts" />
+    <None Remove="ClientApp\src\app\enums\news-type.enum.ts" />
+    <None Remove="ClientApp\src\app\enums\towns-type.enum.ts" />
+    <None Remove="ClientApp\src\app\enums\world-location-type.ts" />
+    <None Remove="ClientApp\src\app\enums\world-pvp-type.enum.ts" />
+    <None Remove="ClientApp\src\app\models\character-death.model.ts" />
+    <None Remove="ClientApp\src\app\models\characters\account-information.model.ts" />
+    <None Remove="ClientApp\src\app\models\characters\achievement.model.ts" />
+    <None Remove="ClientApp\src\app\models\characters\character-guild.model.ts" />
+    <None Remove="ClientApp\src\app\models\characters\character-house.model.ts" />
+    <None Remove="ClientApp\src\app\models\characters\character.model.ts" />
+    <None Remove="ClientApp\src\app\models\created-information.model.ts" />
+    <None Remove="ClientApp\src\app\models\death-involved.ts" />
     <None Remove="ClientApp\src\app\models\response.model.ts" />
+    <None Remove="ClientApp\src\app\models\shared\base-character.model.ts" />
+    <None Remove="ClientApp\src\app\models\shared\other-character.model.ts" />
     <None Remove="ClientApp\src\app\models\statusType.enum.ts" />
+    <None Remove="ClientApp\src\app\pipes\account-status.pipe.ts" />
+    <None Remove="ClientApp\src\app\pipes\sex.pipe.ts" />
+    <None Remove="ClientApp\src\app\pipes\status.pipe.ts" />
+    <None Remove="ClientApp\src\app\services\app.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\enums\account-status-type.enum.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\enums\highscore-type.enum.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\enums\house-type.enum.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\enums\news-type.enum.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\enums\towns-type.enum.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\enums\world-location-type.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\enums\world-pvp-type.enum.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\characters\achievement.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\characters\character-death.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\characters\character-house.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\guilds\guild-member.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\characters\character.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\characters\account-information.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\shared\other-character.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\shared\base-character.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\shared\created-information.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\characters\death-involved.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\response.model.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\models\statusType.enum.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\enums\status-type.enum.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\pipes\account-status.pipe.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\pipes\sex.pipe.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\pipes\status.pipe.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\app.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

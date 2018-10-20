@@ -14,7 +14,7 @@ const CHARS_COOKIE_NAME: string = 'SAVED_CHARS_COOKIE';
 })
 export class CharacterService {
 
-  private defaultChars = 'kharsek,gumi,makoto,yuri,wolfteam knight,haruka nozaki,makoto kun,hecks leads,wolfteam sorcerer,deamon lothbrok,ferxo Nekro,kimz corleone';
+  private defaultChars = 'kharsek,gumi,makoto,yuri,wolfteam knight,haruka nozaki,makoto kun,hecks leads,wolfteam sorcerer,deamon lothbrok,ferxo nekro,kimz corleone';
 
   constructor(
     @Inject('BASE_URL') private baseUrl: string,
@@ -41,7 +41,6 @@ export class CharacterService {
     const charName = name.toLowerCase().trim();
     const chars: string[] = this.cookieService.get(CHARS_COOKIE_NAME).split(',');
     const index = chars.indexOf(charName, 0);
-    console.log(index);
     if (index > -1) {
       chars.splice(index, 1);
       this.cookieService.set(CHARS_COOKIE_NAME, chars.join(','), null, '/');
@@ -56,13 +55,17 @@ export class CharacterService {
     this.cookieService.set(CHARS_COOKIE_NAME, currentChars.join(','), null, '/');
   }
 
+  characterExistsInCache(name: string): boolean {
+    const loweredName: string = name.toLowerCase();
+    const currentChars: string[] = this.cookieService.get(CHARS_COOKIE_NAME).split(',');
+    return currentChars.includes(loweredName);
+  }
+
   getCharacter(name: string): Observable<Response<Character>> {
-    console.log(this.baseUrl);
     return this.httpClient.get<Response<Character>>(this.baseUrl + `api/Characters/${name}`);
   }
 
   getCharacters(names: string): Observable<Response<SimpleCharacter[]>> {
-    console.log(this.baseUrl);
     return this.httpClient.get<Response<SimpleCharacter[]>>(this.baseUrl + `api/Characters/all/${names}`);
   }
 }

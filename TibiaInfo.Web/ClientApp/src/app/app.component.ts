@@ -65,6 +65,7 @@ export class AppComponent {
     this.appService.changeMainTitleSource.subscribe(async msg => this.changeToolbarTitle(await msg));
     this.appService.showMainProgressBarSource.subscribe(async show => this.showProgressBar(await show));
     this.appService.showMainMessageSource.subscribe(async msg => this.showMessage(await msg));
+    this.appService.showBackButtonSource.subscribe(async show => this.showBackButton(await show));
   }
 
   private onSideNavItemClick(itemID: number): void {
@@ -80,9 +81,17 @@ export class AppComponent {
     this.isProgressBarVisible = isVisible;
   }
 
-  showMessage(message: string, action: string = 'Ok'): void {
+  private showMessage(message: string, action: string = 'Ok'): void {
     this.snackBar.open(message, action, {
       duration: 5000,
     });
+  }
+
+  private showBackButton(show: boolean): void {
+    this.isBackButtonVisible = show;
+  }
+
+  goBack() {
+    this.router.navigate(['/characters']);
   }
 }

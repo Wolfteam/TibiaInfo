@@ -5,7 +5,8 @@
       <h4>{{character.name}}'s Information</h4>
     </div>
     <div class="float-right">
-      <button mat-mini-fab matTooltip="Add this character to your favorite list" (click)="saveToFavorites()">
+      <button mat-mini-fab [matTooltip]="isInFavorites ?  'Remove from your favorite list' : 'Add this character to your favorite list'"
+        (click)="saveToFavorites()" [color]="isInFavorites ? 'warn': 'accent'">
         <mat-icon>favorite</mat-icon>
       </button>
     </div>
@@ -25,12 +26,20 @@
 
         <div class="row">
           <div class="col-md-6">
-            <p>Name: {{character.name}}</p>
-            <p>Sex: {{character.sex | sex}}</p>
-            <p>Vocation: {{character.vocation | vocationTitle}}</p>
-
+            <h6>
+              Name:
+              <small class="text-muted">{{character.name}}</small>
+            </h6>
+            <!-- <p>Name: {{character.name}}</p> -->
+            <h6>
+                Sex:
+                <small class="text-muted">{{character.sex | sex}}</small>
+              </h6>
+            <!-- <p>Sex: {{character.sex | sex}}</p> -->
+            <!-- <p>Vocation: {{character.vocation | vocationTitle}}</p> -->
           </div>
-          <div class="col-md-6">
+          <mat-divider class="col-md-1" [vertical]="true"></mat-divider>
+          <div class="col-md-5">
             <p>Achievement Points: {{character.achievementPoints}}</p>
             <p>World: {{character.world}}</p>
             <p *ngIf="character.marriedTo">MarriedTo: {{character.marriedTo}}</p>
@@ -42,7 +51,7 @@
       <mat-expansion-panel expanded="true" *ngIf="character.achievements">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <h5>Achievemnts - Total: {{character.achievementPoints}}</h5> 
+            <h5>Achievemnts - Total: {{character.achievementPoints}}</h5>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-list *ngIf="character.achievements.length > 0">
@@ -51,7 +60,8 @@
             <h5 matLine> {{achievement.name}} </h5>
           </mat-list-item>
         </mat-list>
-        <p *ngIf="character.achievements.length === 0">There are no achievements set to be displayed for this character.</p>
+        <p *ngIf="character.achievements.length === 0">There are no achievements set to be displayed for this
+          character.</p>
       </mat-expansion-panel>
 
       <!--Account information-->
@@ -62,7 +72,8 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <p>Loyalty Title: {{character.accountInformation.loyaltyTitle}}</p>
-        <p>Created: {{character.accountInformation.createdAt.date | date:'MMMM dd yyyy, H:mm:ss'}}  {{character.accountInformation.createdAt.timezone}}</p>
+        <p>Created: {{character.accountInformation.createdAt.date | date:'MMMM dd yyyy, H:mm:ss'}}
+          {{character.accountInformation.createdAt.timezone}}</p>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
@@ -77,7 +88,7 @@
         </mat-expansion-panel-header>
         <mat-list>
           <mat-list-item *ngFor="let death of character.deaths">
-            <p>{{death.diedAt.date | date:'MMMM dd yyyy, HH:mm:ss'}} {{death.diedAt.timezone}}  {{death.reason}}</p>
+            <p>{{death.diedAt.date | date:'MMMM dd yyyy, HH:mm:ss'}} {{death.diedAt.timezone}} {{death.reason}}</p>
           </mat-list-item>
         </mat-list>
       </mat-expansion-panel>
@@ -97,7 +108,8 @@
 
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-            <mat-cell *matCellDef="let element"><a [routerLink]="['/character', element.name]">{{element.name}}</a> </mat-cell>
+            <mat-cell *matCellDef="let element"><a [routerLink]="['/character', element.name]">{{element.name}}</a>
+            </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="world">
@@ -107,10 +119,8 @@
 
           <ng-container matColumnDef="status">
             <mat-header-cell mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-            <mat-cell mat-cell
-                      *matCellDef="let element"
-                      [class.online-status]="element.status === 1"
-                      [class.offline-status]="element.status === 0">{{element.status | status}}</mat-cell>
+            <mat-cell mat-cell *matCellDef="let element" [class.online-status]="element.status === 1"
+              [class.offline-status]="element.status === 0">{{element.status | status}}</mat-cell>
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -120,5 +130,3 @@
     </mat-accordion>
   </div>
 </div>
-
-

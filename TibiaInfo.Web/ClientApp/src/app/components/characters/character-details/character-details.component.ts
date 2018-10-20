@@ -17,6 +17,8 @@ export class CharacterDetailsComponent implements OnInit {
 
   private isPageLoaded: boolean;
   private character: Character;
+  //color = "accent" : "warn"
+  private isInFavorites: boolean = false;
   displayedColumns: string[] = ['name', 'world', 'status'];
   //TODO: IMPROVE THE UI HERE
   //TODO: SHOW A DIFFERENT COLOR IF THE CHAR IS IN THE FAVORITES COOKIE
@@ -44,10 +46,10 @@ export class CharacterDetailsComponent implements OnInit {
         .subscribe(response => {
           if (response.succeed) {
             this.character = response.result;
+            this.isInFavorites = this.characterService.characterExistsInCache(response.result.name);
             //this.dataSource = new MatTableDataSource(response.result.otherCharacters);
             //this.dataSource.sort = this.sort;
             this.isPageLoaded = true;
-            console.log(this.character);
           }
           else
             this.appService.showMessage('An error occurred while trying to get the character. ' + response.message);
@@ -57,6 +59,8 @@ export class CharacterDetailsComponent implements OnInit {
           () => this.appService.showMainProgressBar(false)
         );
     });
+
+    this.appService.showBackButton(true);
   }
 
   getStarsArray(stars: number) {
@@ -69,8 +73,12 @@ export class CharacterDetailsComponent implements OnInit {
 
   saveToFavorites(): void {
     this.appService.showMainProgressBar(true);
-    this.characterService.addCachedCharacterName(this.character.name);
+    if (this.isInFavorites)
+      this.characterService.removeCachedCharacterName(this.character.name);
+    else
+      this.characterService.addCachedCharacterName(this.character.name);
     this.appService.showMainProgressBar(false);
-    this.appService.showMessage(`${this.character.name} was added to your favorite list`);
+    this.appService.showMessage(`${this.character.name} was ${(this.isInFavorites) ? 'removed from ' : 'added to'} your favorite list`);
+    this.isInFavorites = !this.isInFavorites;
   }
 }

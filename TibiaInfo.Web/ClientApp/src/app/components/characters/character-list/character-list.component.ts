@@ -22,6 +22,8 @@ export class CharacterListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.appService.changeMaintTitle('Characters');
     this.appService.showMainProgressBar(true)
+    this.appService.showBackButton(false);
+
     const charNames: string = this.characterService.getCachedCharacterNames()
     this.subscriptions.push(this.characterService.getCharacters(charNames)
       .subscribe(response => {

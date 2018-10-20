@@ -25,24 +25,29 @@
         </mat-expansion-panel-header>
 
         <div class="row">
-          <div class="col-md-6">
-            <h6>
-              Name:
-              <small class="text-muted">{{character.name}}</small>
-            </h6>
-            <!-- <p>Name: {{character.name}}</p> -->
-            <h6>
-                Sex:
-                <small class="text-muted">{{character.sex | sex}}</small>
-              </h6>
-            <!-- <p>Sex: {{character.sex | sex}}</p> -->
-            <!-- <p>Vocation: {{character.vocation | vocationTitle}}</p> -->
+          <div class="col-md-5">
+            <p>Name: {{character.name}}</p>
+            <p>Level: {{character.level}}</p>
+            <p>Sex: {{character.sex | sex}}</p>
+            <p>Vocation: {{character.vocation | vocationTitle}}</p>
+            <p [class.online-status]="character.status === 1" [class.offline-status]="character.status === 0">Status:
+              {{character.status | status}}</p>
+            <p *ngIf="character.guild">Guild Membership: {{character.guild.guildRank}} of the <a [routerLink]="['/guild',character.guild.guildName]">{{character.guild.guildName}}</a></p>
+            <p *ngIf="character.house">House: <a [routerLink]="['/house',character.house.id ]">{{character.house.name}}</a>
+              ({{character.house.town | town}}) is paid until {{character.house.paidUntil |
+              date:'MMMM dd yyyy,
+              H:mm:ss'}} </p>
           </div>
           <mat-divider class="col-md-1" [vertical]="true"></mat-divider>
           <div class="col-md-5">
+            <p>Account Status: {{character.accountStatus | accountStatus}}</p>
             <p>Achievement Points: {{character.achievementPoints}}</p>
-            <p>World: {{character.world}}</p>
+            <p *ngIf="character.comment">Comment: {{character.comment}}</p>
+            <p>Last Login: {{character.lastLogin.date | date:'MMMM dd yyyy, H:mm:ss'}} {{character.lastLogin.timezone}}
+            </p>
             <p *ngIf="character.marriedTo">MarriedTo: {{character.marriedTo}}</p>
+            <p>Residence: {{character.residence}}</p>
+            <p>World: {{character.world}}</p>
           </div>
         </div>
       </mat-expansion-panel>
@@ -88,7 +93,15 @@
         </mat-expansion-panel-header>
         <mat-list>
           <mat-list-item *ngFor="let death of character.deaths">
-            <p>{{death.diedAt.date | date:'MMMM dd yyyy, HH:mm:ss'}} {{death.diedAt.timezone}} {{death.reason}}</p>
+            <div class="row align-items-center">
+              <div class="col-md-2">
+                <p class="p-without-margins">{{death.diedAtLevel}} Level</p>
+              </div>
+              <div class="col-md-10">
+                <p class="p-without-margins">{{death.diedAt.date | date:'MMMM dd yyyy, HH:mm:ss'}} {{death.diedAt.timezone}} {{death.reason}}</p>
+              </div>
+              <mat-divider></mat-divider>
+            </div>
           </mat-list-item>
         </mat-list>
       </mat-expansion-panel>

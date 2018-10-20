@@ -18,9 +18,10 @@ import { CharacterSearchComponent } from './components/characters/character-sear
 // Pipes
 import { AccountStatusPipe } from './pipes/account-status.pipe';
 import { SexPipe } from './pipes/sex.pipe';
+import { StatusPipe } from './pipes/status.pipe';
+import { TownPipe } from './pipes/town.pipe';
 import { VocationTtitlePipe } from './pipes/vocation-title.pipe';
 import { VocationImagePipe } from './pipes/vocation-image.pipe';
-import { StatusPipe } from './pipes/status.pipe'
 
 //Services
 import { AppService } from './services/app.service';
@@ -51,10 +52,11 @@ const appRoutes: Route[] = [
     CharacterListComponent,
     FooterComponent,
     AccountStatusPipe,
+    StatusPipe,
     SexPipe,
+    TownPipe,
     VocationImagePipe,
     VocationTtitlePipe,
-    StatusPipe,
     CharacterComponent,
     CharacterSearchComponent,
     CharacterDetailsComponent

@@ -17,3 +17,8 @@ th.mat-sort-header-sorted {
 .online-status {
   color: green;
 }
+
+.p-without-margins {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

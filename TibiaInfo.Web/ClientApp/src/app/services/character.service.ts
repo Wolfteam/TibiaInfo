@@ -26,13 +26,11 @@ export class CharacterService {
     const chars = this.cookieService.get(CHARS_COOKIE_NAME);
     if (chars !== undefined && chars !== null && chars.length > 0) {
       console.log("Chars are returned from cookie");
-      console.log(chars);
       return chars;
     }
     else {
       console.log("Chars are returned from property");
       this.cookieService.set(CHARS_COOKIE_NAME, this.defaultChars, null, '/');
-      console.log(this.defaultChars);
       return this.defaultChars;
     }
   }

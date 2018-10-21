@@ -11,7 +11,11 @@ import { LocationStrategy } from '@angular/common';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  host: {
+    '(document:keydown)': 'handleKeyDown($event)',
+    '(document:keyup)': 'handleKeyUp($event)'
+  }
 })
 export class AppComponent {
   isSideNavOpened: boolean = false;
@@ -56,6 +60,12 @@ export class AppComponent {
   isBackButtonVisible = false;
   title: string = '';
   playersOnline = 19550;
+  private backToRouterPath: string[] = ['/characters'];
+  private map: any = {
+    17: false,
+    16: false
+  };
+
 
   constructor(
     private appService: AppService,
@@ -66,6 +76,7 @@ export class AppComponent {
     this.appService.showMainProgressBarSource.subscribe(async show => this.showProgressBar(await show));
     this.appService.showMainMessageSource.subscribe(async msg => this.showMessage(await msg));
     this.appService.showBackButtonSource.subscribe(async show => this.showBackButton(await show));
+    this.appService.setBackRouterPathSource.subscribe(async path => this.setBackRouterPath(await path));
   }
 
   private onSideNavItemClick(itemID: number): void {
@@ -88,10 +99,33 @@ export class AppComponent {
   }
 
   private showBackButton(show: boolean): void {
-    this.isBackButtonVisible = show;
+    this.isBackButtonVisible = show
   }
 
-  goBack() {
-    this.router.navigate(['/characters']);
+  private setBackRouterPath(path: string): void {
+    console.log("Pusheado a la pila de navegacion.");
+    this.backToRouterPath.push(path);
+    console.log(this.backToRouterPath);
+  }
+
+  goBack(): void {
+    console.log("Sacando a la pila de navegacion.");
+    this.router.navigate([this.backToRouterPath.pop()]);
+    console.log(this.backToRouterPath);
+  }
+
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.keyCode in this.map) {
+      this.map[event.keyCode] = true;
+      if (this.map[17] && this.map[16]) {
+        this.isSideNavOpened = !this.isSideNavOpened;
+      }
+    }
+  }
+
+  handleKeyUp(event: KeyboardEvent) {
+    if (event.keyCode in this.map) {
+      this.map[event.keyCode] = false;
+    }
   }
 }

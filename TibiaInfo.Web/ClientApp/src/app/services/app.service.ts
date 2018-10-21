@@ -11,6 +11,7 @@ export class AppService {
   showMainMessageSource = new Subject<string>();
   changeMainTitleSource = new Subject<string>();
   showBackButtonSource = new Subject<boolean>();
+  setBackRouterPathSource = new Subject<string>();
 
   showMainProgressBar(show: boolean): void {
     this.showMainProgressBarSource.next(show);
@@ -26,5 +27,10 @@ export class AppService {
 
   showBackButton(show: boolean): void {
     this.showBackButtonSource.next(show);
+  }
+
+  setBackRouterPath(path: string): void {
+    //TODO: Provide a better navigation system
+    this.setBackRouterPathSource.next(path);
   }
 }

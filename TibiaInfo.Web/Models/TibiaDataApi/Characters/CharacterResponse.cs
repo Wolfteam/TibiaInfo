@@ -22,5 +22,8 @@ namespace TibiaInfo.Web.Models.TibiaDataApi.Character
 
         [JsonProperty(PropertyName = "other_characters")]
         public List<OtherCharacter> OtherCharacters { get; set; }
+
+        [JsonProperty(PropertyName = "error")]
+        public string Error { get; set; }
     }
 }

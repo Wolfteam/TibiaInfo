@@ -42,10 +42,8 @@ namespace TibiaInfo.Web.Controllers
             try
             {
                 var r = await _characterService.GetCharacter(name);
-                if (!string.IsNullOrEmpty(r.Response.Character.Error))
-                {
-                    response.Message = r.Response.Character.Error;
-                }
+                if (!string.IsNullOrEmpty(r.Response.Character.Error) || !string.IsNullOrEmpty(r.Response.Error))
+                    response.Message = r.Response.Character.Error ?? r.Response.Error;
                 else
                 {
                     response.Result = _mapper.Map<CharacterDTO>(r.Response);

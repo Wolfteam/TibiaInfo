@@ -43,21 +43,21 @@ namespace TibiaInfo.Web.Helpers
             CreateMap<Guid, GuildMemberDTO>();
             CreateMap<OtherCharacter, BaseCharacterBDTO>();
             CreateMap<CharacterResponse, CharacterDTO>()
-                .ForMember(d => d.AccountInformation, opt => opt.MapFrom(s => s.AccountInformation.FirstOrDefault()))
+                .ForMember(d => d.AccountInformation, opt => opt.ResolveUsing(s => s.AccountInformation?.FirstOrDefault()))
                 .ForMember(d => d.Achievements, opt => opt.MapFrom(s => s.Achievements))
                 .ForMember(d => d.AchievementPoints, opt => opt.ResolveUsing(s => s.Character?.AchievementPoints ?? 0))
-                .ForMember(d => d.Comment, opt => opt.ResolveUsing(s => s.Character.Comment))
+                .ForMember(d => d.Comment, opt => opt.ResolveUsing(s => s.Character?.Comment))
                 .ForMember(d => d.Guild, opt => opt.ResolveUsing(s => s.Character?.Guild ?? null))
                 .ForMember(d => d.House, opt => opt.ResolveUsing(s => s.Character?.House ?? null))
-                .ForMember(d => d.LastLogin, opt => opt.ResolveUsing(s => s.Character?.LastLogin.FirstOrDefault()))
+                .ForMember(d => d.LastLogin, opt => opt.ResolveUsing(s => s.Character?.LastLogin?.FirstOrDefault()))
                 .ForMember(d => d.Level, opt => opt.ResolveUsing(s => s.Character?.Level ?? null))
                 .ForMember(d => d.MarriedTo, opt => opt.ResolveUsing(s => s.Character?.MarriedTo ?? null))
                 .ForMember(d => d.Name, opt => opt.ResolveUsing(s => s.Character?.Name ?? null))
                 .ForMember(d => d.OtherCharacters, opt => opt.MapFrom(s => s.OtherCharacters))
                 .ForMember(d => d.Residence, opt => opt.ResolveUsing(s => s.Character?.Residence ?? null))
-                .ForMember(d => d.Status, opt => opt.ResolveUsing(s => s.Character?.Status.GetStatusType() ?? null))
-                .ForMember(d => d.Sex, opt => opt.ResolveUsing(s => s.Character?.Sex.GetSexType() ?? null))
-                .ForMember(d => d.Vocation, opt => opt.ResolveUsing(s => s.Character?.Vocation.GetVocationType() ?? null))
+                .ForMember(d => d.Status, opt => opt.ResolveUsing(s => s.Character?.Status?.GetStatusType() ?? null))
+                .ForMember(d => d.Sex, opt => opt.ResolveUsing(s => s.Character?.Sex?.GetSexType() ?? null))
+                .ForMember(d => d.Vocation, opt => opt.ResolveUsing(s => s.Character?.Vocation?.GetVocationType() ?? null))
                 .ForMember(d => d.World, opt => opt.ResolveUsing(s => s.Character?.World ?? null));
 
             #endregion

@@ -1,17 +1,17 @@
 <mat-card class="character-card mat-elevation-z8">
   <!-- Card header -->
   <mat-card-header class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
       <img class="float-left character-img" [src]='character.vocation | vocationImage:character.sex'>
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-sm-9">
           <p> <span [matTooltip]='character.status == 1 ? "Online" : "Offline"' [class.character-status-online]="character.status == 1"
               [class.character-status-offline]="character.status == 0" class="character-status"></span>
             {{character.name}}</p>
           <p>Level: {{character.level}}</p>
         </div>
-        <div class="col-md-3">
-          <button color="warn" mat-icon-button (click)="removeCharacter()" matTooltip="Remove from your favorite list">
+        <div class="col-sm-3">
+          <button class="float-right" color="warn" mat-icon-button (click)="removeCharacter()" matTooltip="Remove from your favorite list">
             <mat-icon>favorite</mat-icon>
           </button>
         </div>
@@ -23,7 +23,7 @@
   <mat-card-content>
     <mat-chip-list>
       <mat-chip selectable="false" color="primary" selected>Vocation: {{character.vocation | vocationTitle}}</mat-chip>
-      <mat-chip selectable="false" color="accent" selected>World: {{character.world}}</mat-chip>
+      <mat-chip *ngIf="character.world" selectable="false" color="accent" selected>World: {{character.world}}</mat-chip>
     </mat-chip-list>
   </mat-card-content>
 

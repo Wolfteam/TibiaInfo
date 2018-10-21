@@ -29,6 +29,9 @@ export class CharacterDetailsComponent implements OnInit {
     private appService: AppService) { }
 
   ngOnInit() {
+    this.appService.showBackButton(true);
+    this.appService.setBackRouterPath('/characters');
+
     this.activatedRoute.paramMap.subscribe(params => {
       this.appService.showMainProgressBar(true);
       const charName = params.get('name');
@@ -38,30 +41,31 @@ export class CharacterDetailsComponent implements OnInit {
         return;
       }
 
-      this.characterService.getCharacter(charName)
-        .subscribe(response => {
-          if (response.succeed) {
-            this.character = response.result;
-            this.isInFavorites = this.characterService.characterExistsInCache(response.result.name);
-            //this.dataSource = new MatTableDataSource(response.result.otherCharacters);
-            //this.dataSource.sort = this.sort;
-            this.isPageLoaded = true;
-            this.appService.changeMaintTitle(`Characters - ${response.result.name}`);
+      this.characterService.getCharacter(charName).subscribe(response => {
+        if (response.succeed) {
+          this.character = response.result;
+          this.isInFavorites = this.characterService.characterExistsInCache(response.result.name);
+          //this.dataSource = new MatTableDataSource(response.result.otherCharacters);
+          //this.dataSource.sort = this.sort;
+          this.isPageLoaded = true;
+          this.appService.changeMaintTitle(`Characters - ${response.result.name}`);
+        }
+        else {
+          this.appService.showMessage('An error occurred while trying to get the character. ' + response.message);
+          if (response.message.toLowerCase().includes('character does not exist')) {
+            this.characterNotFound = true;
+            this.appService.changeMaintTitle(`Characters - Not Found`);
           }
-          else {
-            this.appService.showMessage('An error occurred while trying to get the character. ' + response.message);
-            if (response.message.toLowerCase().includes('character does not exist')) {
-              this.characterNotFound = true;
-              this.appService.changeMaintTitle(`Characters - Not Found`);
-            }
-          }
+        }
+      },
+        (error) => {
+          console.log(error);
+          this.appService.showMessage('An unknown error occurred.');
+          this.appService.showMainProgressBar(false);
         },
-          (error) => this.appService.showMessage('An unknown error occured.' + error),
-          () => this.appService.showMainProgressBar(false)
-        );
+        () => this.appService.showMainProgressBar(false)
+      );
     });
-
-    this.appService.showBackButton(true);
   }
 
   getStarsArray(stars: number) {

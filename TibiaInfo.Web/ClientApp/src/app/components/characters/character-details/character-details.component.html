@@ -26,28 +26,29 @@
 
         <div class="row">
           <div class="col-md-5">
-            <p>Name: {{character.name}}</p>
-            <p>Level: {{character.level}}</p>
-            <p>Sex: {{character.sex | sex}}</p>
-            <p>Vocation: {{character.vocation | vocationTitle}}</p>
-            <p [class.online-status]="character.status === 1" [class.offline-status]="character.status === 0">Status:
+            <p><b>Name</b>: {{character.name}}</p>
+            <p><b>Level</b>: {{character.level}}</p>
+            <p><b>Sex</b>: {{character.sex | sex}}</p>
+            <p><b>Vocation</b>: {{character.vocation | vocationTitle}}</p>
+            <p [class.online-status]="character.status === 1" [class.offline-status]="character.status === 0"><b>Status</b>:
               {{character.status | status}}</p>
-            <p *ngIf="character.guild">Guild Membership: {{character.guild.guildRank}} of the <a [routerLink]="['/guild',character.guild.guildName]">{{character.guild.guildName}}</a></p>
-            <p *ngIf="character.house">House: <a [routerLink]="['/house',character.house.id ]">{{character.house.name}}</a>
+            <p *ngIf="character.guild"><b>Guild Membership</b>: {{character.guild.guildRank}} of the <a [routerLink]="['/guild',character.guild.guildName]">{{character.guild.guildName}}</a></p>
+            <p *ngIf="character.house"><b>House</b>: <a [routerLink]="['/house',character.house.id ]">{{character.house.name}}</a>
               ({{character.house.town | town}}) is paid until {{character.house.paidUntil |
               date:'MMMM dd yyyy,
               H:mm:ss'}} </p>
           </div>
           <mat-divider class="col-md-1" [vertical]="true"></mat-divider>
           <div class="col-md-5">
-            <p>Account Status: {{character.accountStatus | accountStatus}}</p>
-            <p>Achievement Points: {{character.achievementPoints}}</p>
-            <p *ngIf="character.comment">Comment: {{character.comment}}</p>
-            <p>Last Login: {{character.lastLogin.date | date:'MMMM dd yyyy, H:mm:ss'}} {{character.lastLogin.timezone}}
+            <p><b>Account Status</b>: {{character.accountStatus | accountStatus}}</p>
+            <p><b>Achievement Points</b>: {{character.achievementPoints}}</p>
+            <p *ngIf="character.comment"><b>Comment</b>: {{character.comment}}</p>
+            <p><b>Last Login</b>: {{character.lastLogin.date | date:'MMMM dd yyyy, H:mm:ss'}}
+              {{character.lastLogin.timezone}}
             </p>
-            <p *ngIf="character.marriedTo">MarriedTo: {{character.marriedTo}}</p>
-            <p>Residence: {{character.residence}}</p>
-            <p>World: {{character.world}}</p>
+            <p *ngIf="character.marriedTo"><b>MarriedTo</b>: {{character.marriedTo}}</p>
+            <p><b>Residence</b>: {{character.residence}}</p>
+            <p><b>World</b>: {{character.world}}</p>
           </div>
         </div>
       </mat-expansion-panel>
@@ -56,7 +57,7 @@
       <mat-expansion-panel expanded="true" *ngIf="character.achievements">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <h5>Achievemnts - Total: {{character.achievementPoints}}</h5>
+            <h5>Achievements - Total: {{character.achievementPoints}}</h5>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-list *ngIf="character.achievements.length > 0">
@@ -76,8 +77,8 @@
             <h5>Account Information</h5>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <p>Loyalty Title: {{character.accountInformation.loyaltyTitle}}</p>
-        <p>Created: {{character.accountInformation.createdAt.date | date:'MMMM dd yyyy, H:mm:ss'}}
+        <p><b>Loyalty Title</b>: {{character.accountInformation.loyaltyTitle}}</p>
+        <p><b>Created</b>: {{character.accountInformation.createdAt.date | date:'MMMM dd yyyy, H:mm:ss'}}
           {{character.accountInformation.createdAt.timezone}}</p>
       </mat-expansion-panel>
     </mat-accordion>
@@ -95,7 +96,7 @@
           <mat-list-item *ngFor="let death of character.deaths">
             <div class="row align-items-center">
               <div class="col-md-2">
-                <p class="p-without-margins">{{death.diedAtLevel}} Level</p>
+                <p class="p-without-margins"><b>{{death.diedAtLevel}} Level</b></p>
               </div>
               <div class="col-md-10">
                 <p class="p-without-margins">{{death.diedAt.date | date:'MMMM dd yyyy, HH:mm:ss'}}

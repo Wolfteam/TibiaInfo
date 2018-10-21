@@ -17,13 +17,9 @@ export class CharacterDetailsComponent implements OnInit {
 
   private isPageLoaded: boolean;
   private character: Character;
-  //color = "accent" : "warn"
   private isInFavorites: boolean = false;
-  displayedColumns: string[] = ['name', 'world', 'status'];
-  //TODO: IMPROVE THE UI HERE
-  //TODO: SHOW A DIFFERENT COLOR IF THE CHAR IS IN THE FAVORITES COOKIE
-  //TODO: SHOW A NOT FOUND IF THE CHARACTER DOES NOT EXISTS
-  //TODO: REMOVE console.logs
+  private displayedColumns: string[] = ['name', 'world', 'status'];
+  private characterNotFound: boolean = false;
   //dataSource: MatTableDataSource<OtherCharacter>;
   //@ViewChild(MatSort) sort: MatSort;
 
@@ -50,10 +46,15 @@ export class CharacterDetailsComponent implements OnInit {
             //this.dataSource = new MatTableDataSource(response.result.otherCharacters);
             //this.dataSource.sort = this.sort;
             this.isPageLoaded = true;
+            this.appService.changeMaintTitle(`Characters - ${response.result.name}`);
           }
-          else
+          else {
             this.appService.showMessage('An error occurred while trying to get the character. ' + response.message);
-          this.appService.changeMaintTitle(`Characters - ${response.result.name}`);
+            if (response.message.toLowerCase().includes('character does not exist')) {
+              this.characterNotFound = true;
+              this.appService.changeMaintTitle(`Characters - Not Found`);
+            }
+          }
         },
           (error) => this.appService.showMessage('An unknown error occured.' + error),
           () => this.appService.showMainProgressBar(false)

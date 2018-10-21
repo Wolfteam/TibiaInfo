@@ -14,7 +14,7 @@ namespace TibiaInfo.Web.Models.DTO.Worlds
 
         public string CreationDate { get; set; }
 
-        public VocationType Location { get; set; }
+        public WorldLocationType Location { get; set; }
 
         public WorldPvPType PvpType { get; set; }
 

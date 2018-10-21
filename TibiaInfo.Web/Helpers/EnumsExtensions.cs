@@ -38,6 +38,8 @@ namespace TibiaInfo.Web.Helpers
                     return VocationType.DRUID;
                 case "Elder Druid":
                     return VocationType.ELDER_DRUID;
+                case "None":
+                    return VocationType.NONE;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(vocation), vocation, "Couldnt find the vocation type enum value");
             }
@@ -126,7 +128,7 @@ namespace TibiaInfo.Web.Helpers
             string type2 = type.Trim().ToLower().Replace(" ", "");
             switch (type2)
             {
-                case"ab'dendriel":
+                case "ab'dendriel":
                     return TownType.AB_DENDRIEL;
                 case "ankrahmun":
                     return TownType.ANKRAHMUN;
@@ -248,6 +250,8 @@ namespace TibiaInfo.Web.Helpers
                     return "Royal Paladin";
                 case VocationType.ALL:
                     return "All";
+                case VocationType.NONE:
+                    return "None";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(vocationType), vocationType, "Couldnt find the vocation string value");
             }

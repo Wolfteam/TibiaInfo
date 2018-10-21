@@ -10,6 +10,7 @@
         ELITE_KNIGHT,
         PALADIN,
         ROYAL_PALADIN,
+        NONE,
         ALL
     }
 }

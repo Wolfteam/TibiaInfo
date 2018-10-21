@@ -28,6 +28,11 @@ import { AppService } from './services/app.service';
 import { CharacterService } from './services/character.service';
 import { CookieService } from 'ngx-cookie-service';
 import { CharacterDetailsComponent } from './components/characters/character-details/character-details.component';
+import { WorldComponent } from './components/worlds/world/world.component';
+import { WorldListComponent } from './components/worlds/world-list/world-list.component';
+import { WorldLocationPipe } from './pipes/world-location.pipe';
+import { WorldPvpPipe } from './pipes/world-pvp.pipe';
+import { WorldDetailsComponent } from './components/worlds/world-details/world-details.component';
 
 const appRoutes: Route[] = [
   {
@@ -37,6 +42,14 @@ const appRoutes: Route[] = [
   {
     path: 'character/:name',
     component: CharacterDetailsComponent
+  },
+  {
+    path: 'worlds',
+    component: WorldListComponent
+  },
+  {
+    path: 'world/:name',
+    component: WorldDetailsComponent
   },
   {
     path: '',
@@ -59,7 +72,12 @@ const appRoutes: Route[] = [
     VocationTtitlePipe,
     CharacterComponent,
     CharacterSearchComponent,
-    CharacterDetailsComponent
+    CharacterDetailsComponent,
+    WorldComponent,
+    WorldListComponent,
+    WorldLocationPipe,
+    WorldPvpPipe,
+    WorldDetailsComponent
   ],
   imports: [
     BrowserModule,

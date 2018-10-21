@@ -1,0 +1,32 @@
+<mat-card class="world-card mat-elevation-z8">
+  <!-- Card header -->
+  <mat-card-header class="row">
+    <b>{{world.name}}</b>
+  </mat-card-header>
+
+  <!-- Card content -->
+  <mat-card-content>
+    <div class="row">
+      <div class="col-md-6">
+        <p>Name: {{world.name}}</p>
+        <p>Type: {{world.pvpType | worldPvp:false}}</p>
+      </div>
+      <div class="col-md-6">
+        <p>Players Online: {{world.numberOfPlayersOnline}}</p>
+        <p>Location: {{world.location | worldLocation}}</p>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <!-- Card Actions -->
+  <mat-card-actions>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" mat-stroked-button matTooltip="Get more details about this world" (click)="showDetails()">
+          <mat-icon>chevron_right</mat-icon>
+          Details
+        </button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

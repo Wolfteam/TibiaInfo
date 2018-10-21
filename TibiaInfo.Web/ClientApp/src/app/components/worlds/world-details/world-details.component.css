@@ -1,0 +1,16 @@
+.players-online-div {
+  margin-top: 10px;
+}
+
+virtual-scroller {
+  display: block;
+
+  width: 100%;
+  height: 450px;
+}
+
+app-character {
+  display: inline-block;
+  width: 100%;
+  padding: 5px;
+}

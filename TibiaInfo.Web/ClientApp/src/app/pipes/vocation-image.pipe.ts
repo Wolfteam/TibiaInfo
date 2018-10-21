@@ -37,6 +37,10 @@ export class VocationImagePipe implements PipeTransform {
                 return sex === SexType.MALE ?
                     './assets/images/mage_outfit_full_male.gif' :
                     './assets/images/mage_outfit_full_female.gif';
+            case VocationType.NONE:
+                return sex === SexType.MALE ?
+                    './assets/images/citizen_outfit_male.gif' :
+                    './assets/images/citizen_outfit_female.gif';
             default:
                 throw new Error('The provided enum value does not exists');
         }

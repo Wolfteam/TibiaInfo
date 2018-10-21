@@ -6,5 +6,6 @@ export enum VocationType {
     KNIGHT,
     ELITE_KNIGHT,
     PALADIN,
-    ROYAL_PALADIN
+    ROYAL_PALADIN,
+    NONE
 }

@@ -23,6 +23,8 @@ export class VocationTtitlePipe implements PipeTransform {
                 return 'Royal Paladin';
             case VocationType.MASTER_SORCERER:
                 return 'Master Sorcerer';
+            case VocationType.NONE:
+                return 'None';
             default:
                 throw new Error('The provided enum value does not exists');
         }

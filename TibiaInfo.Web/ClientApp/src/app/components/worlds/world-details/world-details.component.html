@@ -18,8 +18,7 @@
               yyyy,
               HH:mm:ss'}}
               {{world.onlineRecord.at.timezone}} </p>
-            <p><b>Creation Date</b>: {{world.creationDate | date:'MMMM dd yyyy,
-              HH:mm:ss'}}</p>
+            <p><b>Creation Date</b>: {{world.creationDate | date:'MMMM, yyyy'}}</p>
           </div>
           <div class="col-md-6">
             <img class="float-right" [src]='world.pvpType | worldPvp:true' [matTooltip]="world.pvpType | worldPvp">
@@ -56,13 +55,20 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <div class="row">
-          <div class="col-md-6" *ngFor="let char of world.playersOnline">
-            <app-character [character]="char"></app-character>
-          </div>
-        </div>
 
+        <cdk-virtual-scroll-viewport #viewport [itemSize]="world.playersOnline.length" (scrolledIndexChange)="scrolledIndexChange($event)">
+          <div class="row scroll-div">
+            <app-character *cdkVirtualFor="let char of world.playersOnline; templateCacheSize: 0" class="col-md-6"
+              [character]="char"></app-character>
+          </div>
+        </cdk-virtual-scroll-viewport>
+<!-- 
+        <button (click)="viewport.scrollToIndex(40)">
+          Click aca
+        </button> -->
       </mat-expansion-panel>
     </mat-accordion>
+
+
   </div>
 </div>

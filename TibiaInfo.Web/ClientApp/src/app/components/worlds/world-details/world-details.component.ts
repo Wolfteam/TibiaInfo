@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { WorldService } from 'src/app/services/world.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from 'src/app/services/app.service';
 import { World } from 'src/app/models/worlds/world.model';
 import { StatusType } from 'src/app/enums/status-type.enum';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-world-details',
   templateUrl: './world-details.component.html',
-  styleUrls: ['./world-details.component.css']
+  styleUrls: ['./world-details.component.css'],
 })
 export class WorldDetailsComponent implements OnInit {
 
   private world: World;
   private isPageLoaded: boolean;
+    //TODO: CdkVirtualScrollViewport is not correctly working
+  @ViewChild(CdkVirtualScrollViewport) cdkVirtualScrollViewport: CdkVirtualScrollViewport;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -35,7 +38,6 @@ export class WorldDetailsComponent implements OnInit {
       }
 
       this.worldService.getWorld(worldName).subscribe(r => {
-        console.log(r);
         if (r.succeed) {
           r.result.playersOnline.forEach(p => {
             p.status = StatusType.ONLINE;
@@ -57,5 +59,9 @@ export class WorldDetailsComponent implements OnInit {
         () => this.appService.showMainProgressBar(false)
       );
     });
+  }
+
+  scrolledIndexChange(event: any) {
+    console.log(this.cdkVirtualScrollViewport);
   }
 }

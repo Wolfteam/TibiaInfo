@@ -46,6 +46,7 @@ namespace TibiaInfo.Web.Helpers
                 .ForMember(d => d.AccountInformation, opt => opt.ResolveUsing(s => s.AccountInformation?.FirstOrDefault()))
                 .ForMember(d => d.Achievements, opt => opt.MapFrom(s => s.Achievements))
                 .ForMember(d => d.AchievementPoints, opt => opt.ResolveUsing(s => s.Character?.AchievementPoints ?? 0))
+                .ForMember(d => d.AccountStatus, opt => opt.ResolveUsing(s => s.Character?.AccountStatus.GetAccountStatusType() ?? 0))
                 .ForMember(d => d.Comment, opt => opt.ResolveUsing(s => s.Character?.Comment))
                 .ForMember(d => d.Guild, opt => opt.ResolveUsing(s => s.Character?.Guild ?? null))
                 .ForMember(d => d.House, opt => opt.ResolveUsing(s => s.Character?.House ?? null))

@@ -5,6 +5,19 @@ namespace TibiaInfo.Web.Helpers
 {
     public static class EnumsExtensions
     {
+        public static AccountStatusType GetAccountStatusType(this string accountStatus)
+        {
+            switch (accountStatus.ToLower())
+            {
+                case "premium account":
+                    return AccountStatusType.PREMIUM;
+                case "free account":
+                    return AccountStatusType.FREE;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(accountStatus), accountStatus, "Could find the account status type enum value");
+            }
+        }
+
         public static SexType GetSexType(this string sex)
         {
             switch (sex)

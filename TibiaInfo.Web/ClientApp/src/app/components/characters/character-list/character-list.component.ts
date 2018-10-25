@@ -5,7 +5,6 @@ import { VocationType } from '../../../enums/vocation-type.enum';
 import { CharacterService } from '../../../services/character.service';
 import { pipe, Subscription } from 'rxjs'
 import { AppService } from '../../../services/app.service';
-import { reserveSlots } from '@angular/core/src/render3/instructions';
 
 @Component({
   selector: 'app-character-list',

@@ -1,0 +1,25 @@
+<form class="row">
+  <div class="col-sm-4 col-md-2">
+    <!-- Autocomplete -->
+    <mat-form-field>
+      <input type="text" placeholder="Type the world name..." matInput [formControl]="worldSearchControl"
+        [matAutocomplete]="auto">
+        <!-- (optionSelected)="onWorldSelected($event)" -->
+      <mat-autocomplete #auto="matAutocomplete" >
+        <mat-option *ngFor="let option of filteredWorldOptions" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <!-- Sort by -->
+  <div class="col-sm-8 col-md-5 align-self-center float-left">
+    <label>Sort by: </label>
+    <mat-radio-group name="currentSortOrder" [(ngModel)]="currentSortOrder">
+      <mat-radio-button (click)="onOrderBySelectionChanged(order.id)" [checked]="order.selected" *ngFor="let order of orderBy"
+        [value]="order.id">
+        {{order.text}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+</form>

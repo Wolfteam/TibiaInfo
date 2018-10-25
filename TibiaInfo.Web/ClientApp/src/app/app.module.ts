@@ -6,7 +6,8 @@ import { RouterModule, Route } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material.module';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 
 // Components
 import { AppComponent } from './app.component';
@@ -33,6 +34,7 @@ import { WorldListComponent } from './components/worlds/world-list/world-list.co
 import { WorldLocationPipe } from './pipes/world-location.pipe';
 import { WorldPvpPipe } from './pipes/world-pvp.pipe';
 import { WorldDetailsComponent } from './components/worlds/world-details/world-details.component';
+import { WorldListFilterComponent } from './components/worlds/world-list-filter/world-list-filter.component';
 
 const appRoutes: Route[] = [
   {
@@ -77,7 +79,8 @@ const appRoutes: Route[] = [
     WorldListComponent,
     WorldLocationPipe,
     WorldPvpPipe,
-    WorldDetailsComponent
+    WorldDetailsComponent,
+    WorldListFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -85,6 +88,8 @@ const appRoutes: Route[] = [
     MaterialModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    ScrollDispatchModule,
     RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' })
   ],
   providers: [

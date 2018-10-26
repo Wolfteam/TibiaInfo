@@ -1,19 +1,28 @@
-<mat-card class="world-card mat-elevation-z8">
+<mat-card 
+  [class.open-pvp]="world.pvpType === 0"
+  [class.optional-pvp]="world.pvpType === 1"
+  [class.hardcore-pvp]="world.pvpType === 2"
+  [class.retro-open-pvp]="world.pvpType === 3"
+  [class.retro-hardcore-pvp]="world.pvpType === 4"
+  class="world-card mat-elevation-z8">
   <!-- Card header -->
   <mat-card-header class="row">
     <b>{{world.name}}</b>
   </mat-card-header>
 
   <!-- Card content -->
-  <mat-card-content>
+  <mat-card-content class="container">
     <div class="row">
       <div class="col-md-6">
-        <p>Name: {{world.name}}</p>
-        <p>Type: {{world.pvpType | worldPvp:false}}</p>
+        <p class="p-without-margin"><b>Type</b>: {{world.pvpType | worldPvp:false}}</p>
       </div>
       <div class="col-md-6">
-        <p>Players Online: {{world.numberOfPlayersOnline}}</p>
-        <p>Location: {{world.location | worldLocation}}</p>
+        <p class="p-without-margin"><b>Players Online</b>: {{world.numberOfPlayersOnline}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p class="p-without-margin"> <b>Location</b>: {{world.location | worldLocation}}</p>
       </div>
     </div>
   </mat-card-content>

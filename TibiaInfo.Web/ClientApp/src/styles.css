@@ -10,3 +10,16 @@ body {
   margin-top: 20px;
   min-height: calc(80vh - 60px);
 }
+
+.p-without-margin {
+  margin-bottom: initial;
+  margin-top: initial;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.medium-width {
+  width: 50%;
+}

@@ -1,3 +1,26 @@
 .world-card {
   margin-bottom: 10px;
 }
+mat-card-content{
+  margin-bottom: 0px;
+}
+
+.optional-pvp{
+  background: #4caf50;
+}
+
+.open-pvp {
+  background: #e65100;
+}
+
+.hardcore-pvp {
+  background: #f44336;
+}
+
+.retro-open-pvp {
+  background: #827717;
+}
+
+.retro-hardcore-pvp {
+  background: #b71c1c;
+}

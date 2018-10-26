@@ -18,10 +18,14 @@ export class WorldService {
   ) { }
 
   getAllWorlds(): Observable<Response<AllWorlds>> {
-    return this.httpClient.get<Response<AllWorlds>>(this.baseUrl + `api/worlds/all`);
+    return this.httpClient.get<Response<AllWorlds>>(`${this.baseUrl}api/worlds/all`);
   }
 
   getWorld(name: string): Observable<Response<World>> {
-    return this.httpClient.get<Response<World>>(this.baseUrl + `api/worlds/${name}`);
+    return this.httpClient.get<Response<World>>(`${this.baseUrl}api/worlds/${name}`);
+  }
+
+  getTotalNumberOfPlayersOnline(): Observable<Response<number>> {
+    return this.httpClient.get<Response<number>>(`${this.baseUrl}api/worlds/totalNumberOfPlayersOnline`);
   }
 }

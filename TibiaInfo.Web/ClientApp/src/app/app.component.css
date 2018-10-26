@@ -26,6 +26,13 @@ mat-sidenav {
 
 .bottom-left {
   position: absolute;
-  bottom: 8px;
-  left: 16px;
+  bottom: 1px;
+  width: 100%;
+  margin-left: 10px;
+}
+
+.players-online-text{
+  margin-left: 10px;
+  text-align: initial;
+  font-size: 21px;
 }

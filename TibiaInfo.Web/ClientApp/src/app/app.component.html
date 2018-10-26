@@ -17,12 +17,21 @@
   <mat-sidenav #side [fixedInViewport]="true" mode="push" [(opened)]="isSideNavOpened">
     <div class="side-nav-image-container">
       <img class="side-nav-main-image" src="../assets/images/tibia_logo.jpg">
-      <div class="bottom-left">Players Online: {{playersOnline}}</div>
+      <div class="bottom-left">
+        <div class="row">
+          <div class="col-1" *ngIf="isTotalNumberOfPlayersSpinnerVisible">
+            <mat-spinner diameter="25" color="warn"></mat-spinner>
+          </div>
+          <div class="col-10">
+            <p class="players-online-text">Players Online: {{totalNumberOfPlayersOnline}}</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <mat-divider></mat-divider>
     <mat-nav-list>
-      <a mat-list-item *ngFor="let item of sideNavItems" (click)="onSideNavItemClick(item.id)" [routerLink] ="item.url">
+      <a mat-list-item *ngFor="let item of sideNavItems" (click)="onSideNavItemClick(item.id)" [routerLink]="item.url">
         <mat-icon>{{item.icon}}</mat-icon>
         <span class="align-middle side-nav-item">{{item.text}}</span>
       </a>

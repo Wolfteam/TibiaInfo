@@ -3,10 +3,8 @@ import { OnInit } from '@angular/core';
 import { SideNavItem } from './models/side-nav-item.model';
 import { AppService } from './services/app.service';
 import { MatSnackBar } from '@angular/material';
-import { Subscription } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { LocationStrategy } from '@angular/common';
+import { WorldService } from './services/world.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +15,7 @@ import { LocationStrategy } from '@angular/common';
     '(document:keyup)': 'handleKeyUp($event)'
   }
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   isSideNavOpened: boolean = false;
   sideNavItems: SideNavItem[] = [
     {
@@ -65,10 +63,12 @@ export class AppComponent {
     17: false,
     16: false
   };
-
+  private totalNumberOfPlayersOnline: number = 0;
+  private isTotalNumberOfPlayersSpinnerVisible: boolean = false;
 
   constructor(
     private appService: AppService,
+    private worldService: WorldService,
     private snackBar: MatSnackBar,
     private router: Router
   ) {
@@ -78,6 +78,19 @@ export class AppComponent {
     this.appService.showBackButtonSource.subscribe(async show => this.showBackButton(await show));
     this.appService.setBackRouterPathSource.subscribe(async path => this.setBackRouterPath(await path));
   }
+
+  ngOnInit(): void {
+    this.isTotalNumberOfPlayersSpinnerVisible = true;
+    this.worldService.getTotalNumberOfPlayersOnline().subscribe(r => {
+      if (r.succeed)
+        this.totalNumberOfPlayersOnline = r.result;
+    }, (error) => {
+      this.isTotalNumberOfPlayersSpinnerVisible = false
+      this.showMessage('An unknown error occurred while trying to get the total number of players online');
+      console.log(error);
+    }, () => this.isTotalNumberOfPlayersSpinnerVisible = false);
+  }
+
 
   private onSideNavItemClick(itemID: number): void {
     console.log("Click on side nav item id: " + itemID)

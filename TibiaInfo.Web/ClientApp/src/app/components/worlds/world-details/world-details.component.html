@@ -54,21 +54,16 @@
             <h5>Players Online</h5>
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <!-- World Players Filters -->
+        <app-world-details-player-filter (worldPlayerSearchTextChangedEvent)="onWorldPlayerTextChange($event)"
+          (sortChangedEvent)="sortWorldPlayers($event)" [filteredWorldPlayersOptions]="filteredWorldPlayersOptions"></app-world-details-player-filter>
 
-
-        <cdk-virtual-scroll-viewport #viewport [itemSize]="world.playersOnline.length" (scrolledIndexChange)="scrolledIndexChange($event)">
+        <cdk-virtual-scroll-viewport class="world-player-virtual-scroll" autosize #worldPlayersViewPort [itemSize]="filteredWorldPlayers.length">
           <div class="row scroll-div">
-            <app-character *cdkVirtualFor="let char of world.playersOnline; templateCacheSize: 0" class="col-md-6"
-              [character]="char"></app-character>
+            <app-character *cdkVirtualFor="let char of filteredWorldPlayers" class="col-md-6" [character]="char"></app-character>
           </div>
         </cdk-virtual-scroll-viewport>
-<!-- 
-        <button (click)="viewport.scrollToIndex(40)">
-          Click aca
-        </button> -->
       </mat-expansion-panel>
     </mat-accordion>
-
-
   </div>
 </div>

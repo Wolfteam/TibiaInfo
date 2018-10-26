@@ -23,7 +23,7 @@ export class WorldListComponent implements OnInit {
     private worldService: WorldService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.appService.changeMaintTitle('Worlds');
     this.appService.showMainProgressBar(true);
     this.appService.showBackButton(false);
@@ -31,8 +31,7 @@ export class WorldListComponent implements OnInit {
     this.worldService.getAllWorlds().subscribe(r => {
       if (r.succeed) {
         this.worlds = r.result.worlds;
-        this.filteredWorlds = r.result.worlds;
-        this.filteredWorldOptions = this.getWorldSearchOptions('');
+        this.filterWorlds(['', WorldListSortFilterType.NAME, SortDirectionType.ASCENDING, -1]);
         this.isPageLoaded = true;
       } else {
         this.appService.showMessage('An error occurred while trying to get the character. ' + r.message);
@@ -41,31 +40,39 @@ export class WorldListComponent implements OnInit {
       () => this.appService.showMainProgressBar(false));
   }
 
-  private getWorldSearchOptions(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.worlds
-      .filter(world => world.name.toLowerCase().includes(filterValue))
-      .map(world => world.name);
-  }
-
-  private onWorldSearchTextChange(search: string): void {
-    this.filteredWorlds = this.worlds.filter(w => w.name.toLowerCase().includes(search.toLowerCase()));
-    this.filteredWorldOptions = this.getWorldSearchOptions(search)
-  }
-
   private onWorldSelected(event: MatAutocompleteSelectedEvent): void {
     console.log(event.option);
   }
 
-  private onSortChange(tuple: [WorldListSortFilterType, SortDirectionType]): void {
-    if (tuple[0] === WorldListSortFilterType.NAME && tuple[1] === SortDirectionType.ASCENDING)
-      this.filteredWorlds = this.filteredWorlds.sort((n1, n2) => n1.name > n2.name ? 1 : n1.name < n2.name ? -1 : 0);
-    else if (tuple[0] === WorldListSortFilterType.NAME && tuple[1] === SortDirectionType.DESCENDING)
-      this.filteredWorlds = this.filteredWorlds.sort((n1, n2) => n1.name > n2.name ? -1 : n1.name < n2.name ? 1 : 0);
-    else if (tuple[0] === WorldListSortFilterType.PLAYERS_ONLINE && tuple[1] === SortDirectionType.ASCENDING)
-      this.filteredWorlds = this.filteredWorlds.sort((a, b) => a.numberOfPlayersOnline - b.numberOfPlayersOnline);
+  private filterWorlds(tuple: [string, WorldListSortFilterType, SortDirectionType, number]): void {
+    const search: string = tuple[0].toLowerCase();
+    const sortOrder: WorldListSortFilterType = tuple[1];
+    const sortDirection: SortDirectionType = tuple[2];
+    const sortPvp: number = tuple[3];
+
+    let filteredWorlds: SimpleWorld[];
+    if (sortPvp === -1)
+      filteredWorlds = this.worlds;
     else
-      this.filteredWorlds = this.filteredWorlds.sort((a, b) => b.numberOfPlayersOnline - a.numberOfPlayersOnline);
+      filteredWorlds = this.worlds.filter(w => w.pvpType === sortPvp);
+
+    filteredWorlds = filteredWorlds.filter(world => world.name.toLowerCase().includes(search))
+
+    switch (sortOrder) {
+      case WorldListSortFilterType.NAME:
+        if (sortDirection === SortDirectionType.ASCENDING)
+          this.filteredWorlds = filteredWorlds.sort((n1, n2) => n1.name > n2.name ? 1 : n1.name < n2.name ? -1 : 0);
+        else
+          this.filteredWorlds = filteredWorlds.sort((n1, n2) => n1.name > n2.name ? -1 : n1.name < n2.name ? 1 : 0);
+        break;
+      case WorldListSortFilterType.PLAYERS_ONLINE:
+        this.filteredWorlds = filteredWorlds.sort((a, b) =>
+          sortDirection === SortDirectionType.ASCENDING ?
+            a.numberOfPlayersOnline - b.numberOfPlayersOnline :
+            b.numberOfPlayersOnline - a.numberOfPlayersOnline);
+      default:
+        break;
+    }
+    this.filteredWorldOptions = this.filteredWorlds.map(world => world.name).sort();
   }
 }

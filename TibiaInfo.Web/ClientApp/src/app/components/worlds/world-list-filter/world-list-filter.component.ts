@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { WorldListSortFilterType } from 'src/app/enums/world-list-sort-filter-type.enum';
 import { SortDirectionType } from 'src/app/enums/sort-direction-type.enum';
+import { WorldPvPType } from 'src/app/enums/world-pvp-type.enum';
 
 @Component({
   selector: 'app-world-list-filter',
@@ -12,46 +13,75 @@ import { SortDirectionType } from 'src/app/enums/sort-direction-type.enum';
 })
 export class WorldListFilterComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Output() public worldSearchTextChangedEvent: EventEmitter<string> = new EventEmitter<string>();
-  @Output() public sortChangedEvent: EventEmitter<[WorldListSortFilterType, SortDirectionType]> = new EventEmitter<[WorldListSortFilterType, SortDirectionType]>();
+  @Output() public filterChangedEvent: EventEmitter<[string, WorldListSortFilterType, SortDirectionType, number]> = new EventEmitter<[string, WorldListSortFilterType, SortDirectionType, number]>();
   @Input() public filteredWorldOptions: string[] = [];
 
   private subscriptions: Subscription[] = [];
   private worldSearchControl = new FormControl();
+  private currentSearch: string = '';
   private currentSortOrder: number = WorldListSortFilterType.NAME;
-  private sortOrders: ItemModel[] = [{
-    id: WorldListSortFilterType.NAME,
-    text: 'Name',
-    selected: true
-  }, {
-    id: WorldListSortFilterType.PLAYERS_ONLINE,
-    text: 'Players Online',
-    selected: false
-  }];
+  private sortOrders: ItemModel[] = [
+    {
+      id: WorldListSortFilterType.NAME,
+      text: 'Name',
+      selected: true
+    }, {
+      id: WorldListSortFilterType.PLAYERS_ONLINE,
+      text: 'Players Online',
+      selected: false
+    }];
   private currentSortDirection: ItemModel;
-  private sortDirections: ItemModel[] = [{
-    id: SortDirectionType.ASCENDING,
-    text: 'Ascending',
-    selected: true
-  }, {
-    id: SortDirectionType.DESCENDING,
-    text: 'Descending',
-    selected: false
-  }];
+  private sortDirections: ItemModel[] = [
+    {
+      id: SortDirectionType.ASCENDING,
+      text: 'Ascending',
+      selected: true
+    }, {
+      id: SortDirectionType.DESCENDING,
+      text: 'Descending',
+      selected: false
+    }];
+  private currentSortPvpType: ItemModel;
+  private sortPvpTypes: ItemModel[] = [
+    {
+      id: -1,
+      text: 'All',
+      selected: false
+    }, {
+      id: WorldPvPType.OPTIONAL_PVP,
+      text: 'Optional PvP',
+      selected: false
+    }, {
+      id: WorldPvPType.OPEN_PVP,
+      text: 'Open PvP',
+      selected: false
+    }, {
+      id: WorldPvPType.HARDCORE_PVP,
+      text: 'Hardcore PvP',
+      selected: false
+    }, {
+      id: WorldPvPType.RETRO_OPEN_PVP,
+      text: 'Retro Open PvP',
+      selected: false
+    }, {
+      id: WorldPvPType.RETRO_HARDCORE_PVP,
+      text: 'Retro Hardcore PvP',
+      selected: false
+    }]
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit(): void {
     this.currentSortDirection = this.sortDirections[0];
+    this.currentSortPvpType = this.sortPvpTypes[0];
   }
 
   ngAfterViewInit(): void {
     this.subscriptions.push(
       this.worldSearchControl.valueChanges
         .subscribe((value: string) => {
-          this.worldSearchTextChangedEvent.emit(value);
-          this.sortChangedEvent.emit([this.currentSortOrder, this.currentSortDirection.id]);
+          this.currentSearch = value;
+          this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, this.currentSortDirection.id, this.currentSortPvpType.id]);
         })
     );
   }
@@ -61,10 +91,14 @@ export class WorldListFilterComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   private onOrderOrderChange(sortOrder: number): void {
-    this.sortChangedEvent.emit([sortOrder, this.currentSortDirection.id]);
+    this.filterChangedEvent.emit([this.currentSearch, sortOrder, this.currentSortDirection.id, this.currentSortPvpType.id]);
   }
 
   private onSortDirectionChange(sortMode: number): void {
-    this.sortChangedEvent.emit([this.currentSortOrder, sortMode]);
+    this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, sortMode, this.currentSortPvpType.id]);
+  }
+
+  private onSortPvPTypeChange(sortPvp: number): void {
+    this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, this.currentSortDirection.id, sortPvp]);
   }
 }

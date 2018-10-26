@@ -1,8 +1,7 @@
-<app-world-list-filter (worldSearchTextChangedEvent)="onWorldSearchTextChange($event)" (sortChangedEvent)="onSortChange($event)"
-  [filteredWorldOptions]="filteredWorldOptions" *ngIf="isPageLoaded"></app-world-list-filter>
+<app-world-list-filter (filterChangedEvent)="filterWorlds($event)" [filteredWorldOptions]="filteredWorldOptions" *ngIf="isPageLoaded"></app-world-list-filter>
 
 <div class="row" *ngIf="isPageLoaded">
-  <div class="col-md-4" *ngFor="let world of filteredWorlds">
+  <div class="col-6 col-md-4" *ngFor="let world of filteredWorlds">
     <app-world [world]="world"></app-world>
   </div>
 </div>

@@ -8,7 +8,9 @@
             <h5>World Information</h5>
           </mat-panel-title>
         </mat-expansion-panel-header>
-
+        <div class="position-relative">
+          <img class="float-right" [src]='world.pvpType | worldPvp:true' [matTooltip]="world.pvpType | worldPvp">
+        </div>
         <div class="row">
           <div class="col-md-6">
             <p><b>Name</b>: {{world.name}}</p>
@@ -21,7 +23,6 @@
             <p><b>Creation Date</b>: {{world.creationDate | date:'MMMM, yyyy'}}</p>
           </div>
           <div class="col-md-6">
-            <img class="float-right" [src]='world.pvpType | worldPvp:true' [matTooltip]="world.pvpType | worldPvp">
             <p><b>Location</b>: {{world.location | worldLocation}}</p>
             <p><b>Battle Eye Status</b>: {{world.battleEyeStatus}}</p>
           </div>
@@ -51,12 +52,12 @@
       <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <h5>Players Online</h5>
+            <h5>Players Online - Total: {{world.playersOnline.length}}</h5>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <!-- World Players Filters -->
-        <app-world-details-player-filter (worldPlayerSearchTextChangedEvent)="onWorldPlayerTextChange($event)"
-          (sortChangedEvent)="sortWorldPlayers($event)" [filteredWorldPlayersOptions]="filteredWorldPlayersOptions"></app-world-details-player-filter>
+        <app-world-details-player-filter (filterChangedEvent)="filterWorldPlayers($event)" (worldPlayerSelectedEvent)="onWorldPlayerSelected($event)"
+          [filteredWorldPlayersOptions]="filteredWorldPlayersOptions"></app-world-details-player-filter>
 
         <cdk-virtual-scroll-viewport class="world-player-virtual-scroll" autosize #worldPlayersViewPort [itemSize]="filteredWorldPlayers.length">
           <div class="row scroll-div">

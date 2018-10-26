@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { WorldService } from 'src/app/services/world.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from 'src/app/services/app.service';
@@ -10,6 +10,7 @@ import { SexType } from 'src/app/enums/sex-type.enum';
 import { SortDirectionType } from 'src/app/enums/sort-direction-type.enum';
 import { CharacterSortFilterType } from 'src/app/enums/characer-sort-filter-type.enum';
 import { VocationHelper } from '../../../helpers/vocation.helpers';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-world-details',
@@ -18,6 +19,10 @@ import { VocationHelper } from '../../../helpers/vocation.helpers';
 })
 export class WorldDetailsComponent implements OnInit, OnDestroy {
 
+  @ViewChild('worldPlayersViewPort') worldPlayersViewPort: CdkVirtualScrollViewport;
+//TODO: Implement a way to add/ remove the char from the cookies
+//TODO: When going back to the world list component the filter should be as they were left
+//TODO: maybe use query params to filter
   private isPageLoaded: boolean;
   private world: World;
   private subscription: Subscription[] = [];
@@ -52,8 +57,7 @@ export class WorldDetailsComponent implements OnInit, OnDestroy {
               p.sex = SexType.UNKNOWN;
             });
             this.world = r.result;
-            this.filteredWorldPlayers = this.world.playersOnline;
-            this.filteredWorldPlayersOptions = this.getWorldPlayersSearchOptions('');
+            this.filterWorldPlayers(['', CharacterSortFilterType.NAME, SortDirectionType.ASCENDING, -1]);
             this.isPageLoaded = true;
             this.appService.changeMaintTitle(`World - ${r.result.name}`);
           }
@@ -76,37 +80,43 @@ export class WorldDetailsComponent implements OnInit, OnDestroy {
     this.subscription.forEach(s => s.unsubscribe());
   }
 
-  private onWorldPlayerTextChange(search: string) {
-    this.filteredWorldPlayers = this.world.playersOnline
-      .filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
-    this.filteredWorldPlayersOptions = this.getWorldPlayersSearchOptions(search)
+  private onWorldPlayerSelected(name: string): void {
+    this.worldPlayersViewPort.scrollTo({
+      start: 0,
+      top: 0
+    });
   }
 
-  private getWorldPlayersSearchOptions(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.world.playersOnline
-      .filter(player => player.name.toLowerCase().includes(filterValue))
-      .map(player => player.name);
-  }
+  private filterWorldPlayers(tuple: [string, CharacterSortFilterType, SortDirectionType, number]): void {
+    const search: string = tuple[0].toLowerCase();
+    const sortOrder: CharacterSortFilterType = tuple[1];
+    const sortDirection: SortDirectionType = tuple[2];
+    const vocation: number = tuple[3];
 
-  private sortWorldPlayers(tuple: [CharacterSortFilterType, SortDirectionType]): void {
-    //TODO: For some reason this only works when using the autocomplete
-    switch (tuple[0]) {
+    let playersFiltered: SimpleCharacter[];
+    if (vocation !== -1)
+      playersFiltered = this.world.playersOnline.filter(p => p.vocation === vocation);
+    else
+      playersFiltered = this.world.playersOnline;
+
+    playersFiltered = playersFiltered.filter(p => p.name.toLowerCase().includes(search));
+
+    switch (sortOrder) {
       case CharacterSortFilterType.LEVEL:
-        if (tuple[1] === SortDirectionType.ASCENDING)
-          this.filteredWorldPlayers = this.filteredWorldPlayers.sort((a, b) => a.level - b.level);
+        if (sortDirection === SortDirectionType.ASCENDING)
+          this.filteredWorldPlayers = playersFiltered.sort((a, b) => a.level - b.level);
         else
-          this.filteredWorldPlayers = this.filteredWorldPlayers.sort((a, b) => b.level - a.level);
+          this.filteredWorldPlayers = playersFiltered.sort((a, b) => b.level - a.level);
         break;
       case CharacterSortFilterType.NAME:
-        if (tuple[1] === SortDirectionType.ASCENDING)
-          this.filteredWorldPlayers = this.filteredWorldPlayers.sort((n1, n2) => n1.name > n2.name ? 1 : n1.name < n2.name ? -1 : 0);
+        if (sortDirection === SortDirectionType.ASCENDING)
+          this.filteredWorldPlayers = playersFiltered.sort((n1, n2) => n1.name > n2.name ? 1 : n1.name < n2.name ? -1 : 0);
         else
-          this.filteredWorldPlayers = this.filteredWorldPlayers.sort((n1, n2) => n1.name > n2.name ? -1 : n1.name < n2.name ? 1 : 0);
+          this.filteredWorldPlayers = playersFiltered.sort((n1, n2) => n1.name > n2.name ? -1 : n1.name < n2.name ? 1 : 0);
         break;
       case CharacterSortFilterType.VOCATION:
-        if (tuple[1] === SortDirectionType.ASCENDING)
-          this.filteredWorldPlayers = this.filteredWorldPlayers.sort((a, b) => {
+        if (sortDirection === SortDirectionType.ASCENDING)
+          this.filteredWorldPlayers = playersFiltered.sort((a, b) => {
             const vocationA: string = VocationHelper.toVocation(a.vocation);
             const vocationB: string = VocationHelper.toVocation(b.vocation);
             return vocationA > vocationB ? 1 :
@@ -114,7 +124,7 @@ export class WorldDetailsComponent implements OnInit, OnDestroy {
                 0;
           });
         else
-          this.filteredWorldPlayers = this.filteredWorldPlayers.sort((a, b) => {
+          this.filteredWorldPlayers = playersFiltered.sort((a, b) => {
             const vocationA: string = VocationHelper.toVocation(a.vocation);
             const vocationB: string = VocationHelper.toVocation(b.vocation);
             return vocationA > vocationB ? -1 :
@@ -125,5 +135,7 @@ export class WorldDetailsComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+
+    this.filteredWorldPlayersOptions = this.filteredWorldPlayers.map(p => p.name).sort();
   }
 }

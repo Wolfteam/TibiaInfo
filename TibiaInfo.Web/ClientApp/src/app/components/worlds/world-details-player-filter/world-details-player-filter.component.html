@@ -1,40 +1,61 @@
-<form class="row">
-  <div class="col-sm-12 col-md-3">
-    <!-- Autocomplete -->
-    <mat-form-field class="world-players-autocomplete">
-      <input type="text" placeholder="Type the player name..." matInput [formControl]="worldPlayersSearchControl"
-        [matAutocomplete]="auto">
-      <cdk-virtual-scroll-viewport class="world-player-filter-virtual-scroll" [itemSize]="filteredWorldPlayersOptions.length">
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onWorldPlayerSelected($event)">
-          <mat-option *ngFor="let option of filteredWorldPlayersOptions" [value]="option">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-      </cdk-virtual-scroll-viewport>
-    </mat-form-field>
+<div class="row world-player-filter-div">
+  <div class="col-12">
+    <h5>Filters</h5>
   </div>
-  <!-- Sort by -->
-  <div class="col-sm-12 col-md-7 align-self-center float-left">
-    <mat-icon>sort</mat-icon>
-    <label>Sort by: </label>
-    <mat-radio-group name="currentSortOrder" [(ngModel)]="currentSortOrder">
-      <mat-radio-button (click)="onSortOrderChange(order.id)" [checked]="order.selected" *ngFor="let order of sortOrders"
-        [value]="order.id">
-        {{order.text}}
-      </mat-radio-button>
-    </mat-radio-group>
+  <div class="col-12">
+    <form class="row">
+      <!-- Autocomplete -->
+      <div class="col-12 col-md-3">
+        <!-- Autocomplete -->
+        <mat-form-field class="full-width">
+          <input type="text" placeholder="Type the player name..." matInput [formControl]="worldPlayersSearchControl"
+            [matAutocomplete]="auto">
+          <cdk-virtual-scroll-viewport class="world-player-filter-virtual-scroll" [itemSize]="filteredWorldPlayersOptions.length">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onWorldPlayerSelected($event)">
+              <mat-option *ngFor="let option of filteredWorldPlayersOptions" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </cdk-virtual-scroll-viewport>
+        </mat-form-field>
+      </div>
 
-    <mat-form-field>
-      <mat-select placeholder="Sorting direction" [(value)]="currentSortDirection" (selectionChange)="onSortDirectionChange(currentSortDirection.id)">
-        <mat-option *ngFor="let option of sortDirections" [value]="option">
-          <mat-icon>{{option.id === 0 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon> {{option.text}}
-        </mat-option>
-        <mat-select-trigger>
-          <mat-icon class="selected-sort-mode-icon">{{currentSortDirection.id === 0 ? 'arrow_upward' :
-            'arrow_downward'}}</mat-icon>
-          {{currentSortDirection.text}}
-        </mat-select-trigger>
-      </mat-select>
-    </mat-form-field>
+      <!-- Sort direction and Sort by vocation -->
+      <div class="col-12 col-md-5 text-center">
+        <mat-form-field class="medium-width">
+          <mat-select placeholder="Sort direction" [(value)]="currentSortDirection" (selectionChange)="onSortDirectionChange(currentSortDirection.id)">
+            <mat-option *ngFor="let option of sortDirections" [value]="option">
+              <mat-icon>{{option.id === 0 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon> {{option.text}}
+            </mat-option>
+            <mat-select-trigger>
+              {{currentSortDirection.text}}
+            </mat-select-trigger>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="medium-width">
+          <mat-select placeholder="Vocations" [(value)]="currentSortVocation" (selectionChange)="onSortVocationChange(currentSortVocation.id)">
+            <mat-option *ngFor="let option of sortVocations" [value]="option">
+              {{option.text}}
+            </mat-option>
+            <mat-select-trigger>
+              {{currentSortVocation.text}}
+            </mat-select-trigger>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Sort order -->
+      <div class="col-12 col-md-4 align-self-center">
+        <mat-icon>sort</mat-icon>
+        <label>Sort by: </label>
+        <mat-radio-group name="currentSortOrder" [(ngModel)]="currentSortOrder">
+          <mat-radio-button (click)="onSortOrderChange(order.id)" [checked]="order.selected" *ngFor="let order of sortOrders"
+            [value]="order.id">
+            {{order.text}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </form>
   </div>
-</form>
+</div>

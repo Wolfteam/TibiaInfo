@@ -71,5 +71,26 @@ namespace TibiaInfo.Web.Controllers
             }
             return Ok(response);
         }
+
+        [HttpGet("totalNumberOfPlayersOnline")]
+        public async Task<IActionResult> GetTotalNumberOfPlayersOnline()
+        {
+            var response = new Response<int>
+            {
+                Succeed = false
+            };
+            try
+            {
+                var r = await _worldService.GetAllWorlds();
+                response.Result = r.Response.TotalPlayersOnline;
+                response.Succeed = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
+            return Ok(response);
+        }
     }
 }

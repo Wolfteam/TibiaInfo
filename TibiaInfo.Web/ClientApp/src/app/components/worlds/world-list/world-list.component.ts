@@ -3,6 +3,8 @@ import { AppService } from 'src/app/services/app.service';
 import { WorldService } from 'src/app/services/world.service';
 import { SimpleWorld } from 'src/app/models/worlds/simple-world.model';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { SortDirectionType } from 'src/app/enums/sort-direction-type.enum';
+import { WorldListSortFilterType } from 'src/app/enums/world-list-sort-filter-type.enum';
 
 @Component({
   selector: 'app-world-list',
@@ -15,7 +17,6 @@ export class WorldListComponent implements OnInit {
   private worlds: SimpleWorld[] = [];
   private filteredWorlds: SimpleWorld[] = [];
   private filteredWorldOptions: string[] = [];
-
 
   constructor(
     private appService: AppService,
@@ -48,18 +49,22 @@ export class WorldListComponent implements OnInit {
       .map(world => world.name);
   }
 
-  private onWorldSearchTextChange(search: string) {
+  private onWorldSearchTextChange(search: string): void {
     this.filteredWorlds = this.worlds.filter(w => w.name.toLowerCase().includes(search.toLowerCase()));
     this.filteredWorldOptions = this.getWorldSearchOptions(search)
   }
 
-  private onWorldSelected(event: MatAutocompleteSelectedEvent) {
+  private onWorldSelected(event: MatAutocompleteSelectedEvent): void {
     console.log(event.option);
   }
 
-  private orderBySelectionChanged(id: number) {
-    if (id === 1)
+  private onSortChange(tuple: [WorldListSortFilterType, SortDirectionType]): void {
+    if (tuple[0] === WorldListSortFilterType.NAME && tuple[1] === SortDirectionType.ASCENDING)
       this.filteredWorlds = this.filteredWorlds.sort((n1, n2) => n1.name > n2.name ? 1 : n1.name < n2.name ? -1 : 0);
+    else if (tuple[0] === WorldListSortFilterType.NAME && tuple[1] === SortDirectionType.DESCENDING)
+      this.filteredWorlds = this.filteredWorlds.sort((n1, n2) => n1.name > n2.name ? -1 : n1.name < n2.name ? 1 : 0);
+    else if (tuple[0] === WorldListSortFilterType.PLAYERS_ONLINE && tuple[1] === SortDirectionType.ASCENDING)
+      this.filteredWorlds = this.filteredWorlds.sort((a, b) => a.numberOfPlayersOnline - b.numberOfPlayersOnline);
     else
       this.filteredWorlds = this.filteredWorlds.sort((a, b) => b.numberOfPlayersOnline - a.numberOfPlayersOnline);
   }

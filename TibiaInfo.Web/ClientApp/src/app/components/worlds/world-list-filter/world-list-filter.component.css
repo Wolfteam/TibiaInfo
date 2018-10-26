@@ -7,3 +7,11 @@ label {
   vertical-align: middle;
   margin-right: 10px;
 }
+
+.world-list-autocomplete {
+  width: 100%;
+}
+
+.selected-sort-mode-icon {
+  vertical-align: bottom;
+}

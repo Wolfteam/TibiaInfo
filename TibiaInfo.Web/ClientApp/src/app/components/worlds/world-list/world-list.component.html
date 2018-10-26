@@ -1,4 +1,4 @@
-<app-world-list-filter (worldSearchTextChangedEvent)="onWorldSearchTextChange($event)" (orderBySelectionChangedEvent)="orderBySelectionChanged($event)"
+<app-world-list-filter (worldSearchTextChangedEvent)="onWorldSearchTextChange($event)" (sortChangedEvent)="onSortChange($event)"
   [filteredWorldOptions]="filteredWorldOptions" *ngIf="isPageLoaded"></app-world-list-filter>
 
 <div class="row" *ngIf="isPageLoaded">

@@ -1,11 +1,10 @@
 <form class="row">
-  <div class="col-sm-4 col-md-2">
+  <div class="col-sm-12 col-md-3">
     <!-- Autocomplete -->
-    <mat-form-field>
+    <mat-form-field class="world-list-autocomplete">
       <input type="text" placeholder="Type the world name..." matInput [formControl]="worldSearchControl"
         [matAutocomplete]="auto">
-        <!-- (optionSelected)="onWorldSelected($event)" -->
-      <mat-autocomplete #auto="matAutocomplete" >
+      <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let option of filteredWorldOptions" [value]="option">
           {{option}}
         </mat-option>
@@ -13,13 +12,26 @@
     </mat-form-field>
   </div>
   <!-- Sort by -->
-  <div class="col-sm-8 col-md-5 align-self-center float-left">
+  <div class="col-sm-12 col-md-7 align-self-center float-left">
+    <mat-icon>sort</mat-icon>
     <label>Sort by: </label>
     <mat-radio-group name="currentSortOrder" [(ngModel)]="currentSortOrder">
-      <mat-radio-button (click)="onOrderBySelectionChanged(order.id)" [checked]="order.selected" *ngFor="let order of orderBy"
+      <mat-radio-button (click)="onOrderOrderChange(order.id)" [checked]="order.selected" *ngFor="let order of sortOrders"
         [value]="order.id">
         {{order.text}}
       </mat-radio-button>
     </mat-radio-group>
+
+    <mat-form-field>
+      <mat-select placeholder="Sorting direction" [(value)]="currentSortDirection" (selectionChange)="onSortDirectionChange(currentSortDirection.id)">
+        <mat-option *ngFor="let option of sortDirections" [value]="option">
+          <mat-icon>{{option.id === 0 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon> {{option.text}}
+        </mat-option>
+        <mat-select-trigger>
+          <mat-icon class="selected-sort-mode-icon">{{currentSortDirection.id === 0 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon>
+          {{currentSortDirection.text}}
+        </mat-select-trigger>
+      </mat-select>
+    </mat-form-field>
   </div>
 </form>

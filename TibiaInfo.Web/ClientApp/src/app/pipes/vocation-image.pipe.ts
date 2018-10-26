@@ -7,6 +7,8 @@ import { SexType } from '../enums/sex-type.enum';
 })
 export class VocationImagePipe implements PipeTransform {
     transform(value: VocationType, sex: SexType): string {
+        if (sex === SexType.UNKNOWN)
+            return './assets/images/citizen_outfit_male.gif';
         switch (value) {
             case VocationType.KNIGHT:
                 return sex === SexType.MALE ?

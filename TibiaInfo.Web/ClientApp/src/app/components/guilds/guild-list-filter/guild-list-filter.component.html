@@ -1,0 +1,48 @@
+<form *ngIf="isPageLoaded">
+  <div class="row">
+    <div class="col-12">
+      <h4>Guilds Information</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-5">
+      <!-- World Autocomplete -->
+      <mat-form-field>
+        <input type="text" placeholder="Select the world..." matInput [formControl]="worldSearchControl"
+          [matAutocomplete]="world_auto">
+        <mat-autocomplete #world_auto="matAutocomplete" (optionSelected)="onWorldSelected($event)">
+          <mat-option *ngFor="let option of filteredWorldOptions" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row" *ngIf="showAdditionalFilters">
+    <!-- Guild Autocomplete -->
+    <div class="col-sm-12 col-md-6">
+      <mat-form-field class="full-width">
+        <input type="text" placeholder="Select the guild..." matInput [formControl]="guildSearchControl"
+          [matAutocomplete]="guild_auto">
+        <mat-autocomplete #guild_auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredGuildsOptions" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <!-- Sort Direction -->
+    <div class="col-sm-12 col-md-3 align-self-center float-left">
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Sort direction" [(value)]="currentSortDirection" (selectionChange)="onSortDirectionChange(currentSortDirection.id)">
+          <mat-option *ngFor="let option of sortDirections" [value]="option">
+            <mat-icon>{{option.id === 0 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon> {{option.text}}
+          </mat-option>
+          <mat-select-trigger>
+            {{currentSortDirection.text}}
+          </mat-select-trigger>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</form>

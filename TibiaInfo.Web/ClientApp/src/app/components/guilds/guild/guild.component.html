@@ -1,0 +1,37 @@
+<mat-card class="guild-card mat-elevation-z8 ">
+  <!-- Card header -->
+  <mat-card-header class="row">
+    <b>{{guild.name}}</b>
+  </mat-card-header>
+
+  <!-- Card content -->
+  <mat-card-content>
+    <div class="position-relative">
+      <img [matTooltip]="guild.description" class="guild-logo-img float-right" [src]="guild.logoUrl">
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <p class="guild-description-text">{{
+            !guild.description ? '&nbsp;' :
+            (guild.description.length > 20) ?
+            (guild.description | slice:0:20) + '.....' :
+            (guild.description) }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <!-- Card Actions -->
+  <mat-card-actions>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" mat-stroked-button matTooltip="Get more details about this guild" (click)="showDetails()">
+          <mat-icon>chevron_right</mat-icon>
+          Details
+        </button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

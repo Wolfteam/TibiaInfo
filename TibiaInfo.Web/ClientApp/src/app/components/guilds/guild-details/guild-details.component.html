@@ -1,0 +1,122 @@
+<div class="row" *ngIf="isPageLoaded">
+  <!--Guild information-->
+  <div class="col-md-6">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>Guild Information</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="position-relative">
+        <img class="float-left guild-logo-img" [src]='guild.logoUrl ? guild.logoUrl : "https://ssl-static-tibia.akamaized.net/images/community/default_logo.gif" '>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <p><b>Name</b>: {{guild.name}}</p>
+        </div>
+        <div class="col-md-6">
+          <p><b>World</b>: {{guild.world}}</p>
+          <p *ngIf="guild.homePageUrl"><b>Home Page</b>: {{guild.homePageUrl}}</p>
+        </div>
+        <div class="col-12">
+          <p><b>Members Online</b>: {{guild.membersOnline}} / {{guild.totalMembers}} </p>
+        </div>
+        <div class="col-12" *ngIf="guild.description">
+          <blockquote>{{guild.description}}</blockquote>
+        </div>
+        <div class="col-12" *ngIf="guild.disbanded">
+          <p>{{guild.disbanded.completeNotification}}</p>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+
+  <!-- Other information -->
+  <div class="col-md-6">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>Other Information</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="row">
+        <div class="col-md-6">
+          <p><b>Founded On</b>: {{guild.foundedOn | date:'MMMM dd yyyy'}}</p>
+          <!-- <p><b>Active</b>:</p> -->
+          <p *ngIf="guild.guildhall"><b>GuildHall</b>: <a [routerLink]="['/house', guild.guildhall.id]">{{guild.guildhall.name}}</a>.
+            The rent is paid until {{guild.guildhall.paidUntil | date:'MMMM dd yyyy'}}</p>
+        </div>
+        <div class="col-md-6">
+          <p><b>At war</b>:</p>
+          <p><b>Accepts Applications</b>:{{guild.acceptsApplication ? 'Yes' : 'No'}}</p>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+
+  <!-- Members -->
+  <div class="col-12">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>Members - Total: {{guild.totalMembers}}</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="row" *ngFor="let rank of guild.ranks">
+            <div class="col-12">
+              <mat-expansion-panel expanded="false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <h5>Rank: {{rank.rankTitle}}</h5>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <cdk-virtual-scroll-viewport class="guild-member-virtual-scroll" autosize #guildPlayerMembersViewPort
+                  [itemSize]="rank.rankMembers.length">
+                  <div class="row scroll-div">
+                    <app-guild-member class="col-md-4" *cdkVirtualFor="let char of rank.rankMembers" [character]="char"></app-guild-member>
+                  </div>
+                </cdk-virtual-scroll-viewport>
+              </mat-expansion-panel>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+
+  <!-- Invited -->
+  <div class="col-12" *ngIf="guild.invited.length > 0">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>Invited - Total: {{guild.totalInvited}}</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="row">
+        <div class="col-12">
+          <table mat-table [dataSource]="guild.invited" class="mat-elevation-z1">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th >
+              <td mat-cell *matCellDef="let element"><a [routerLink]="['/character', element.name]">{{element.name}}</a>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="invitedOn">
+              <th  mat-header-cell *matHeaderCellDef>Invited On</th>
+              <td mat-cell *matCellDef="let element">{{element.invitedOn | date:'MMMM dd yyyy'}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['name', 'invitedOn']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['name', 'invitedOn'];"></tr>
+          </table>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+.guild-card {
+  margin-bottom: 20px;
+  background: #1212;
+}
+
+.guild-logo-img {
+  width: 70px;
+  height: 70px;
+  margin-top: -5px;
+  margin-right: 10px;
+}
+
+.guild-description-text {
+  margin-top: 10px;
+}

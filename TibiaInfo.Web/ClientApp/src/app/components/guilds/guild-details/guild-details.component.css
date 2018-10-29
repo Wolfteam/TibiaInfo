@@ -1,0 +1,21 @@
+.guild-logo-img {
+  width: 100px;
+  height: 130px;
+}
+
+mat-expansion-panel {
+  margin-bottom: 5px;
+}
+
+.guild-member-virtual-scroll {
+  width: 100%;
+  height: 300px;
+}
+
+.scroll-div {
+  margin: 10px;
+}
+
+table {
+  width: 100%;
+}

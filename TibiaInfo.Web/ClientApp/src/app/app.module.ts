@@ -22,6 +22,11 @@ import { WorldListComponent } from './components/worlds/world-list/world-list.co
 import { WorldDetailsComponent } from './components/worlds/world-details/world-details.component';
 import { WorldListFilterComponent } from './components/worlds/world-list-filter/world-list-filter.component';
 import { WorldDetailsPlayerFilterComponent } from './components/worlds/world-details-player-filter/world-details-player-filter.component';
+import { GuildListComponent } from './components/guilds/guild-list/guild-list.component';
+import { GuildComponent } from './components/guilds/guild/guild.component';
+import { GuildListFilterComponent } from './components/guilds/guild-list-filter/guild-list-filter.component';
+import { GuildDetailsComponent } from './components/guilds/guild-details/guild-details.component';
+import { GuildMemberComponent } from './components/guilds/guild-member/guild-member.component';
 
 // Pipes
 import { AccountStatusPipe } from './pipes/account-status.pipe';
@@ -56,6 +61,14 @@ const appRoutes: Route[] = [
     component: WorldDetailsComponent
   },
   {
+    path: 'guilds',
+    component: GuildListComponent
+  },
+  {
+    path: 'guild/:name',
+    component:GuildDetailsComponent
+  },
+  {
     path: '',
     redirectTo: '/characters',
     pathMatch: 'full'
@@ -83,7 +96,12 @@ const appRoutes: Route[] = [
     WorldPvpPipe,
     WorldDetailsComponent,
     WorldListFilterComponent,
-    WorldDetailsPlayerFilterComponent
+    WorldDetailsPlayerFilterComponent,
+    GuildListComponent,
+    GuildComponent,
+    GuildListFilterComponent,
+    GuildDetailsComponent,
+    GuildMemberComponent
   ],
   imports: [
     BrowserModule,

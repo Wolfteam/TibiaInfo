@@ -1,0 +1,33 @@
+<mat-card class="guild-member-card mat-elevation-z8">
+  <!-- Card header -->
+  <mat-card-header class="row">
+    <a [routerLink]="['/character', character.name]">
+      <p><b>{{character.name}}</b></p>
+    </a>
+  </mat-card-header>
+
+  <!-- Card content -->
+  <mat-card-content class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <p><b>Level</b>: {{character.level}}</p>
+          </div>
+          <div class="col-sm-6">
+            <button class="float-right" color="warn" mat-icon-button (click)="removeCharacter()" matTooltip="Remove from your favorite list">
+              <mat-icon>favorite</mat-icon>
+            </button>
+          </div>
+          <div class="col-12">
+            <p><b>Joined On</b>: {{character.joinedOn | date:'MMMM dd yyyy'}}</p>
+          </div>
+        </div>
+        <mat-chip-list>
+          <mat-chip selectable="false" color="primary" selected>Vocation: {{character.vocation | vocationTitle}}</mat-chip>
+        </mat-chip-list>
+      </div>
+
+    </div>
+  </mat-card-content>
+</mat-card>

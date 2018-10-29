@@ -18,7 +18,10 @@ th.mat-sort-header-sorted {
   color: green;
 }
 
-.p-without-margins {
-  margin-top: 0px;
-  margin-bottom: 0px;
+mat-expansion-panel {
+  margin-bottom: 5px;
+}
+
+mat-list-item {
+  height: auto !important;
 }

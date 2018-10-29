@@ -96,10 +96,10 @@
           <mat-list-item *ngFor="let death of character.deaths">
             <div class="row align-items-center">
               <div class="col-md-2">
-                <p class="p-without-margins"><b>{{death.diedAtLevel}} Level</b></p>
+                <p class="p-without-margin"><b>{{death.diedAtLevel}} Level</b></p>
               </div>
               <div class="col-md-10">
-                <p class="p-without-margins">{{death.diedAt.date | date:'MMMM dd yyyy, HH:mm:ss'}}
+                <p class="p-without-margin">{{death.diedAt.date | date:'MMMM dd yyyy, HH:mm:ss'}}
                   {{death.diedAt.timezone}} {{death.reason}}</p>
               </div>
               <mat-divider></mat-divider>

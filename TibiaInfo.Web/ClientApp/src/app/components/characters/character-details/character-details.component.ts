@@ -3,10 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { CharacterService } from '../../../services/character.service';
 import { Character } from '../../../models/characters/character.model';
 import { AppService } from '../../../services/app.service';
-import { AccountStatusType } from '../../../enums/account-status-type.enum';
-import { range } from 'rxjs';
-import { MatTableDataSource, MatSort } from '@angular/material';
-import { OtherCharacter } from '../../../models/shared/other-character.model';
 
 @Component({
   selector: 'app-character-details',
@@ -14,7 +10,7 @@ import { OtherCharacter } from '../../../models/shared/other-character.model';
   styleUrls: ['./character-details.component.css']
 })
 export class CharacterDetailsComponent implements OnInit {
-
+  //TODO: I should show a link in the character deaths when any of the involved appear in the text
   private isPageLoaded: boolean;
   private character: Character;
   private isInFavorites: boolean = false;

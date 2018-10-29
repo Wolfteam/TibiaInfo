@@ -1,5 +1,5 @@
-.players-online-div {
-  margin-top: 10px;
+mat-expansion-panel {
+  margin-bottom: 5px;
 }
 
 .world-player-virtual-scroll {

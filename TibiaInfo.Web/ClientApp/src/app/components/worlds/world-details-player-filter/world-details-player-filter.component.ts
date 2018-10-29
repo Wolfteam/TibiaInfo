@@ -24,79 +24,82 @@ export class WorldDetailsPlayerFilterComponent implements OnInit, AfterViewInit,
 
   private currentSearch: string = '';
   private currentSortOrder: number = CharacterSortFilterType.NAME;
-  private sortOrders: ItemModel[] = [{
-    id: CharacterSortFilterType.NAME,
-    text: 'Name',
-    selected: true
-  }, {
-    id: CharacterSortFilterType.LEVEL,
-    text: 'Level',
-    selected: false
-  }, {
-    id: CharacterSortFilterType.VOCATION,
-    text: 'Vocation',
-    selected: false
-  }];
+  private sortOrders: ItemModel[] = [
+    {
+      id: CharacterSortFilterType.NAME,
+      text: 'Name',
+      selected: true
+    }, {
+      id: CharacterSortFilterType.LEVEL,
+      text: 'Level',
+      selected: false
+    }, {
+      id: CharacterSortFilterType.VOCATION,
+      text: 'Vocation',
+      selected: false
+    }];
   private currentSortDirection: ItemModel;
-  private sortDirections: ItemModel[] = [{
-    id: SortDirectionType.ASCENDING,
-    text: 'Ascending',
-    selected: true
-  }, {
-    id: SortDirectionType.DESCENDING,
-    text: 'Descending',
-    selected: false
-  }];
+  private sortDirections: ItemModel[] = [
+    {
+      id: SortDirectionType.ASCENDING,
+      text: 'Ascending',
+      selected: true
+    }, {
+      id: SortDirectionType.DESCENDING,
+      text: 'Descending',
+      selected: false
+    }];
   private currentSortVocation: ItemModel;
-  private sortVocations: ItemModel[] = [{
-    id: -1,
-    selected: true,
-    text: 'All'
-  },
-  {
-    id: VocationType.NONE,
-    selected: false,
-    text: 'None'
-  }, {
-    id: VocationType.DRUID,
-    selected: false,
-    text: 'Druid'
-  },
-  {
-    id: VocationType.ELDER_DRUID,
-    selected: false,
-    text: 'Elder Druid'
-  },
-  {
-    id: VocationType.KNIGHT,
-    selected: false,
-    text: 'Knight'
-  },
-  {
-    id: VocationType.ELITE_KNIGHT,
-    selected: false,
-    text: 'Elite Knight'
-  },
-  {
-    id: VocationType.SORCERER,
-    selected: false,
-    text: 'Sorcerer'
-  },
-  {
-    id: VocationType.MASTER_SORCERER,
-    selected: false,
-    text: 'Master Sorcerer'
-  },
-  {
-    id: VocationType.PALADIN,
-    selected: false,
-    text: 'Paladin'
-  },
-  {
-    id: VocationType.ROYAL_PALADIN,
-    selected: false,
-    text: 'Royal Paladin'
-  }]
+  private sortVocations: ItemModel[] = [
+    {
+      id: -1,
+      selected: true,
+      text: 'All'
+    },
+    {
+      id: VocationType.NONE,
+      selected: false,
+      text: 'None'
+    }, {
+      id: VocationType.DRUID,
+      selected: false,
+      text: 'Druid'
+    },
+    {
+      id: VocationType.ELDER_DRUID,
+      selected: false,
+      text: 'Elder Druid'
+    },
+    {
+      id: VocationType.KNIGHT,
+      selected: false,
+      text: 'Knight'
+    },
+    {
+      id: VocationType.ELITE_KNIGHT,
+      selected: false,
+      text: 'Elite Knight'
+    },
+    {
+      id: VocationType.SORCERER,
+      selected: false,
+      text: 'Sorcerer'
+    },
+    {
+      id: VocationType.MASTER_SORCERER,
+      selected: false,
+      text: 'Master Sorcerer'
+    },
+    {
+      id: VocationType.PALADIN,
+      selected: false,
+      text: 'Paladin'
+    },
+    {
+      id: VocationType.ROYAL_PALADIN,
+      selected: false,
+      text: 'Royal Paladin'
+    }]
 
   constructor() { }
 
@@ -126,7 +129,7 @@ export class WorldDetailsPlayerFilterComponent implements OnInit, AfterViewInit,
   private onSortOrderChange(sortOrder: number): void {
     this.filterChangedEvent.emit([this.currentSearch, sortOrder, this.currentSortDirection.id, this.currentSortVocation.id]);
   }
-
+  
   private onSortDirectionChange(sortDirection: number): void {
     this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, sortDirection, this.currentSortVocation.id]);
   }

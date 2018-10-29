@@ -34,9 +34,13 @@ export class WorldListComponent implements OnInit {
         this.filterWorlds(['', WorldListSortFilterType.NAME, SortDirectionType.ASCENDING, -1]);
         this.isPageLoaded = true;
       } else {
-        this.appService.showMessage('An error occurred while trying to get the character. ' + r.message);
+        this.appService.showMessage('An error occurred while trying to get the all the worlds. ' + r.message);
       }
-    }, (error) => this.appService.showMessage('An unknown error occurred while trying to get all the worlds. ' + error),
+    }, (error) => {
+      console.log(error);
+      this.appService.showMainProgressBar(false);
+      this.appService.showMessage('An unknown error occurred while trying to get all the worlds.')
+    },
       () => this.appService.showMainProgressBar(false));
   }
 

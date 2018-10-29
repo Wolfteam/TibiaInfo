@@ -43,7 +43,7 @@ export class WorldDetailsComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.activatedRoute.paramMap.subscribe(params => {
         const worldName = params.get('name');
-        if (worldName === null || worldName == '') {
+        if (worldName === null || worldName === '') {
           this.appService.showMainProgressBar(false);
           this.appService.showMessage('You need to provide a valid world name.');
           return;

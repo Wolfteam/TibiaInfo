@@ -1,34 +1,32 @@
 <div class="row" *ngIf="isPageLoaded">
   <div class="col-md-6">
-    <mat-accordion multi="true">
-      <!--World information-->
-      <mat-expansion-panel expanded="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <h5>World Information</h5>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div class="position-relative">
-          <img class="float-right" [src]='world.pvpType | worldPvp:true' [matTooltip]="world.pvpType | worldPvp">
+    <!--World information-->
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>World Information</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="position-relative">
+        <img class="float-right" [src]='world.pvpType | worldPvp:true' [matTooltip]="world.pvpType | worldPvp">
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <p><b>Name</b>: {{world.name}}</p>
+          <p><b>Players Online</b>: {{world.numberOfPlayersOnline}}</p>
+          <p><b>Online Record</b>: {{world.onlineRecord.playersOnline}} on {{world.onlineRecord.at.date | date:'MMMM
+            dd
+            yyyy,
+            HH:mm:ss'}}
+            {{world.onlineRecord.at.timezone}} </p>
+          <p><b>Creation Date</b>: {{world.creationDate | date:'MMMM, yyyy'}}</p>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <p><b>Name</b>: {{world.name}}</p>
-            <p><b>Players Online</b>: {{world.numberOfPlayersOnline}}</p>
-            <p><b>Online Record</b>: {{world.onlineRecord.playersOnline}} on {{world.onlineRecord.at.date | date:'MMMM
-              dd
-              yyyy,
-              HH:mm:ss'}}
-              {{world.onlineRecord.at.timezone}} </p>
-            <p><b>Creation Date</b>: {{world.creationDate | date:'MMMM, yyyy'}}</p>
-          </div>
-          <div class="col-md-6">
-            <p><b>Location</b>: {{world.location | worldLocation}}</p>
-            <p><b>Battle Eye Status</b>: {{world.battleEyeStatus}}</p>
-          </div>
+        <div class="col-md-6">
+          <p><b>Location</b>: {{world.location | worldLocation}}</p>
+          <p><b>Battle Eye Status</b>: {{world.battleEyeStatus}}</p>
         </div>
-      </mat-expansion-panel>
-    </mat-accordion>
+      </div>
+    </mat-expansion-panel>
   </div>
   <div class="col-md-6">
     <!--World Quests-->

@@ -1,8 +1,6 @@
-import { VocationType } from "../../enums/vocation-type.enum";
-import { SexType } from "../../enums/sex-type.enum";
+import { HasSex } from "./has-sex.model";
+import { HasVocation } from "./has-vocation.model";
 
-export interface BaseCharacter {
+export interface BaseCharacter extends HasSex , HasVocation {
   name: string;
-  vocation: VocationType;
-  sex: SexType;
 }

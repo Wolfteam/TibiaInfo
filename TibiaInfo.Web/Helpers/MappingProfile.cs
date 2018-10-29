@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using TibiaInfo.Web.Models.DTO;
 using TibiaInfo.Web.Models.DTO.Characters;
+using TibiaInfo.Web.Models.DTO.Guilds;
 using TibiaInfo.Web.Models.DTO.HighScores;
 using TibiaInfo.Web.Models.DTO.Houses;
 using TibiaInfo.Web.Models.DTO.News;
@@ -66,6 +67,7 @@ namespace TibiaInfo.Web.Helpers
             #region Guilds related
             CreateMap<BaseGuild, BaseGuildDTO>();
             CreateMap<GuildsResponse, AllGuildsDTO>();
+            CreateMap<GuildCharacterInvitedDTO, GuildCharacterInvited>();
 
             CreateMap<GuildCharacterMember, GuildCharacterMemberDTO>()
                 .ForMember(d => d.JoinedOn, opt => opt.MapFrom(s => s.JoinedOn))
@@ -84,8 +86,9 @@ namespace TibiaInfo.Web.Helpers
                 .ForMember(d => d.HomePageUrl, opt => opt.MapFrom(s => s.Guild.HomePageUrl))
                 .ForMember(d => d.Invited, opt => opt.MapFrom(s => s.Invited))
                 .ForMember(d => d.IsActive, opt => opt.MapFrom(s => s.Guild.IsActive))
-                .ForMember(d => d.IsDisbanded, opt => opt.MapFrom(s => s.Guild.IsDisbanded))
+                .ForMember(d => d.Disbanded, opt => opt.MapFrom(s => s.Guild.Disbanded))
                 .ForMember(d => d.IsInWar, opt => opt.MapFrom(s => s.Guild.IsInWar))
+                .ForMember(d => d.Invited, opt => opt.MapFrom(s => s.Invited))
                 .ForMember(d => d.LogoUrl, opt => opt.MapFrom(s => s.Guild.LogoUrl))
                 .ForMember(d => d.Ranks, opt => opt.MapFrom(s => s.Ranks))
                 .ForMember(d => d.MembersOffline, opt => opt.MapFrom(s => s.Guild.MembersOffline))

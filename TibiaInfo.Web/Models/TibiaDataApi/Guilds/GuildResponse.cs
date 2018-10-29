@@ -12,7 +12,7 @@ namespace TibiaInfo.Web.Models.TibiaDataApi.Guilds
         public List<GuildRankMember> Ranks { get; set; }
 
         [JsonProperty(PropertyName = "invited")]
-        public List<GuildCharacterMember> Invited { get; set; }
+        public List<GuildCharacterInvited> Invited { get; set; }
 
         [JsonProperty(PropertyName = "error")]
         public string Error { get; set; }

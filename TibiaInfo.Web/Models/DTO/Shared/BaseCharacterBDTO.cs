@@ -1,8 +1,9 @@
 ﻿using TibiaInfo.Web.Enums;
+using TibiaInfo.Web.Models.DTO.Shared;
 
 namespace TibiaInfo.Web.Models.DTO
 {
-    public class BaseCharacterBDTO
+    public class BaseCharacterBDTO : IHasName
     {
         public string Name { get; set; }
 

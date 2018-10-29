@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TibiaInfo.Web.Models.DTO.Guilds;
 
 namespace TibiaInfo.Web.Models.DTO
 {
@@ -13,7 +14,7 @@ namespace TibiaInfo.Web.Models.DTO
 
         public int MembersOffline { get; set; }
 
-        public bool IsDisbanded { get; set; }
+        public GuildDisbandedDTO Disbanded { get; set; }
 
         public int TotalMembers { get; set; }
 
@@ -30,6 +31,6 @@ namespace TibiaInfo.Web.Models.DTO
 
         public CharacterHouseDTO Guildhall { get; set; }
         public List<GuildRankMemberDTO> Ranks { get; set; }
-        public List<GuildCharacterMemberDTO> Invited { get; set; }
+        public List<GuildCharacterInvitedDTO> Invited { get; set; }
     }
 }

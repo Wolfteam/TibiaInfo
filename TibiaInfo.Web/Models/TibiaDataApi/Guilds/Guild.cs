@@ -1,3 +1,4 @@
+using TibiaInfo.Web.Converters;
 using Newtonsoft.Json;
 using System;
 
@@ -15,6 +16,7 @@ namespace TibiaInfo.Web.Models.TibiaDataApi.Guilds
         public string LogoUrl { get; set; }
 
         [JsonProperty(PropertyName = "guildhall")]
+        [JsonConverter(typeof(ArrayToSingleConverter<GuildHall>))]
         public GuildHall Guildhall { get; set; }
 
         [JsonProperty(PropertyName = "application")]
@@ -30,7 +32,8 @@ namespace TibiaInfo.Web.Models.TibiaDataApi.Guilds
         public int MembersOffline { get; set; }
 
         [JsonProperty(PropertyName = "disbanded")]
-        public bool IsDisbanded { get; set; }
+        [JsonConverter(typeof(BooleanToGuildDisbandedConverter))]
+        public GuildDisbanded Disbanded { get; set; }
 
         [JsonProperty(PropertyName = "totalmembers")]
         public int TotalMembers { get; set; }

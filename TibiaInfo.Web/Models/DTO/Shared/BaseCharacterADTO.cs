@@ -2,7 +2,7 @@
 
 namespace TibiaInfo.Web.Models.DTO.Shared
 {
-    public class BaseCharacterADTO
+    public class BaseCharacterADTO : IHasName, IhasVocation, IHasLevel
     {
         public string Name { get; set; }
 

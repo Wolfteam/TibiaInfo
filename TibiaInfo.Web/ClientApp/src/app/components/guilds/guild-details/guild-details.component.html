@@ -25,7 +25,7 @@
           <blockquote>{{guild.description}}</blockquote>
         </div>
         <div class="col-12" *ngIf="guild.disbanded">
-          <p>{{guild.disbanded.completeNotification}}</p>
+          <p class="disbanded-notification-text">{{guild.disbanded.completeNotification}}</p>
         </div>
       </div>
     </mat-expansion-panel>
@@ -64,9 +64,18 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <app-guild-details-member-filter (filterChangedEvent)="sortGuildMembers($event)" [filteredGuildMemberOptions]="filteredGuildMemberOptions"
+              [filteredGuildRankOptions]="filteredGuildRankOptions"></app-guild-details-member-filter>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-12">
-          <div class="row" *ngFor="let rank of guild.ranks">
+          <div class="row" *ngFor="let rank of filteredRanks">
             <div class="col-12">
               <mat-expansion-panel expanded="false">
                 <mat-expansion-panel-header>
@@ -78,7 +87,8 @@
                 <cdk-virtual-scroll-viewport class="guild-member-virtual-scroll" autosize #guildPlayerMembersViewPort
                   [itemSize]="rank.rankMembers.length">
                   <div class="row scroll-div">
-                    <app-guild-member class="col-md-4" *cdkVirtualFor="let char of rank.rankMembers" [character]="char"></app-guild-member>
+                    <app-guild-details-member class="col-md-4" *cdkVirtualFor="let char of rank.rankMembers"
+                      [character]="char"></app-guild-details-member>
                   </div>
                 </cdk-virtual-scroll-viewport>
               </mat-expansion-panel>
@@ -102,13 +112,13 @@
         <div class="col-12">
           <table mat-table [dataSource]="guild.invited" class="mat-elevation-z1">
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef>Name</th >
+              <th mat-header-cell *matHeaderCellDef>Name</th>
               <td mat-cell *matCellDef="let element"><a [routerLink]="['/character', element.name]">{{element.name}}</a>
               </td>
             </ng-container>
 
             <ng-container matColumnDef="invitedOn">
-              <th  mat-header-cell *matHeaderCellDef>Invited On</th>
+              <th mat-header-cell *matHeaderCellDef>Invited On</th>
               <td mat-cell *matCellDef="let element">{{element.invitedOn | date:'MMMM dd yyyy'}}</td>
             </ng-container>
 

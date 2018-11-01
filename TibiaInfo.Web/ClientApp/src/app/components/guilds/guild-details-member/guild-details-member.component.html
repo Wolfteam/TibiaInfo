@@ -2,7 +2,7 @@
   <!-- Card header -->
   <mat-card-header class="row">
     <a [routerLink]="['/character', character.name]">
-      <p><b>{{character.name}}</b></p>
+      <p><strong>{{character.name}} </strong> <span *ngIf="character.nick">(<small>{{character.nick}}</small>)</span></p>
     </a>
   </mat-card-header>
 
@@ -15,7 +15,8 @@
             <p><b>Level</b>: {{character.level}}</p>
           </div>
           <div class="col-sm-6">
-            <button class="float-right" color="warn" mat-icon-button (click)="removeCharacter()" matTooltip="Remove from your favorite list">
+            <button class="float-right" [color]="character.isInFavorites ? 'warn': 'accent'" mat-icon-button (click)="removeCharacter()"
+              [matTooltip]="character.isInFavorites ?  'Remove from your favorite list' : 'Add this character to your favorite list'">
               <mat-icon>favorite</mat-icon>
             </button>
           </div>

@@ -19,3 +19,7 @@ mat-expansion-panel {
 table {
   width: 100%;
 }
+
+.disbanded-notification-text {
+  color: red;
+}

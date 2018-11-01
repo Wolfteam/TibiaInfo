@@ -26,7 +26,8 @@ import { GuildListComponent } from './components/guilds/guild-list/guild-list.co
 import { GuildComponent } from './components/guilds/guild/guild.component';
 import { GuildListFilterComponent } from './components/guilds/guild-list-filter/guild-list-filter.component';
 import { GuildDetailsComponent } from './components/guilds/guild-details/guild-details.component';
-import { GuildMemberComponent } from './components/guilds/guild-member/guild-member.component';
+import { GuildDetailsMemberComponent } from './components/guilds/guild-details-member/guild-details-member.component';
+import { GuildDetailsMemberFilterComponent } from './components/guilds/guild-details-member-filter/guild-details-member-filter.component';
 
 // Pipes
 import { AccountStatusPipe } from './pipes/account-status.pipe';
@@ -101,7 +102,8 @@ const appRoutes: Route[] = [
     GuildComponent,
     GuildListFilterComponent,
     GuildDetailsComponent,
-    GuildMemberComponent
+    GuildDetailsMemberComponent,
+    GuildDetailsMemberFilterComponent
   ],
   imports: [
     BrowserModule,

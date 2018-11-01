@@ -77,7 +77,8 @@ namespace TibiaInfo.Web.Helpers
                 .ForMember(d => d.Status, opt => opt.MapFrom(s => s.Status.GetStatusType()))
                 .ForMember(d => d.Vocation, opt => opt.MapFrom(s => s.Vocation.GetVocationType()));
             CreateMap<GuildRankMember, GuildRankMemberDTO>();
-            CreateMap<GuildHall, CharacterHouseDTO>();
+            CreateMap<GuildHall, CharacterHouseDTO>()
+                .ForMember(d => d.Town, opt => opt.MapFrom(s => s.Town.GetTownType()));
             CreateMap<GuildResponse, GuildDTO>()
                 .ForMember(d => d.AcceptsApplication, opt => opt.MapFrom(s => s.Guild.AcceptsApplication))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Guild.Description))

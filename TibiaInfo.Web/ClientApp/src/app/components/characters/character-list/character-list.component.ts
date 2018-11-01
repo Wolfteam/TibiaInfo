@@ -18,7 +18,7 @@ export class CharacterListComponent implements OnInit, OnDestroy {
 
   constructor(private appService: AppService, private characterService: CharacterService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.appService.changeMaintTitle('Characters');
     this.appService.showMainProgressBar(true)
     this.appService.showBackButton(false);
@@ -27,16 +27,10 @@ export class CharacterListComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.characterService.getCharacters(charNames)
       .subscribe(response => {
         if (response.succeed) {
-          console.log(response.result);
-          this.characters = response.result.sort((c1, c2) => {
-            if (c1.name > c2.name)
-              return 1;
-
-            if (c1.name < c2.name)
-              return -1;
-
-            return 0;
-          });
+          response.result.forEach(c => c.isInFavorites = true);
+          this.characters = response.result.sort((c1, c2) =>
+            c1.name > c2.name ? 1 : c1.name < c2.name ? -1 : 0
+          );
         } else {
           this.appService.showMessage('An error occurred while trying to get the character. ' + response.message);
         }

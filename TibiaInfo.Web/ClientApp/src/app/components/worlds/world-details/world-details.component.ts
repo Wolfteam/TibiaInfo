@@ -11,6 +11,7 @@ import { SortDirectionType } from 'src/app/enums/sort-direction-type.enum';
 import { CharacterSortFilterType } from 'src/app/enums/characer-sort-filter-type.enum';
 import { VocationHelper } from '../../../helpers/vocation.helpers';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { CharacterService } from 'src/app/services/character.service';
 
 @Component({
   selector: 'app-world-details',
@@ -20,9 +21,9 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 export class WorldDetailsComponent implements OnInit, OnDestroy {
 
   @ViewChild('worldPlayersViewPort') worldPlayersViewPort: CdkVirtualScrollViewport;
-//TODO: Implement a way to add/ remove the char from the cookies
-//TODO: When going back to the world list component the filter should be as they were left
-//TODO: maybe use query params to filter
+  //TODO: Implement a way to add/ remove the char from the cookies, maybe you will find trouble with this
+  //TODO: When going back to the world list component the filter should be as they were left
+  //TODO: maybe use query params to filter
   private isPageLoaded: boolean;
   private world: World;
   private subscription: Subscription[] = [];
@@ -32,6 +33,7 @@ export class WorldDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private appService: AppService,
+    private characterService: CharacterService,
     private worldService: WorldService
   ) { }
 
@@ -51,7 +53,16 @@ export class WorldDetailsComponent implements OnInit, OnDestroy {
 
         this.worldService.getWorld(worldName).subscribe(r => {
           if (r.succeed) {
+            const cachedCharacters: string[] = this.characterService
+              .getArrayCachedCharacterNames();
+            cachedCharacters.forEach(p => p.toLowerCase());
+
             r.result.playersOnline.forEach(p => {
+              if (cachedCharacters.includes(p.name.toLowerCase()))
+                p.isInFavorites = true;
+              else
+                p.isInFavorites = false;
+
               p.status = StatusType.ONLINE;
               p.world = r.result.name;
               p.sex = SexType.UNKNOWN;

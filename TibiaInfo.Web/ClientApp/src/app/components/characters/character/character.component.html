@@ -11,7 +11,8 @@
           <p>Level: {{character.level}}</p>
         </div>
         <div class="col-sm-3">
-          <button class="float-right" color="warn" mat-icon-button (click)="removeCharacter()" matTooltip="Remove from your favorite list">
+          <button class="float-right" [color]="character.isInFavorites ? 'warn': 'accent'" mat-icon-button (click)="removeCharacter()"
+            [matTooltip]="character.isInFavorites ?  'Remove from your favorite list' : 'Add this character to your favorite list'">
             <mat-icon>favorite</mat-icon>
           </button>
         </div>

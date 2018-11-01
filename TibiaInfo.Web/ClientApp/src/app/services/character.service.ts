@@ -35,6 +35,10 @@ export class CharacterService {
     }
   }
 
+  getArrayCachedCharacterNames(): string[]{
+    return this.getCachedCharacterNames().split(',');
+  }
+
   removeCachedCharacterName(name: string): void {
     const charName = name.toLowerCase().trim();
     const chars: string[] = this.cookieService.get(CHARS_COOKIE_NAME).split(',');

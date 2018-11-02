@@ -18,13 +18,9 @@
     <div class="side-nav-image-container">
       <img class="side-nav-main-image" src="../assets/images/tibia_logo.jpg">
       <div class="bottom-left">
-        <div class="row">
-          <div class="col-1" *ngIf="isTotalNumberOfPlayersSpinnerVisible">
-            <mat-spinner diameter="25" color="warn"></mat-spinner>
-          </div>
-          <div class="col-10">
-            <p class="players-online-text">Players Online: {{totalNumberOfPlayersOnline}}</p>
-          </div>
+        <div class="col-12">
+          <mat-spinner *ngIf="isTotalNumberOfPlayersSpinnerVisible" class="float-left" diameter="25" color="warn"></mat-spinner>
+          <p class="players-online-text">Players Online: {{totalNumberOfPlayersOnline}}</p>
         </div>
       </div>
     </div>

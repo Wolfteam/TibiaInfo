@@ -23,3 +23,13 @@ body {
 .medium-width {
   width: 50%;
 }
+
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0px !important;
+}

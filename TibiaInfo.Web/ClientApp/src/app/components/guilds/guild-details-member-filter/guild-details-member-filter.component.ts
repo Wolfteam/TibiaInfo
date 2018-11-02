@@ -13,8 +13,6 @@ import { GuildMemberSortFilterType } from 'src/app/enums/guild-member-sort-filte
 })
 export class GuildDetailsMemberFilterComponent implements OnInit {
   @Output() public filterChangedEvent: EventEmitter<[string, string, GuildMemberSortFilterType, SortDirectionType, number]> = new EventEmitter<[string, string, GuildMemberSortFilterType, SortDirectionType, number]>();
-  @Output() public guildMemberSelectedEvent: EventEmitter<string> = new EventEmitter<string>();
-  @Output() public guildRankSelectedEvent: EventEmitter<string> = new EventEmitter<string>();
   @Input() public filteredGuildMemberOptions: string[] = [];
   @Input() public filteredGuildRankOptions: string[] = [];
 
@@ -129,15 +127,7 @@ export class GuildDetailsMemberFilterComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
-
-  private onGuildMemberSelected(name: string): void {
-    this.guildMemberSelectedEvent.emit(name);
-  }
-
-  private onGuildRankSelected(name: string): void {
-    this.guildRankSelectedEvent.emit(name);
-  }
-
+  
   private onSortOrderChange(sortOrder: number): void {
     this.filterChangedEvent.emit([this.currentGuildMemberSearch, this.currentGuildRankSearch, sortOrder, this.currentSortDirection.id, this.currentSortVocation.id]);
   }

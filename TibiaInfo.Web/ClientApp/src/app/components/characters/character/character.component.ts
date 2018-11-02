@@ -23,4 +23,8 @@ export class CharacterComponent implements OnInit {
   private showDetails(): void {
     this.router.navigate(['/character', this.character.name])
   }
+
+  private showWorld(): void {
+    this.router.navigate(['/world', this.character.world])
+  }
 }

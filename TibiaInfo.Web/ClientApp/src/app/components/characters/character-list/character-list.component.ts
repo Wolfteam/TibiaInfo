@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SimpleCharacter } from '../../../models//characters/simple-character.model';
-import { SexType } from '../../../enums/sex-type.enum';
-import { VocationType } from '../../../enums/vocation-type.enum';
 import { CharacterService } from '../../../services/character.service';
-import { pipe, Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { AppService } from '../../../services/app.service';
 
 @Component({
@@ -35,7 +33,11 @@ export class CharacterListComponent implements OnInit, OnDestroy {
           this.appService.showMessage('An error occurred while trying to get the character. ' + response.message);
         }
       },
-        (error) => this.appService.showMessage('An unknown error occurred while trying to get the character. ' + error),
+        (error) => {
+          this.appService.showMainProgressBar(false);
+          console.log(error);
+          this.appService.showMessage('An unknown error occurred while trying to get the character.');
+        },
         () => this.appService.showMainProgressBar(false)
       ));
   }

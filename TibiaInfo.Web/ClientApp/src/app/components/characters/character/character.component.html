@@ -5,9 +5,10 @@
       <img class="float-left character-img" [src]='character.vocation | vocationImage:character.sex'>
       <div class="row">
         <div class="col-sm-9">
-          <p> <span [matTooltip]='character.status == 1 ? "Online" : "Offline"' [class.character-status-online]="character.status == 1"
-              [class.character-status-offline]="character.status == 0" class="character-status"></span>
-            {{character.name}}</p>
+          <p class="text-overflow"><span [matTooltip]='character.status == 1 ? "Online" : "Offline"'
+              [class.character-status-online]="character.status == 1" [class.character-status-offline]="character.status == 0"
+              class="character-status"></span>
+            <span [matTooltip]="character.name"><strong>{{character.name}}</strong></span></p>
           <p>Level: {{character.level}}</p>
         </div>
         <div class="col-sm-3">
@@ -21,10 +22,19 @@
   </mat-card-header>
 
   <!-- Card content -->
-  <mat-card-content>
+  <mat-card-content class="no-margin-bottom">
     <mat-chip-list>
-      <mat-chip selectable="false" color="primary" selected>Vocation: {{character.vocation | vocationTitle}}</mat-chip>
-      <mat-chip *ngIf="character.world" selectable="false" color="accent" selected>World: {{character.world}}</mat-chip>
+      <div class="container">
+        <div class="row justify-content-center">
+          <mat-chip class="col-5" selectable="false" color="primary" selected>
+            <span class="text-overflow">Vocation: {{character.vocation | vocationTitle}}</span>
+          </mat-chip>
+          <mat-chip class="col-5" *ngIf="character.world" matTooltip="Click to see world details" color="accent"
+            selected (click)="showWorld()">
+            <span class="text-overflow">World: {{character.world}}</span>
+          </mat-chip>
+        </div>
+      </div>
     </mat-chip-list>
   </mat-card-content>
 

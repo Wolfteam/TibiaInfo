@@ -15,7 +15,7 @@
           <p><b>Name</b>: {{guild.name}}</p>
         </div>
         <div class="col-md-6">
-          <p><b>World</b>: {{guild.world}}</p>
+          <b>World</b>: <a [routerLink]="['/world',guild.world]">{{guild.world}}</a>
           <p *ngIf="guild.homePageUrl"><b>Home Page</b>: {{guild.homePageUrl}}</p>
         </div>
         <div class="col-12">
@@ -67,8 +67,8 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <app-guild-details-member-filter (filterChangedEvent)="sortGuildMembers($event)" [filteredGuildMemberOptions]="filteredGuildMemberOptions"
-              [filteredGuildRankOptions]="filteredGuildRankOptions"></app-guild-details-member-filter>
+            <app-guild-details-member-filter (filterChangedEvent)="sortGuildMembers($event)"
+              [filteredGuildMemberOptions]="filteredGuildMemberOptions" [filteredGuildRankOptions]="filteredGuildRankOptions"></app-guild-details-member-filter>
           </div>
         </div>
       </div>

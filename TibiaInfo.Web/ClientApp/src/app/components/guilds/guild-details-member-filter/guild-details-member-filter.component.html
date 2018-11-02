@@ -7,7 +7,7 @@
           <input type="text" placeholder="Type the player name..." matInput [formControl]="guildMemberSearchControl"
             [matAutocomplete]="guild_member_auto">
           <!-- <cdk-virtual-scroll-viewport [itemSize]="filteredWorldPlayersOptions.length"> -->
-          <mat-autocomplete #guild_member_auto="matAutocomplete" (optionSelected)="onGuildMemberSelected($event)">
+          <mat-autocomplete #guild_member_auto="matAutocomplete">
             <mat-option *ngFor="let option of filteredGuildMemberOptions" [value]="option">
               {{option}}
             </mat-option>
@@ -22,7 +22,7 @@
           <input type="text" placeholder="Type the guild rank..." matInput [formControl]="guildRankSearchControl"
             [matAutocomplete]="guild_rank_auto">
           <!-- <cdk-virtual-scroll-viewport [itemSize]="filteredWorldPlayersOptions.length"> -->
-          <mat-autocomplete #guild_rank_auto="matAutocomplete" (optionSelected)="onGuildRankSelected($event)">
+          <mat-autocomplete #guild_rank_auto="matAutocomplete">
             <mat-option *ngFor="let option of filteredGuildRankOptions" [value]="option">
               {{option}}
             </mat-option>

@@ -16,7 +16,7 @@ import { VocationHelper } from 'src/app/helpers/vocation.helpers';
   styleUrls: ['./guild-details.component.css']
 })
 export class GuildDetailsComponent implements OnInit, OnDestroy {
-
+  //TODO: I need to show if the guild is at war or not
   private isPageLoaded: boolean = false;
   private subscriptions: Subscription[] = [];
   private guild: Guild;

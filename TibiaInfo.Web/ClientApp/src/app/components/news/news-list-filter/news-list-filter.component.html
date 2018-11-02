@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-12">
+    <h4>News</h4>
+  </div>
+
+  <div class="col-12">
+    <form class="row">
+      <!-- Autocomplete -->
+      <div class="col-12 col-md-4">
+        <mat-form-field class="full-width">
+          <input type="text" placeholder="Type the news title..." matInput [formControl]="newsSearchControl"
+            [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredNewsOptions" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <!-- Sort direction && News type-->
+      <div class="col-12 col-md-3 text-center">
+        <mat-form-field class="medium-width">
+          <mat-select placeholder="Sorting direction" [(value)]="currentSortDirection" (selectionChange)="onSortDirectionChange(currentSortDirection.id)">
+            <mat-option *ngFor="let option of sortDirections" [value]="option">
+              <mat-icon>{{option.id === 0 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon> {{option.text}}
+            </mat-option>
+            <mat-select-trigger>
+              {{currentSortDirection.text}}
+            </mat-select-trigger>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="medium-width">
+          <mat-select placeholder="News type" [(value)]="currentNewsType" (selectionChange)="onNewsTypeChange(currentNewsType.id)">
+            <mat-option *ngFor="let option of newsTypes" [value]="option">
+              {{option.text}}
+            </mat-option>
+            <mat-select-trigger>
+              {{currentNewsType.text}}
+            </mat-select-trigger>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Sort by -->
+      <div class="col-12 col-md-5 align-self-center">
+        <mat-icon>sort</mat-icon>
+        <label>Sort by: </label>
+        <mat-radio-group name="currentSortOrder" [(ngModel)]="currentSortOrder">
+          <mat-radio-button (click)="onOrderChange(order.id)" [checked]="order.selected" *ngFor="let order of sortOrders"
+            [value]="order.id">
+            {{order.text}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </form>
+  </div>
+
+</div>

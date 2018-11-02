@@ -28,6 +28,10 @@ import { GuildListFilterComponent } from './components/guilds/guild-list-filter/
 import { GuildDetailsComponent } from './components/guilds/guild-details/guild-details.component';
 import { GuildDetailsMemberComponent } from './components/guilds/guild-details-member/guild-details-member.component';
 import { GuildDetailsMemberFilterComponent } from './components/guilds/guild-details-member-filter/guild-details-member-filter.component';
+import { NewsComponent } from './components/news/news/news.component';
+import { NewsListComponent } from './components/news/news-list/news-list.component';
+import { NewsDetailsComponent } from './components/news/news-details/news-details.component';
+import { NewsListFilterComponent } from './components/news/news-list-filter/news-list-filter.component';
 
 // Pipes
 import { AccountStatusPipe } from './pipes/account-status.pipe';
@@ -38,6 +42,7 @@ import { VocationTtitlePipe } from './pipes/vocation-title.pipe';
 import { VocationImagePipe } from './pipes/vocation-image.pipe';
 import { WorldLocationPipe } from './pipes/world-location.pipe';
 import { WorldPvpPipe } from './pipes/world-pvp.pipe';
+import { NewsTypePipe } from './pipes/news-type.pipe';
 
 //Services
 import { AppService } from './services/app.service';
@@ -67,7 +72,15 @@ const appRoutes: Route[] = [
   },
   {
     path: 'guild/:name',
-    component:GuildDetailsComponent
+    component: GuildDetailsComponent
+  },
+  {
+    path: 'news',
+    component: NewsListComponent
+  },
+  {
+    path: 'news/:id',
+    component: NewsDetailsComponent
   },
   {
     path: '',
@@ -103,7 +116,12 @@ const appRoutes: Route[] = [
     GuildListFilterComponent,
     GuildDetailsComponent,
     GuildDetailsMemberComponent,
-    GuildDetailsMemberFilterComponent
+    GuildDetailsMemberFilterComponent,
+    NewsComponent,
+    NewsListComponent,
+    NewsDetailsComponent,
+    NewsTypePipe,
+    NewsListFilterComponent
   ],
   imports: [
     BrowserModule,

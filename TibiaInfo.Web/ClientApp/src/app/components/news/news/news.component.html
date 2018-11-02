@@ -1,0 +1,33 @@
+<mat-card class="news-card mat-elevation-z8">
+  <!-- Card header -->
+  <mat-card-header class="row">
+    <div class="col-12 text-overflow">
+      <a [href]="news.tibiaUrl" matTooltip="Click to see this new in the tibia web site"><strong>{{news.title}}</strong></a>
+    </div>
+  </mat-card-header>
+
+  <!-- Card content -->
+  <mat-card-content class="no-margin-bottom">
+    <mat-chip-list>
+      <div class="container">
+        <div class="row justify-content-center">
+          <mat-chip class="col-5" selectable="false" selected color="primary" [matTooltip]="news.createdAt.date | date:'MMMM dd yyyy'"><span class="text-overflow">{{news.createdAt.date
+              | date:'MMMM dd yyyy'}}</span></mat-chip>
+          <mat-chip class="col-4" selectable="false" selected color="warn" [matTooltip]="news.type | newsType"><span class="text-overflow">{{news.type | newsType}}</span></mat-chip>
+        </div>
+      </div>
+    </mat-chip-list>
+  </mat-card-content>
+
+  <!-- Card Actions -->
+  <mat-card-actions>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" mat-stroked-button matTooltip="Get more details about this new" (click)="showDetails()">
+          <mat-icon>chevron_right</mat-icon>
+          Details
+        </button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

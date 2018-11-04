@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TibiaInfo.Web.Enums;
 using TibiaInfo.Web.Interfaces.TibiaDataApi;
@@ -43,6 +44,7 @@ namespace TibiaInfo.Web.Controllers
                     case NewsType.LATEST_NEWS:
                         var r2 = await _newsService.GetLatestNews();
                         response.Result = _mapper.Map<AllNewsDTO>(r2.Response);
+                        response.Result.News = response.Result.News.Where(n => n.Type == newsType).ToList();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(newsType), newsType, "The provided news type is not valid");

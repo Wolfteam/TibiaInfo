@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import { NewsService } from 'src/app/services/news.service';
 import { Subscription } from 'rxjs';
@@ -14,12 +14,13 @@ import { SimpleNews } from 'src/app/models/news/simple-news.model';
   styleUrls: ['./news-list.component.css']
 })
 export class NewsListComponent implements OnInit, OnDestroy {
-  //TODO: NPI xq no se muestran los news tickers
+
   private isPageLoaded: boolean = false;
   private subscriptions: Subscription[] = [];
   private allNews: AllNews;
   private filteredNews: SimpleNews[] = [];
   private filteredNewsOptions: string[] = [];
+  private isNewsTypeSelectControlEnabled: boolean = true;
 
   constructor(
     private appService: AppService,
@@ -28,43 +29,43 @@ export class NewsListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.appService.changeMaintTitle('News');
-    this.appService.showMainProgressBar(true)
     this.appService.showBackButton(false);
-    this.subscriptions.push(
-      this.newsService.getAllNews(NewsType.LATEST_NEWS).subscribe(r => {
-        if (r.succeed) {
-          this.isPageLoaded = true;
-          this.allNews = r.result;
-          this.sortNews(['', NewsListSortFilterType.CREATION_DATE, SortDirectionType.DESCENDING, -1]);
-        } else {
-          this.appService.showMessage(`An error occurred while trying to get all the lastest news. ${r.message}`);
-        }
-      },
-        (error) => {
-          this.appService.showMainProgressBar(false)
-          console.log(error);
-          this.appService.showMessage(`An unknown error occurred while trying to get the character.`);
-        },
-        () => this.appService.showMainProgressBar(false)
-      ));
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  private sortNews(tuple: [string, NewsListSortFilterType, SortDirectionType, number]): void {
+  private searchNews(newsType: NewsType): void {
+    this.isPageLoaded =
+      this.isNewsTypeSelectControlEnabled = false;
+    this.appService.showMainProgressBar(true)
+    this.subscriptions.push(
+      this.newsService.getAllNews(newsType).subscribe(r => {
+        if (r.succeed) {
+          this.allNews = r.result;
+          this.isPageLoaded = true;
+          this.sortNews(['', NewsListSortFilterType.CREATION_DATE, SortDirectionType.DESCENDING]);
+        } else {
+          this.appService.showMessage(`An error occurred while trying to get all the lastest news. ${r.message}`);
+        }
+        this.isNewsTypeSelectControlEnabled = true;
+      },
+        (error) => {
+          this.appService.showMainProgressBar(false)
+          console.log(error);
+          this.appService.showMessage(`An unknown error occurred while trying to get the lastest news.`);
+        },
+        () => this.appService.showMainProgressBar(false)
+      ));
+  }
+
+  private sortNews(tuple: [string, NewsListSortFilterType, SortDirectionType]): void {
     const search: string = tuple[0].toLowerCase();
     const sortOrder: NewsListSortFilterType = tuple[1];
     const sortDirection: SortDirectionType = tuple[2];
-    const newsType: number = tuple[3];
 
-    let news: SimpleNews[];
-
-    if (newsType === -1)
-      news = this.allNews.news.filter(n => n.title.toLowerCase().includes(search));
-    else
-      news = this.allNews.news.filter(n => n.type === newsType && n.title.toLowerCase().includes(search));
+    let news: SimpleNews[] = this.allNews.news.filter(n => n.title.toLowerCase().includes(search));
 
     switch (sortOrder) {
       case NewsListSortFilterType.CREATION_DATE:

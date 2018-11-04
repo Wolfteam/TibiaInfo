@@ -1,10 +1,22 @@
-<div class="row">
+<form class="row">
   <div class="col-12">
     <h4>News</h4>
   </div>
+  <div class="col-sm-12 col-md-6">
+    <mat-form-field class="medium-width">
+      <mat-select placeholder="News type" [(value)]="currentNewsType" [formControl]="newsTypeSelectControl">
+        <mat-option *ngFor="let option of newsTypes" [value]="option.id">
+          {{option.text}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-mini-fab color="accent" (click)="searchNews()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
 
-  <div class="col-12">
-    <form class="row">
+  <div class="col-12" *ngIf="isPageLoaded">
+    <div class="row">
       <!-- Autocomplete -->
       <div class="col-12 col-md-4">
         <mat-form-field class="full-width">
@@ -19,7 +31,7 @@
       </div>
       <!-- Sort direction && News type-->
       <div class="col-12 col-md-3 text-center">
-        <mat-form-field class="medium-width">
+        <mat-form-field class="full-width">
           <mat-select placeholder="Sorting direction" [(value)]="currentSortDirection" (selectionChange)="onSortDirectionChange(currentSortDirection.id)">
             <mat-option *ngFor="let option of sortDirections" [value]="option">
               <mat-icon>{{option.id === 0 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon> {{option.text}}
@@ -29,20 +41,10 @@
             </mat-select-trigger>
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="medium-width">
-          <mat-select placeholder="News type" [(value)]="currentNewsType" (selectionChange)="onNewsTypeChange(currentNewsType.id)">
-            <mat-option *ngFor="let option of newsTypes" [value]="option">
-              {{option.text}}
-            </mat-option>
-            <mat-select-trigger>
-              {{currentNewsType.text}}
-            </mat-select-trigger>
-          </mat-select>
-        </mat-form-field>
       </div>
 
       <!-- Sort by -->
-      <div class="col-12 col-md-5 align-self-center">
+      <div class="col-12 col-md-4 align-self-center">
         <mat-icon>sort</mat-icon>
         <label>Sort by: </label>
         <mat-radio-group name="currentSortOrder" [(ngModel)]="currentSortOrder">
@@ -52,7 +54,6 @@
           </mat-radio-button>
         </mat-radio-group>
       </div>
-    </form>
+    </div>
   </div>
-
-</div>
+</form>

@@ -1,4 +1,9 @@
-<app-news-list-filter *ngIf="isPageLoaded" (filterChangedEvent)="sortNews($event)" [filteredNewsOptions]="filteredNewsOptions"></app-news-list-filter>
+<app-news-list-filter 
+  [isPageLoaded]="isPageLoaded" 
+  (filterChangedEvent)="sortNews($event)" 
+  [filteredNewsOptions]="filteredNewsOptions"
+  [isNewsTypeSelectControlEnabled]="isNewsTypeSelectControlEnabled"
+  (searchNewsEvent)="searchNews($event)"></app-news-list-filter>
 
 <div *ngIf="isPageLoaded" class="row">
   <div class="col-md-4" *ngFor="let news of filteredNews">

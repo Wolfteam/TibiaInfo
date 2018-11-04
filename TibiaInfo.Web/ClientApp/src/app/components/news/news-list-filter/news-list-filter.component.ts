@@ -1,10 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit, OnDestroy, AfterViewChecked } from '@angular/core';
 import { SortDirectionType } from 'src/app/enums/sort-direction-type.enum';
 import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { ItemModel } from 'src/app/models/item.model';
 import { NewsListSortFilterType } from 'src/app/enums/news-list-sort-filter-type.enum';
 import { NewsType } from 'src/app/enums/news-type.enum';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-news-list-filter',
@@ -13,11 +14,27 @@ import { NewsType } from 'src/app/enums/news-type.enum';
 })
 export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Output() public filterChangedEvent: EventEmitter<[string, NewsListSortFilterType, SortDirectionType, number]> = new EventEmitter<[string, NewsListSortFilterType, SortDirectionType, number]>();
+  @Output() public filterChangedEvent: EventEmitter<[string, NewsListSortFilterType, SortDirectionType]> = new EventEmitter<[string, NewsListSortFilterType, SortDirectionType]>();
+  @Output() public searchNewsEvent: EventEmitter<NewsType> = new EventEmitter<NewsType>();
   @Input() public filteredNewsOptions: string[] = [];
+  @Input() public isPageLoaded: boolean = false;
+  private _isNewsTypeSelectControlEnabled: boolean = true;
+  @Input()
+  get isNewsTypeSelectControlEnabled(): boolean {
+    return this._isNewsTypeSelectControlEnabled;
+  }
+  set isNewsTypeSelectControlEnabled(isEnabled: boolean) {
+    this._isNewsTypeSelectControlEnabled = isEnabled;
+    if (!isEnabled)
+      this.newsTypeSelectControl.disable();
+    else
+      this.newsTypeSelectControl.enable();
+  }
 
   private subscriptions: Subscription[] = [];
   private newsSearchControl = new FormControl();
+  private newsTypeSelectControl = new FormControl();
+
   private currentSearch: string = '';
   private currentSortOrder: number = NewsListSortFilterType.CREATION_DATE;
   private sortOrders: ItemModel[] = [
@@ -41,13 +58,8 @@ export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy
       text: 'Descending',
       selected: true
     }];
-  private currentNewsType: ItemModel;
+  private currentNewsType: NewsType;
   private newsTypes: ItemModel[] = [
-    {
-      id: -1,
-      selected: true,
-      text: 'All'
-    },
     {
       id: NewsType.FEATURED_ARTICLE,
       selected: false,
@@ -62,11 +74,25 @@ export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy
       text: 'News Tickers'
     }];
 
-  constructor() { }
+  private loadFromParams: boolean = false;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.currentSortDirection = this.sortDirections[1];
-    this.currentNewsType = this.newsTypes[0];
+    const newsTypeParam = +this.activatedRoute.snapshot.queryParamMap.get('newsType');
+    const currentNewsType = !isNaN(newsTypeParam) && this.activatedRoute.snapshot.queryParamMap.has('newsType')?
+      this.newsTypes.find(nt => nt.id === newsTypeParam).id : NewsType.LATEST_NEWS;
+    this.currentNewsType = currentNewsType;
+    this.newsTypeSelectControl.setValue(currentNewsType)
+
+    if (this.activatedRoute.snapshot.queryParamMap.has('newsType')) {
+      setTimeout(() => this.searchNews());
+      // this.loadFromParams = true;
+    }
   }
 
   ngAfterViewInit(): void {
@@ -74,24 +100,37 @@ export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy
       this.newsSearchControl.valueChanges
         .subscribe((value: string) => {
           this.currentSearch = value;
-          this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, this.currentSortDirection.id, -1]);
+          this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, this.currentSortDirection.id]);
         })
     );
+
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
+  private searchNews(): void {
+    // changes the route without moving from the current view or
+    // triggering a navigation event,
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: {
+        newsType: this.currentNewsType
+      },
+      // preserve the existing query params in the route
+      queryParamsHandling: 'merge',
+      // do not trigger navigation
+      skipLocationChange: false
+    });
+    this.searchNewsEvent.emit(this.currentNewsType);
+  }
+
   private onSortDirectionChange(sortDirection: SortDirectionType): void {
-    this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, sortDirection, this.currentNewsType.id]);
+    this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, sortDirection]);
   }
 
   private onOrderChange(sortOrder: NewsListSortFilterType): void {
-    this.filterChangedEvent.emit([this.currentSearch, sortOrder, this.currentSortDirection.id, this.currentNewsType.id]);
-  }
-
-  private onNewsTypeChange(newsType: number): void {
-    this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, this.currentSortDirection.id, newsType]);
+    this.filterChangedEvent.emit([this.currentSearch, sortOrder, this.currentSortDirection.id]);
   }
 }

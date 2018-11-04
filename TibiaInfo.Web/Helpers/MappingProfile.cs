@@ -118,7 +118,8 @@ namespace TibiaInfo.Web.Helpers
             #endregion
 
             #region House related
-            CreateMap<SimpleHouse, SimpleHouseDTO>();
+            CreateMap<SimpleHouse, SimpleHouseDTO>()
+                .ForMember(d => d.StatusText, opt => opt.MapFrom(s => s.Status));
             CreateMap<AllHousesResponse, AllHousesDTO>()
                 .ForMember(d => d.Town, opt => opt.MapFrom(s => s.Town.GetTownType()))
                 .ForMember(d => d.Type, opt => opt.MapFrom(s => s.Type.GetHouseType()));

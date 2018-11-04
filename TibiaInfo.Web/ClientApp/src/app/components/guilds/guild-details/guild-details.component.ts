@@ -106,7 +106,7 @@ export class GuildDetailsComponent implements OnInit, OnDestroy {
         }
       });
       filtered.forEach(r =>
-        r.rankMembers = r.rankMembers.filter(p => p.name.toLowerCase().includes(characterSearch))
+        r.rankMembers = r.rankMembers.filter(p => p.name.toLowerCase().includes(characterSearch) && p.vocation === vocation)
       );
     }
     let guildMemberOptions: string[] = [];

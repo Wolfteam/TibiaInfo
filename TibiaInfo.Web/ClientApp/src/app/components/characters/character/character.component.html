@@ -27,7 +27,7 @@
       <div class="container">
         <div class="row justify-content-center">
           <mat-chip class="col-5" selectable="false" color="primary" selected>
-            <span class="text-overflow">Vocation: {{character.vocation | vocationTitle}}</span>
+            <span class="text-overflow" [matTooltip]="character.vocation | vocationTitle">Vocation: {{character.vocation | vocationTitle}}</span>
           </mat-chip>
           <mat-chip class="col-5" *ngIf="character.world" matTooltip="Click to see world details" color="accent"
             selected (click)="showWorld()">

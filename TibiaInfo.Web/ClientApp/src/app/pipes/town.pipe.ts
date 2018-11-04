@@ -41,5 +41,4 @@ export class TownPipe implements PipeTransform {
                 throw new Error('The provided status enum value does not exists');
         }
     }
-
 }

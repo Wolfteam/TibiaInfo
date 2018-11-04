@@ -16,7 +16,6 @@ export class GuildListFilterComponent implements OnInit, OnDestroy {
 
   @Output() public worldSelectionChangeEvent: EventEmitter<string> = new EventEmitter<string>();
   @Output() public sortDirectionChangeEvent: EventEmitter<[string, SortDirectionType]> = new EventEmitter<[string, SortDirectionType]>();
-  @Output() public enableWorldSearchControlEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() public showAdditionalFilters: boolean = false;
   @Input() public filteredGuildsOptions: string[] = [];
   private _isWorldSearchControlEnabled: boolean = true;

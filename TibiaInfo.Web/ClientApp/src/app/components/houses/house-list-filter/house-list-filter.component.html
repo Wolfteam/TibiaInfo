@@ -1,0 +1,81 @@
+<form *ngIf="isPageLoaded">
+  <div class="row">
+    <div class="col-12">
+      <h4>Houses Information</h4>
+    </div>
+  </div>
+  <div class="row">
+    <!-- World Autocomplete -->
+    <mat-form-field class="col-12 col-md-3">
+      <input type="text" placeholder="Select the world..." matInput [formControl]="worldSearchControl"
+        [matAutocomplete]="world_auto">
+      <mat-autocomplete #world_auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredWorldOptions" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <!-- Towns -->
+    <mat-form-field class="col-12 col-md-3">
+      <mat-select placeholder="Select the town..." [(value)]="currentTown">
+        <mat-option *ngFor="let option of townsOptions" [value]="option">
+          {{option | town}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Sort Direction -->
+    <mat-form-field class="col-12 col-md-3">
+      <mat-select placeholder="Sort direction" [(value)]="currentSortDirection">
+        <mat-option *ngFor="let option of sortDirections" [value]="option">
+          <mat-icon>{{option.id === 0 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon> {{option.text}}
+        </mat-option>
+        <mat-select-trigger>
+          {{currentSortDirection.text}}
+        </mat-select-trigger>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <!-- Status -->
+    <mat-form-field class="col-12 col-md-3">
+      <mat-select placeholder="House Status..." [(value)]="currentHouseStatus">
+        <mat-option *ngFor="let option of houseStatusOptions" [value]="option">
+          {{option.text}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Sort by -->
+    <mat-form-field class="col-12 col-md-3">
+      <mat-select placeholder="Sort by" [(value)]="currentSortOrder">
+        <mat-option *ngFor="let option of sortOrders" [value]="option">
+          {{option.text}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- House/Guildhalls & Search button  -->
+    <div class="col-12 col-md-3 align-self-center">
+      <mat-slide-toggle [color]="primary" [(ngModel)]="showGuildHalls" name="currentHouseType">
+        {{currentHouseType}}
+      </mat-slide-toggle>
+      <button class="search-button" mat-mini-fab color="accent" (click)="searchHouses()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="row" *ngIf="showAdditionalFilters">
+    <!-- World Autocomplete -->
+    <mat-form-field class="col-12 col-md-4">
+      <input type="text" placeholder="Type the house name..." matInput [formControl]="houseSearchControl"
+        [matAutocomplete]="house_auto">
+      <mat-autocomplete #house_auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredHouseOptions" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</form>

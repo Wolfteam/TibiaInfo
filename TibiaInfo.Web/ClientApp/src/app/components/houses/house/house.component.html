@@ -1,0 +1,39 @@
+<mat-card class="custom-card-margin-bottom mat-elevation-z8" [class.house-rented]="house.status === 2"
+  [class.house-auctioned-no-bid-yet]="house.status === 0" [class.house-auctioned]="house.status === 1">
+
+  <!-- Card header -->
+  <mat-card-header class="row">
+    <strong>{{house.name}}</strong>
+  </mat-card-header>
+
+  <!-- Card content -->
+  <mat-card-content class="no-margin-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-5">
+          <span><strong>Size</strong>: {{house.size}} SQM</span>
+        </div>
+        <div class="col-7">
+          <span><strong>Rent</strong>: {{house.rent}} Gold Coins</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <span><strong>Status</strong>: {{house.statusText}}</span>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <!-- Card Actions -->
+  <mat-card-actions>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" mat-stroked-button matTooltip="Get more details about this house" (click)="showDetails()">
+          <mat-icon>chevron_right</mat-icon>
+          Details
+        </button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

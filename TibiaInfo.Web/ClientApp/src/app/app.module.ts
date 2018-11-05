@@ -48,6 +48,11 @@ import { NewsTypePipe } from './pipes/news-type.pipe';
 import { AppService } from './services/app.service';
 import { CharacterService } from './services/character.service';
 import { CookieService } from 'ngx-cookie-service';
+import { HouseListComponent } from './components/houses/house-list/house-list.component';
+import { HouseComponent } from './components/houses/house/house.component';
+import { HouseDetailsComponent } from './components/houses/house-details/house-details.component';
+import { HouseListFilterComponent } from './components/houses/house-list-filter/house-list-filter.component';
+import { ScrollToTopComponent } from './components/general/scroll-to-top/scroll-to-top.component';
 
 const appRoutes: Route[] = [
   {
@@ -73,6 +78,14 @@ const appRoutes: Route[] = [
   {
     path: 'guild/:name',
     component: GuildDetailsComponent
+  },
+  {
+    path: 'houses',
+    component: HouseListComponent
+  },
+  {
+    path: 'house/:id',
+    component: HouseDetailsComponent
   },
   {
     path: 'news',
@@ -117,11 +130,16 @@ const appRoutes: Route[] = [
     GuildDetailsComponent,
     GuildDetailsMemberComponent,
     GuildDetailsMemberFilterComponent,
+    HouseListComponent,
+    HouseComponent,
+    HouseDetailsComponent,
     NewsComponent,
     NewsListComponent,
     NewsDetailsComponent,
     NewsTypePipe,
-    NewsListFilterComponent
+    NewsListFilterComponent,
+    HouseListFilterComponent,
+    ScrollToTopComponent
   ],
   imports: [
     BrowserModule,

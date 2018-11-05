@@ -19,7 +19,7 @@ mat-sidenav {
   color: white;
 }
 
-.side-nav-main-image{
+.side-nav-main-image {
   width: 300px;
   height: 190px;
 }
@@ -30,7 +30,7 @@ mat-sidenav {
   width: stretch;
 }
 
-.players-online-text{
+.players-online-text {
   text-align: initial;
   font-size: 21px;
 }

@@ -1,3 +1,40 @@
-<p>
-  house-details works!
-</p>
+<div class="row" *ngIf="isPageLoaded">
+  <div class="col-md-6">
+    <!--House information-->
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>House Information</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="position-relative">
+        <img class="float-left" [src]='house.imageUrl'>
+      </div>
+      <div class="row">
+        <div class="col-6 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.name"><strong>Name</strong>: {{house.name}}</p>
+        </div>
+        <div class="col-6 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.world"><strong>World</strong>: {{house.world}}</p>
+        </div>
+        <div class="col-6 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.type | houseType"><strong>Type</strong>: {{house.type |
+            houseType}}</p>
+        </div>
+        <div class="col-6 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.numberOfBeds"><strong>Numbers of beds</strong>:
+            {{house.numberOfBeds}}</p>
+        </div>
+        <div class="col-6 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.size"><strong>Size</strong>: {{house.size}} SQM</p>
+        </div>
+        <div class="col-6 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.rent"><strong>Rent</strong>: {{house.rent}} Gold Coins</p>
+        </div>
+        <div class="col-12">
+          <p >{{house.status.description}}</p>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>

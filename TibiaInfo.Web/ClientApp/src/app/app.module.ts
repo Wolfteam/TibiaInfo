@@ -53,6 +53,7 @@ import { HouseComponent } from './components/houses/house/house.component';
 import { HouseDetailsComponent } from './components/houses/house-details/house-details.component';
 import { HouseListFilterComponent } from './components/houses/house-list-filter/house-list-filter.component';
 import { ScrollToTopComponent } from './components/general/scroll-to-top/scroll-to-top.component';
+import { HouseTypePipe } from './pipes/house-type.pipe';
 
 const appRoutes: Route[] = [
   {
@@ -84,7 +85,7 @@ const appRoutes: Route[] = [
     component: HouseListComponent
   },
   {
-    path: 'house/:id',
+    path: 'house/:world/:id',
     component: HouseDetailsComponent
   },
   {
@@ -139,7 +140,8 @@ const appRoutes: Route[] = [
     NewsTypePipe,
     NewsListFilterComponent,
     HouseListFilterComponent,
-    ScrollToTopComponent
+    ScrollToTopComponent,
+    HouseTypePipe
   ],
   imports: [
     BrowserModule,

@@ -8,14 +8,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./house.component.css']
 })
 export class HouseComponent implements OnInit {
+  @Input() public currentWorld: string;
   @Input() public house: SimpleHouse;
-
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   private showDetails(): void {
-    this.router.navigate(['/house', this.house.id]);
+    this.router.navigate(['/house', this.currentWorld, this.house.id]);
   }
 }

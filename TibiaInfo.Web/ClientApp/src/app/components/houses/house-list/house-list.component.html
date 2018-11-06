@@ -6,6 +6,6 @@
 
 <div class="row" *ngIf="showHouses">
   <div class="col-12 col-md-4" *ngFor="let house of filteredHouses">
-    <app-house [house]="house"></app-house>
+    <app-house [house]="house" [currentWorld]="allHouses.world"></app-house>
   </div>
 </div>

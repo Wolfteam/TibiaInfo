@@ -19,7 +19,7 @@ export class ScrollToTopComponent implements OnInit {
   }
 
   private scrollToTheTop(): void {
-    document.getElementsByTagName("body")[0].scrollIntoView();
+    document.getElementById('app-root').scrollIntoView({behavior:'smooth', block:'start', inline:'start'});
   }
 
   private onWindowScroll(): void {

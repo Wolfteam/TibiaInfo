@@ -14,15 +14,15 @@
   <mat-card-content class="container">
     <div class="row">
       <div class="col-md-6">
-        <p class="p-without-margin"><b>Type</b>: {{world.pvpType | worldPvp:false}}</p>
+        <p class="p-without-margin text-overflow" [matTooltip]="world.pvpType | worldPvp:false"><b>Type</b>: {{world.pvpType | worldPvp:false}}</p>
       </div>
       <div class="col-md-6">
-        <p class="p-without-margin"><b>Players Online</b>: {{world.numberOfPlayersOnline}}</p>
+        <p class="p-without-margin text-overflow" [matTooltip]="world.numberOfPlayersOnline"><b>Players Online</b>: {{world.numberOfPlayersOnline}}</p>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <p class="p-without-margin"> <b>Location</b>: {{world.location | worldLocation}}</p>
+        <p class="p-without-margin text-overflow" [matTooltip]="world.location | worldLocation"> <b>Location</b>: {{world.location | worldLocation}}</p>
       </div>
     </div>
   </mat-card-content>

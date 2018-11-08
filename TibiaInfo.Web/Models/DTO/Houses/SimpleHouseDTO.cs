@@ -19,6 +19,7 @@ namespace TibiaInfo.Web.Models.DTO.Houses
                 string text = StatusText.ToLower();
                 return text.Contains("gold") ? HouseStatusType.AUCTIONED_BID :
                     text.Contains("rented") ? HouseStatusType.RENTED :
+                    text.Contains("transfer") ? HouseStatusType.TRANSFERRED :
                     HouseStatusType.AUCTIONED_NO_BID;
             }
         }

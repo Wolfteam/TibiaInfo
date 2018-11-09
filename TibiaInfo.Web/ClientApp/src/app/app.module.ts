@@ -54,6 +54,10 @@ import { HouseDetailsComponent } from './components/houses/house-details/house-d
 import { HouseListFilterComponent } from './components/houses/house-list-filter/house-list-filter.component';
 import { ScrollToTopComponent } from './components/general/scroll-to-top/scroll-to-top.component';
 import { HouseTypePipe } from './pipes/house-type.pipe';
+import { HighscoreListFilterComponent } from './components/highscores/highscore-list-filter/highscore-list-filter.component';
+import { HighscoreListComponent } from './components/highscores/highscore-list/highscore-list.component';
+import { HighscoreComponent } from './components/highscores/highscore/highscore.component';
+import { HighscoreTypePipe } from './pipes/highscore-type.pipe';
 
 const appRoutes: Route[] = [
   {
@@ -95,6 +99,10 @@ const appRoutes: Route[] = [
   {
     path: 'news/:id',
     component: NewsDetailsComponent
+  },
+  {
+    path: 'highscores',
+    component: HighscoreListComponent
   },
   {
     path: '',
@@ -141,7 +149,11 @@ const appRoutes: Route[] = [
     NewsListFilterComponent,
     HouseListFilterComponent,
     ScrollToTopComponent,
-    HouseTypePipe
+    HouseTypePipe,
+    HighscoreListFilterComponent,
+    HighscoreListComponent,
+    HighscoreComponent,
+    HighscoreTypePipe
   ],
   imports: [
     BrowserModule,

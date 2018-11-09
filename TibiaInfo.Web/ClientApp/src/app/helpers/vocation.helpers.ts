@@ -56,6 +56,8 @@ export class VocationHelper {
         return SORCERER;
       case VocationType.NONE:
         return NONE_VOCATION;
+      case VocationType.ALL:
+        return 'All';
       default:
         throw new Error('The provided vocation enum type does not exists');
     }

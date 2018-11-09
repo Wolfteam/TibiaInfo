@@ -4,14 +4,14 @@
     <div class="col-sm-12">
       <img class="float-left character-img" [src]='character.vocation | vocationImage:character.sex'>
       <div class="row">
-        <div class="col-sm-9">
+        <div class="col-9">
           <p class="text-overflow"><span [matTooltip]='character.status == 1 ? "Online" : "Offline"'
               [class.character-status-online]="character.status == 1" [class.character-status-offline]="character.status == 0"
               class="character-status"></span>
             <span [matTooltip]="character.name"><strong>{{character.name}}</strong></span></p>
           <p>Level: {{character.level}}</p>
         </div>
-        <div class="col-sm-3">
+        <div class="col-3">
           <button class="float-right" [color]="character.isInFavorites ? 'warn': 'accent'" mat-icon-button (click)="removeCharacter()"
             [matTooltip]="character.isInFavorites ?  'Remove from your favorite list' : 'Add this character to your favorite list'">
             <mat-icon>favorite</mat-icon>

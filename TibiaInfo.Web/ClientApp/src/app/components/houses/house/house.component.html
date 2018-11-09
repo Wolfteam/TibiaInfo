@@ -1,5 +1,8 @@
-<mat-card class="custom-card-margin-bottom mat-elevation-z8" [class.house-rented]="house.status === 2"
-  [class.house-auctioned-no-bid-yet]="house.status === 0" [class.house-auctioned]="house.status === 1">
+<mat-card class="custom-card-margin-bottom mat-elevation-z8" 
+  [class.house-transferred]="house.status === 3"
+  [class.house-rented]="house.status === 2"
+  [class.house-auctioned-no-bid-yet]="house.status === 0" 
+  [class.house-auctioned]="house.status === 1">
 
   <!-- Card header -->
   <mat-card-header class="row">

@@ -4,6 +4,7 @@ namespace TibiaInfo.Web.Enums
     {
         AUCTIONED_NO_BID,
         AUCTIONED_BID,
-        RENTED
+        RENTED,
+        TRANSFERRED
     }
 }

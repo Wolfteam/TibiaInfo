@@ -32,7 +32,7 @@ export class HighscoreListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.appService.changeMaintTitle('HighScores');
+    this.appService.changeMaintTitle('Highscores');
     this.appService.showBackButton(false);
   }
 
@@ -49,11 +49,13 @@ export class HighscoreListComponent implements OnInit {
       this.highScoreService.getAllHighScores(world, highScoreType, vocationType).subscribe(r => {
         if (r.succeed) {
           this.allHighScores = r.result;
+          this.filteredHighScores = r.result.highScores;
+          this.filteredCharacterOptions = r.result.highScores.map(h => h.name).sort();
           this.showAdditionalFilters =
             this.isMainFilterEnabled =
             this.isPageLoaded = true;
         } else {
-          this.appService.showMessage(`An error occurred while trying to get all the highscores for world : ${world}. ${r.message}`);
+          this.appService.showMessage(`An error occurred while trying to get all the r.result.highScore for world : ${world}. ${r.message}`);
         }
       }, (_) => {
         this.appService.showMessage('An unkwnown error occurred while trying to get all the highscores');
@@ -63,46 +65,56 @@ export class HighscoreListComponent implements OnInit {
   }
 
   sortHighScores(tuple: [string, HighScoreListFilterType, SortDirectionType]): void {
-    const search: string = tuple[0].toLowerCase();
+    const search: string = tuple[0] ? tuple[0].toLowerCase() : '';
     const sortOrder: HighScoreListFilterType = tuple[1];
     const sortDirection: SortDirectionType = tuple[2];
 
-    let highscores = this.allHighScores.highScore.filter(h => h.name.includes(search));
+    let highscores = this.allHighScores.highScores.filter(h => h.name.toLowerCase().includes(search));
     switch (sortOrder) {
-      case HighScoreListFilterType.LEVEL_POINTS:
+      case HighScoreListFilterType.NAME:
         if (sortDirection === SortDirectionType.ASCENDING)
-          highscores = highscores.sort((n1, n2) => n1.levelPoiints > n2.levelPoiints ? 1 : n1.levelPoiints < n2.levelPoiints ? -1 : 0);
+          this.filteredHighScores = highscores.sort((n1, n2) => n1.name > n2.name ? 1 : n1.name < n2.name ? -1 : 0);
         else
-          highscores = highscores.sort((n1, n2) => n1.levelPoiints > n2.levelPoiints ? -1 : n1.levelPoiints < n2.levelPoiints ? 1 : 0);
+          this.filteredHighScores = highscores.sort((n1, n2) => n1.name > n2.name ? -1 : n1.name < n2.name ? 1 : 0);
+        break;
+      case HighScoreListFilterType.LEVEL_POINTS:
+        this.filteredHighScores = highscores.sort((n1, n2) =>
+          sortDirection === SortDirectionType.ASCENDING ?
+            n1.levelPoints - n2.levelPoints :
+            n2.levelPoints - n1.levelPoints
+        );
         break;
       case HighScoreListFilterType.POINTS:
-        if (sortDirection === SortDirectionType.ASCENDING)
-          highscores = highscores.sort((n1, n2) => n1.points > n2.points ? 1 : n1.points < n2.points ? -1 : 0);
-        else
-          highscores = highscores.sort((n1, n2) => n1.points > n2.points ? -1 : n1.points < n2.points ? 1 : 0);
+        this.filteredHighScores = highscores.sort((n1, n2) =>
+          sortDirection === SortDirectionType.ASCENDING ?
+            n1.points - n2.points :
+            n2.points - n1.points
+        );
+        break;
       case HighScoreListFilterType.VOCATION:
         if (sortDirection === SortDirectionType.ASCENDING)
-          highscores = highscores.sort((n1, n2) => {
+          this.filteredHighScores = highscores.sort((n1, n2) => {
             const vocationA: string = VocationHelper.toVocation(n1.vocation);
             const vocationB: string = VocationHelper.toVocation(n2.vocation);
             return vocationA > vocationB ? 1 :
               vocationA < vocationB ? -1 : 0;
           });
         else
-          highscores = highscores.sort((n1, n2) => {
+          this.filteredHighScores = highscores.sort((n1, n2) => {
             const vocationA: string = VocationHelper.toVocation(n1.vocation);
             const vocationB: string = VocationHelper.toVocation(n2.vocation);
             return vocationA > vocationB ? -1 :
               vocationA < vocationB ? 1 : 0;
           });
+        break;
       default:
         if (sortDirection === SortDirectionType.ASCENDING)
-          highscores = highscores.sort((n1, n2) => n1.rankPosition > n2.rankPosition ? 1 : n1.rankPosition < n2.rankPosition ? -1 : 0);
+          this.filteredHighScores = highscores.sort((n1, n2) => n1.rankPosition > n2.rankPosition ? 1 : n1.rankPosition < n2.rankPosition ? -1 : 0);
         else
-          highscores = highscores.sort((n1, n2) => n1.rankPosition > n2.rankPosition ? -1 : n1.rankPosition < n2.rankPosition ? 1 : 0);
+          this.filteredHighScores = highscores.sort((n1, n2) => n1.rankPosition > n2.rankPosition ? -1 : n1.rankPosition < n2.rankPosition ? 1 : 0);
+        break;
     }
 
-    this.filteredHighScores = highscores;
     this.filteredCharacterOptions = highscores.map(h => h.name).sort();
   }
 }

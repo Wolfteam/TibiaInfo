@@ -27,37 +27,36 @@ export class HighscoreListFilterComponent implements OnInit, OnDestroy, AfterVie
   set isMainFilterEnabled(isEnabled: boolean) {
     this._isMainFilterEnabled = isEnabled;
     if (!isEnabled)
-    this.highScoreFilterForm.disable();
+      this.highScoreFilterForm.disable({ emitEvent: false });
     else
-    this.highScoreFilterForm.enable();
+      this.highScoreFilterForm.enable({ emitEvent: false });
   }
   @Input() filteredCharacterOptions: string[] = [];
 
   isPageLoaded: boolean = false;
 
-  highScoreFilterForm = new FormGroup({
-    worldSearchControl: new FormControl(),
-    characterSearchControl: new FormControl()
-  });
+  highScoreFilterForm: FormGroup;
+  additionalFiltersForm: FormGroup;
 
-  currentWorld: string = '';
   filteredWorldOptions: string[] = [];
   private worlds: string[] = [];
 
-  currentHighscore: HighScoreType = HighScoreType.EXPERIENCE;
+  currentHighscore: HighScoreType;
   highscoresOptions: HighScoreType[] = [];
 
-  currentVocation: VocationType = VocationType.ALL;
+  currentVocation: VocationType;
   vocationOptions: VocationType[] = [];
 
-  currentCharacterSearch: string = '';
-
-  currentSortOrder: ItemModel;
   sortOrders: ItemModel[] = [
     {
       id: HighScoreListFilterType.RANK,
       text: 'Rank',
       selected: true
+    },
+    {
+      id: HighScoreListFilterType.NAME,
+      text: 'Name',
+      selected: false
     },
     {
       id: HighScoreListFilterType.POINTS,
@@ -91,13 +90,7 @@ export class HighscoreListFilterComponent implements OnInit, OnDestroy, AfterVie
   constructor(
     private appService: AppService,
     private worldService: WorldService
-  ) { }
-
-  ngOnInit(): void {
-    this.appService.showMainProgressBar(true);
-    this.currentSortOrder = this.sortOrders[0];
-    this.currentSortDirection = this.sortDirections[0];
-
+  ) {
     this.highscoresOptions = Object.keys(HighScoreType).filter(key => isNaN(Number(HighScoreType[key]))).map(n => +n);
     const allowedVocations: number[] = [
       VocationType.ALL,
@@ -110,6 +103,24 @@ export class HighscoreListFilterComponent implements OnInit, OnDestroy, AfterVie
       .filter(key => isNaN(Number(VocationType[key])) && allowedVocations.indexOf(+key) >= 0)
       .map(n => +n);
 
+    this.currentHighscore = HighScoreType.EXPERIENCE;
+    this.currentVocation = VocationType.ALL;
+    this.currentSortDirection = this.sortDirections[0];
+
+    this.highScoreFilterForm = new FormGroup({
+      worldSearchControl: new FormControl(),
+      highscoresTypesControl: new FormControl(this.currentHighscore),
+      vocationTypesControl: new FormControl(this.currentVocation)
+    });
+    this.additionalFiltersForm = new FormGroup({
+      characterSearchControl: new FormControl(),
+      sortDirectionControl: new FormControl(this.currentSortDirection),
+      sortOrderControl: new FormControl(HighScoreListFilterType.RANK)
+    });
+  }
+
+  ngOnInit(): void {
+    this.appService.showMainProgressBar(true);
     this.subscription.push(
       this.worldService.getAllWorlds().subscribe(r => {
         if (r.succeed) {
@@ -132,12 +143,17 @@ export class HighscoreListFilterComponent implements OnInit, OnDestroy, AfterVie
   ngAfterViewInit(): void {
     this.subscription.push(
       this.highScoreFilterForm.controls['worldSearchControl'].valueChanges.subscribe((value: string) => {
-        this.currentWorld = value;
         this.filteredWorldOptions = this.getWorldSearchOptions(value);
       }),
-      this.highScoreFilterForm.controls['characterSearchControl'].valueChanges.subscribe((value: string) => {
-        this.currentCharacterSearch = value;
-        this.filterChangeEvent.emit([this.currentCharacterSearch, this.currentSortOrder.id, this.currentSortDirection.id]);
+      this.additionalFiltersForm.controls['characterSearchControl'].valueChanges.subscribe((value: string) => {
+        this.filterChangeEvent.emit([
+          value,
+          <HighScoreListFilterType>this.additionalFiltersForm.controls['sortOrderControl'].value,
+          (<ItemModel>this.additionalFiltersForm.controls['sortDirectionControl'].value).id,
+        ]);
+      }),
+      this.additionalFiltersForm.controls['sortDirectionControl'].valueChanges.subscribe((value: ItemModel) => {
+        this.onSortDirectionChange(value.id);
       })
     );
   }
@@ -147,19 +163,36 @@ export class HighscoreListFilterComponent implements OnInit, OnDestroy, AfterVie
   }
 
   searchHighScores(): void {
-    if (this.worlds.indexOf(this.currentWorld) < 0) {
+    if (this.worlds.indexOf(this.highScoreFilterForm.controls['worldSearchControl'].value) < 0) {
       this.appService.showMessage('You must select a world');
       return;
     }
-    this.searchHighScoresEvent.emit([this.currentWorld, this.currentHighscore, this.currentVocation]);
+    this.searchHighScoresEvent.emit([
+      this.highScoreFilterForm.controls['worldSearchControl'].value,
+      this.currentHighscore,
+      this.currentVocation
+    ]);
+    this.additionalFiltersForm.reset({
+      characterSearchControl: null,
+      sortDirectionControl: this.sortDirections[0],
+      sortOrderControl: HighScoreListFilterType.RANK
+    }, { emitEvent: false, onlySelf: true });
   }
 
   onSortDirectionChange(sortDirection: SortDirectionType): void {
-    this.filterChangeEvent.emit([this.currentCharacterSearch, this.currentSortOrder.id, sortDirection])
+    this.filterChangeEvent.emit([
+      this.additionalFiltersForm.controls['characterSearchControl'].value,
+      <HighScoreListFilterType>this.additionalFiltersForm.controls['sortOrderControl'].value,
+      sortDirection
+    ]);
   }
 
   onSortOrderChange(sortOrder: HighScoreListFilterType): void {
-    this.filterChangeEvent.emit([this.currentCharacterSearch, sortOrder, this.currentSortDirection.id])
+    this.filterChangeEvent.emit([
+      this.additionalFiltersForm.controls['characterSearchControl'].value,
+      sortOrder,
+      (<ItemModel>this.additionalFiltersForm.controls['sortDirectionControl'].value).id
+    ]);
   }
 
   private getWorldSearchOptions(value: string): string[] {

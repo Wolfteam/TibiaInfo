@@ -3,4 +3,5 @@ export enum HighScoreListFilterType {
     POINTS,
     LEVEL_POINTS,
     RANK,
+    NAME
 }

@@ -7,7 +7,7 @@
 </app-highscore-list-filter>
 
 <div class="row" *ngIf="isPageLoaded">
-  <div class="col-12 col-md-4" *ngFor="let highscore of allHighScores.highScores">
+  <div class="col-12 col-md-3" *ngFor="let highscore of filteredHighScores">
     <app-highscore [highscore]="highscore" [currentHighScoreType]="allHighScores.highScoreType"></app-highscore>
   </div>
 </div>

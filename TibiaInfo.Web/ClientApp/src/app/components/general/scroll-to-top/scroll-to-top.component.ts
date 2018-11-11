@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   }
 })
 export class ScrollToTopComponent implements OnInit {
-  private showGoToTheTopButton: boolean = false;
+  showGoToTheTopButton: boolean = false;
   private initialY: number;
 
   constructor() { }
@@ -18,11 +18,11 @@ export class ScrollToTopComponent implements OnInit {
     this.initialY = document.documentElement.scrollTop || document.body.scrollTop;
   }
 
-  private scrollToTheTop(): void {
-    document.getElementById('app-root').scrollIntoView({behavior:'smooth', block:'start', inline:'start'});
+  scrollToTheTop(): void {
+    document.getElementById('app-root').scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
   }
 
-  private onWindowScroll(): void {
+  onWindowScroll(): void {
     if (this.initialY) {
       if (this.initialY > window.scrollY) {
         this.showGoToTheTopButton = false;

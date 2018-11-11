@@ -17,8 +17,8 @@ import { HouseStatusType } from 'src/app/enums/house-status-type.enum';
 })
 export class HouseListFilterComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Output() public searchHousesEvent = new EventEmitter<HouseListSearchEvent>();
-  @Output() public houseSearchControlChange = new EventEmitter<string>();
+  @Output() searchHousesEvent = new EventEmitter<HouseListSearchEvent>();
+  @Output() houseSearchControlChange = new EventEmitter<string>();
   private _houseOptions: string[];
   @Input()
   get houseOptions(): string[] {
@@ -29,22 +29,22 @@ export class HouseListFilterComponent implements OnInit, AfterViewInit, OnDestro
     this.filteredHouseOptions = this.getHouseSearchOptions('');
   }
 
-  @Input() public showAdditionalFilters: boolean = false;
+  @Input() showAdditionalFilters: boolean = false;
 
-  private isPageLoaded: boolean = false;
+  isPageLoaded: boolean = false;
   private subscriptions: Subscription[] = [];
 
-  private worldSearchControl = new FormControl();
-  private houseSearchControl = new FormControl();
+  worldSearchControl = new FormControl();
+  houseSearchControl = new FormControl();
 
-  private currentWorld: string;
+  currentWorld: string;
   private worlds: string[] = [];
-  private filteredWorldOptions: string[] = [];
+  filteredWorldOptions: string[] = [];
 
-  private filteredHouseOptions: string[] = [];
+  filteredHouseOptions: string[] = [];
 
-  private currentTown: TownsType;
-  private townsOptions: TownsType[] = [
+  currentTown: TownsType;
+  townsOptions: TownsType[] = [
     // TownsType.AB_DENDRIEL,
     // TownsType.ANKRAHMUN,
     // TownsType.CARLIN,
@@ -62,8 +62,8 @@ export class HouseListFilterComponent implements OnInit, AfterViewInit, OnDestro
     // TownsType.YALAHAR
   ];
 
-  private currentHouseStatus: ItemModel;
-  private houseStatusOptions: ItemModel[] = [
+  currentHouseStatus: ItemModel;
+  houseStatusOptions: ItemModel[] = [
     {
       id: -1,
       selected: true,
@@ -85,8 +85,8 @@ export class HouseListFilterComponent implements OnInit, AfterViewInit, OnDestro
       text: 'Rented'
     }];
 
-  private currentSortDirection: ItemModel;
-  private sortDirections: ItemModel[] = [
+  currentSortDirection: ItemModel;
+  sortDirections: ItemModel[] = [
     {
       id: SortDirectionType.ASCENDING,
       text: 'Ascending',
@@ -97,8 +97,8 @@ export class HouseListFilterComponent implements OnInit, AfterViewInit, OnDestro
       selected: false
     }];
 
-  private currentSortOrder: ItemModel;
-  private sortOrders: ItemModel[] = [
+  currentSortOrder: ItemModel;
+  sortOrders: ItemModel[] = [
     {
       id: 0,
       text: 'Name',
@@ -124,7 +124,7 @@ export class HouseListFilterComponent implements OnInit, AfterViewInit, OnDestro
       text: 'Auction End',
       selected: false
     }];
-  private currentHouseType: string = 'Houses';
+  currentHouseType: string = 'Houses';
   private _showGuildHalls: boolean = false;
   get showGuildHalls(): boolean {
     return this._showGuildHalls;
@@ -195,7 +195,7 @@ export class HouseListFilterComponent implements OnInit, AfterViewInit, OnDestro
       .filter(house => house.toLowerCase().includes(filterValue))
   }
 
-  private searchHouses(): void {
+  searchHouses(): void {
     if (this.worlds.indexOf(this.currentWorld) < 0) {
       this.appService.showMessage('You must select world');
       return;

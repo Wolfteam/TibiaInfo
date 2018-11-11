@@ -63,8 +63,8 @@ export class AppComponent implements OnInit {
     17: false,
     16: false
   };
-  private totalNumberOfPlayersOnline: number = 0;
-  private isTotalNumberOfPlayersSpinnerVisible: boolean = false;
+  totalNumberOfPlayersOnline: number = 0;
+  isTotalNumberOfPlayersSpinnerVisible: boolean = false;
 
   constructor(
     private appService: AppService,
@@ -92,7 +92,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  private onSideNavItemClick(itemID: number): void {
+  onSideNavItemClick(itemID: number): void {
     console.log("Click on side nav item id: " + itemID)
     this.isSideNavOpened = !this.isSideNavOpened;
   }

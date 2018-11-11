@@ -11,7 +11,7 @@ export class HighscoreComponent implements OnInit {
 
   @Input() highscore: HighScore;
   @Input() currentHighScoreType: HighScoreType;
-  //TODO: POINTS SHOULD BE IN CURRENCY OR|
+  
   constructor() { }
 
   ngOnInit() {

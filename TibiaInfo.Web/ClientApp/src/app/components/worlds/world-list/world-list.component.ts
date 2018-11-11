@@ -13,10 +13,10 @@ import { WorldListSortFilterType } from 'src/app/enums/world-list-sort-filter-ty
 })
 export class WorldListComponent implements OnInit {
 
-  private isPageLoaded: boolean;
+  isPageLoaded: boolean;
   private worlds: SimpleWorld[] = [];
-  private filteredWorlds: SimpleWorld[] = [];
-  private filteredWorldOptions: string[] = [];
+  filteredWorlds: SimpleWorld[] = [];
+  filteredWorldOptions: string[] = [];
 
   constructor(
     private appService: AppService,
@@ -44,11 +44,11 @@ export class WorldListComponent implements OnInit {
       () => this.appService.showMainProgressBar(false));
   }
 
-  private onWorldSelected(event: MatAutocompleteSelectedEvent): void {
+  onWorldSelected(event: MatAutocompleteSelectedEvent): void {
     console.log(event.option);
   }
 
-  private filterWorlds(tuple: [string, WorldListSortFilterType, SortDirectionType, number]): void {
+  filterWorlds(tuple: [string, WorldListSortFilterType, SortDirectionType, number]): void {
     const search: string = tuple[0].toLowerCase();
     const sortOrder: WorldListSortFilterType = tuple[1];
     const sortDirection: SortDirectionType = tuple[2];

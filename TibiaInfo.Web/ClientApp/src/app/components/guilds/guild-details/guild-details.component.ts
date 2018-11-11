@@ -17,14 +17,14 @@ import { VocationHelper } from 'src/app/helpers/vocation.helpers';
 })
 export class GuildDetailsComponent implements OnInit, OnDestroy {
   //TODO: I need to show if the guild is at war or not
-  private isPageLoaded: boolean = false;
+  isPageLoaded: boolean = false;
+  guild: Guild;
+
+  filteredRanks: GuildRank[];
+
+  filteredGuildMemberOptions: string[] = [];
+  filteredGuildRankOptions: string[] = [];
   private subscriptions: Subscription[] = [];
-  private guild: Guild;
-
-  private filteredRanks: GuildRank[];
-
-  private filteredGuildMemberOptions: string[] = [];
-  private filteredGuildRankOptions: string[] = [];
 
   constructor(
     private appService: AppService,
@@ -80,7 +80,7 @@ export class GuildDetailsComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  private sortGuildMembers(tuple: [string, string, GuildMemberSortFilterType, SortDirectionType, number]): void {
+  sortGuildMembers(tuple: [string, string, GuildMemberSortFilterType, SortDirectionType, number]): void {
     const characterSearch: string = tuple[0].toLowerCase();
     const rankSearch: string = tuple[1].toLowerCase();
     const sortOrder: GuildMemberSortFilterType = tuple[2];

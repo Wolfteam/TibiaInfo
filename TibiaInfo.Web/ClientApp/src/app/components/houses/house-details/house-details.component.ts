@@ -11,32 +11,32 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./house-details.component.css']
 })
 export class HouseDetailsComponent implements OnInit, OnDestroy {
-  
-  private house: House;
-  private isPageLoaded: boolean = false;
+
+  house: House;
+  isPageLoaded: boolean = false;
   private subscriptions: Subscription[] = [];
 
   constructor(
     private appService: AppService,
     private houseService: HouseService,
     private activatedRoute: ActivatedRoute
-    ) { }
+  ) { }
 
-    ngOnInit(): void {
-      this.appService.showMainProgressBar(true);
-      this.appService.showBackButton(true);
-      this.appService.setBackRouterPath('/houses');
+  ngOnInit(): void {
+    this.appService.showMainProgressBar(true);
+    this.appService.showBackButton(true);
+    this.appService.setBackRouterPath('/houses');
 
-      this.subscriptions.push(
-        this.activatedRoute.paramMap.subscribe(params => {
-          const world = params.get('world');
-          const houseId = params.get('id');
+    this.subscriptions.push(
+      this.activatedRoute.paramMap.subscribe(params => {
+        const world = params.get('world');
+        const houseId = params.get('id');
         if (houseId === null || world === null) {
           this.appService.showMessage('You need to provide a valid world name and a house id');
           return;
         }
         this.appService.changeMaintTitle(`Houses - ${world} - ${houseId}`);
-        
+
         this.houseService.getHouse(world, +houseId).subscribe(r => {
           if (r.succeed) {
             this.house = r.result;
@@ -50,12 +50,11 @@ export class HouseDetailsComponent implements OnInit, OnDestroy {
           this.appService.showMessage('An unknown error occurred while trying to get all the worlds.');
         },
           () => this.appService.showMainProgressBar(false))
-        })
-        );
-      }
-      
-      ngOnDestroy(): void {
-        this.subscriptions.forEach(s => s.unsubscribe());
-      }
-    }
-    
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
+}

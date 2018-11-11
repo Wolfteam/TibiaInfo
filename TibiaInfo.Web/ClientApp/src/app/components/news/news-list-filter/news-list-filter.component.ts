@@ -14,10 +14,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Output() public filterChangedEvent: EventEmitter<[string, NewsListSortFilterType, SortDirectionType]> = new EventEmitter<[string, NewsListSortFilterType, SortDirectionType]>();
-  @Output() public searchNewsEvent: EventEmitter<NewsType> = new EventEmitter<NewsType>();
-  @Input() public filteredNewsOptions: string[] = [];
-  @Input() public isPageLoaded: boolean = false;
+  @Output() filterChangedEvent: EventEmitter<[string, NewsListSortFilterType, SortDirectionType]> = new EventEmitter<[string, NewsListSortFilterType, SortDirectionType]>();
+  @Output() searchNewsEvent: EventEmitter<NewsType> = new EventEmitter<NewsType>();
+  @Input() filteredNewsOptions: string[] = [];
+  @Input() isPageLoaded: boolean = false;
   private _isNewsTypeSelectControlEnabled: boolean = true;
   @Input()
   get isNewsTypeSelectControlEnabled(): boolean {
@@ -32,12 +32,12 @@ export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   private subscriptions: Subscription[] = [];
-  private newsSearchControl = new FormControl();
-  private newsTypeSelectControl = new FormControl();
+  newsSearchControl = new FormControl();
+  newsTypeSelectControl = new FormControl();
 
-  private currentSearch: string = '';
-  private currentSortOrder: number = NewsListSortFilterType.CREATION_DATE;
-  private sortOrders: ItemModel[] = [
+  currentSearch: string = '';
+  currentSortOrder: number = NewsListSortFilterType.CREATION_DATE;
+  sortOrders: ItemModel[] = [
     {
       id: NewsListSortFilterType.TITLE,
       text: 'Title',
@@ -47,8 +47,8 @@ export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy
       text: 'Creation date',
       selected: true
     }];
-  private currentSortDirection: ItemModel;
-  private sortDirections: ItemModel[] = [
+  currentSortDirection: ItemModel;
+  sortDirections: ItemModel[] = [
     {
       id: SortDirectionType.ASCENDING,
       text: 'Ascending',
@@ -58,8 +58,8 @@ export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy
       text: 'Descending',
       selected: true
     }];
-  private currentNewsType: NewsType;
-  private newsTypes: ItemModel[] = [
+  currentNewsType: NewsType;
+  newsTypes: ItemModel[] = [
     {
       id: NewsType.FEATURED_ARTICLE,
       selected: false,
@@ -74,8 +74,6 @@ export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy
       text: 'News Tickers'
     }];
 
-  private loadFromParams: boolean = false;
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router
@@ -84,7 +82,7 @@ export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy
   ngOnInit(): void {
     this.currentSortDirection = this.sortDirections[1];
     const newsTypeParam = +this.activatedRoute.snapshot.queryParamMap.get('newsType');
-    const currentNewsType = !isNaN(newsTypeParam) && this.activatedRoute.snapshot.queryParamMap.has('newsType')?
+    const currentNewsType = !isNaN(newsTypeParam) && this.activatedRoute.snapshot.queryParamMap.has('newsType') ?
       this.newsTypes.find(nt => nt.id === newsTypeParam).id : NewsType.LATEST_NEWS;
     this.currentNewsType = currentNewsType;
     this.newsTypeSelectControl.setValue(currentNewsType)
@@ -110,7 +108,7 @@ export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  private searchNews(): void {
+  searchNews(): void {
     // changes the route without moving from the current view or
     // triggering a navigation event,
     this.router.navigate([], {
@@ -126,11 +124,11 @@ export class NewsListFilterComponent implements OnInit, AfterViewInit, OnDestroy
     this.searchNewsEvent.emit(this.currentNewsType);
   }
 
-  private onSortDirectionChange(sortDirection: SortDirectionType): void {
+  onSortDirectionChange(sortDirection: SortDirectionType): void {
     this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, sortDirection]);
   }
 
-  private onOrderChange(sortOrder: NewsListSortFilterType): void {
+  onOrderChange(sortOrder: NewsListSortFilterType): void {
     this.filterChangedEvent.emit([this.currentSearch, sortOrder, this.currentSortDirection.id]);
   }
 }

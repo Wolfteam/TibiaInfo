@@ -13,14 +13,14 @@ import { WorldPvPType } from 'src/app/enums/world-pvp-type.enum';
 })
 export class WorldListFilterComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Output() public filterChangedEvent: EventEmitter<[string, WorldListSortFilterType, SortDirectionType, number]> = new EventEmitter<[string, WorldListSortFilterType, SortDirectionType, number]>();
-  @Input() public filteredWorldOptions: string[] = [];
+  @Output() filterChangedEvent: EventEmitter<[string, WorldListSortFilterType, SortDirectionType, number]> = new EventEmitter<[string, WorldListSortFilterType, SortDirectionType, number]>();
+  @Input() filteredWorldOptions: string[] = [];
 
   private subscriptions: Subscription[] = [];
-  private worldSearchControl = new FormControl();
-  private currentSearch: string = '';
-  private currentSortOrder: number = WorldListSortFilterType.NAME;
-  private sortOrders: ItemModel[] = [
+  worldSearchControl = new FormControl();
+  currentSearch: string = '';
+  currentSortOrder: number = WorldListSortFilterType.NAME;
+  sortOrders: ItemModel[] = [
     {
       id: WorldListSortFilterType.NAME,
       text: 'Name',
@@ -30,8 +30,8 @@ export class WorldListFilterComponent implements OnInit, AfterViewInit, OnDestro
       text: 'Players Online',
       selected: false
     }];
-  private currentSortDirection: ItemModel;
-  private sortDirections: ItemModel[] = [
+  currentSortDirection: ItemModel;
+  sortDirections: ItemModel[] = [
     {
       id: SortDirectionType.ASCENDING,
       text: 'Ascending',
@@ -41,8 +41,8 @@ export class WorldListFilterComponent implements OnInit, AfterViewInit, OnDestro
       text: 'Descending',
       selected: false
     }];
-  private currentSortPvpType: ItemModel;
-  private sortPvpTypes: ItemModel[] = [
+  currentSortPvpType: ItemModel;
+  sortPvpTypes: ItemModel[] = [
     {
       id: -1,
       text: 'All',
@@ -90,15 +90,15 @@ export class WorldListFilterComponent implements OnInit, AfterViewInit, OnDestro
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  private onOrderOrderChange(sortOrder: number): void {
+  onOrderOrderChange(sortOrder: number): void {
     this.filterChangedEvent.emit([this.currentSearch, sortOrder, this.currentSortDirection.id, this.currentSortPvpType.id]);
   }
 
-  private onSortDirectionChange(sortMode: number): void {
+  onSortDirectionChange(sortMode: number): void {
     this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, sortMode, this.currentSortPvpType.id]);
   }
 
-  private onSortPvPTypeChange(sortPvp: number): void {
+  onSortPvPTypeChange(sortPvp: number): void {
     this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, this.currentSortDirection.id, sortPvp]);
   }
 }

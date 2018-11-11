@@ -13,11 +13,11 @@ import { SimpleHouse } from 'src/app/models/houses/simple-house.model';
 })
 export class HouseListComponent implements OnInit, OnDestroy {
   //TODO: Loading indicator does not hide when you fast switch between pages
-  private showHouses: boolean = false;
+  showHouses: boolean = false;
   private subscriptions: Subscription[] = [];
   private allHouses: AllHouses;
-  private filteredHouses: SimpleHouse[] = [];
-  private houseOptions: string[] = [];
+  filteredHouses: SimpleHouse[] = [];
+  houseOptions: string[] = [];
 
   constructor(
     private appService: AppService,
@@ -33,7 +33,7 @@ export class HouseListComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  private searchHouses(event: HouseListSearchEvent): void {
+  searchHouses(event: HouseListSearchEvent): void {
     this.showHouses = false;
     this.appService.showMainProgressBar(true);
 
@@ -58,7 +58,7 @@ export class HouseListComponent implements OnInit, OnDestroy {
     );
   }
 
-  private filterHouses(value: string) {
+  filterHouses(value: string) {
     this.filteredHouses = this.allHouses.houses
       .filter(h => h.name.toLowerCase().includes(value.toLowerCase()));
   }

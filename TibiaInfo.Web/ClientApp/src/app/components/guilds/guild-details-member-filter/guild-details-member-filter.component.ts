@@ -12,19 +12,19 @@ import { GuildMemberSortFilterType } from 'src/app/enums/guild-member-sort-filte
   styleUrls: ['./guild-details-member-filter.component.css']
 })
 export class GuildDetailsMemberFilterComponent implements OnInit {
-  @Output() public filterChangedEvent: EventEmitter<[string, string, GuildMemberSortFilterType, SortDirectionType, number]> = new EventEmitter<[string, string, GuildMemberSortFilterType, SortDirectionType, number]>();
-  @Input() public filteredGuildMemberOptions: string[] = [];
-  @Input() public filteredGuildRankOptions: string[] = [];
+  @Output() filterChangedEvent: EventEmitter<[string, string, GuildMemberSortFilterType, SortDirectionType, number]> = new EventEmitter<[string, string, GuildMemberSortFilterType, SortDirectionType, number]>();
+  @Input() filteredGuildMemberOptions: string[] = [];
+  @Input() filteredGuildRankOptions: string[] = [];
 
   private subscriptions: Subscription[] = [];
-  private guildMemberSearchControl: FormControl = new FormControl();
-  private guildRankSearchControl: FormControl = new FormControl();
+  guildMemberSearchControl: FormControl = new FormControl();
+  guildRankSearchControl: FormControl = new FormControl();
 
-  private currentGuildMemberSearch: string = '';
-  private currentGuildRankSearch: string = '';
+  currentGuildMemberSearch: string = '';
+  currentGuildRankSearch: string = '';
 
-  private currentSortOrder: number = GuildMemberSortFilterType.NAME;
-  private sortOrders: ItemModel[] = [
+  currentSortOrder: number = GuildMemberSortFilterType.NAME;
+  sortOrders: ItemModel[] = [
     {
       id: GuildMemberSortFilterType.RANK,
       text: 'Rank',
@@ -46,8 +46,8 @@ export class GuildDetailsMemberFilterComponent implements OnInit {
       text: 'Joined Date',
       selected: false
     }];
-  private currentSortDirection: ItemModel;
-  private sortDirections: ItemModel[] = [
+  currentSortDirection: ItemModel;
+  sortDirections: ItemModel[] = [
     {
       id: SortDirectionType.ASCENDING,
       text: 'Ascending',
@@ -57,8 +57,8 @@ export class GuildDetailsMemberFilterComponent implements OnInit {
       text: 'Descending',
       selected: false
     }];
-  private currentSortVocation: ItemModel;
-  private sortVocations: ItemModel[] = [
+  currentSortVocation: ItemModel;
+  sortVocations: ItemModel[] = [
     {
       id: -1,
       selected: true,
@@ -127,16 +127,16 @@ export class GuildDetailsMemberFilterComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
-  
-  private onSortOrderChange(sortOrder: number): void {
+
+  onSortOrderChange(sortOrder: number): void {
     this.filterChangedEvent.emit([this.currentGuildMemberSearch, this.currentGuildRankSearch, sortOrder, this.currentSortDirection.id, this.currentSortVocation.id]);
   }
 
-  private onSortDirectionChange(sortDirection: number): void {
+  onSortDirectionChange(sortDirection: number): void {
     this.filterChangedEvent.emit([this.currentGuildMemberSearch, this.currentGuildRankSearch, this.currentSortOrder, sortDirection, this.currentSortVocation.id]);
   }
 
-  private onSortVocationChange(vocation: number): void {
+  onSortVocationChange(vocation: number): void {
     this.filterChangedEvent.emit([this.currentGuildMemberSearch, this.currentGuildRankSearch, this.currentSortOrder, this.currentSortDirection.id, vocation]);
   }
 }

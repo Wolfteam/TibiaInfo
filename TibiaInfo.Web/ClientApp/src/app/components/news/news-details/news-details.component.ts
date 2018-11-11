@@ -12,9 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class NewsDetailsComponent implements OnInit {
 
-  private isPageLoaded: boolean = false;
+  isPageLoaded: boolean = false;
   private subscriptions: Subscription[] = [];
-  private news: News;
+  news: News;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,7 +22,7 @@ export class NewsDetailsComponent implements OnInit {
     private newsService: NewsService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.appService.showMainProgressBar(true);
     this.appService.showBackButton(true);
     this.appService.setBackRouterPath('/news');

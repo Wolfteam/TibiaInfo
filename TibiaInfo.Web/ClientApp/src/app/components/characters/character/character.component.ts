@@ -8,23 +8,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./character.component.css']
 })
 export class CharacterComponent implements OnInit {
-  @Input() public character: SimpleCharacter;
-  @Output() public characterRemoved: EventEmitter<SimpleCharacter> = new EventEmitter<SimpleCharacter>();
+  @Input() character: SimpleCharacter;
+  @Output() characterRemoved: EventEmitter<SimpleCharacter> = new EventEmitter<SimpleCharacter>();
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  private removeCharacter(): void {
+  removeCharacter(): void {
     this.characterRemoved.emit(this.character);
   }
 
-  private showDetails(): void {
+  showDetails(): void {
     this.router.navigate(['/character', this.character.name])
   }
 
-  private showWorld(): void {
+  showWorld(): void {
     this.router.navigate(['/world', this.character.world])
   }
 }

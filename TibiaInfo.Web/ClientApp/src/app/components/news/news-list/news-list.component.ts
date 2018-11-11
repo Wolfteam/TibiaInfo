@@ -15,12 +15,12 @@ import { SimpleNews } from 'src/app/models/news/simple-news.model';
 })
 export class NewsListComponent implements OnInit, OnDestroy {
 
-  private isPageLoaded: boolean = false;
+  isPageLoaded: boolean = false;
   private subscriptions: Subscription[] = [];
   private allNews: AllNews;
-  private filteredNews: SimpleNews[] = [];
-  private filteredNewsOptions: string[] = [];
-  private isNewsTypeSelectControlEnabled: boolean = true;
+  filteredNews: SimpleNews[] = [];
+  filteredNewsOptions: string[] = [];
+  isNewsTypeSelectControlEnabled: boolean = true;
 
   constructor(
     private appService: AppService,
@@ -36,7 +36,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  private searchNews(newsType: NewsType): void {
+  searchNews(newsType: NewsType): void {
     this.isPageLoaded =
       this.isNewsTypeSelectControlEnabled = false;
     this.appService.showMainProgressBar(true)
@@ -60,7 +60,7 @@ export class NewsListComponent implements OnInit, OnDestroy {
       ));
   }
 
-  private sortNews(tuple: [string, NewsListSortFilterType, SortDirectionType]): void {
+  sortNews(tuple: [string, NewsListSortFilterType, SortDirectionType]): void {
     const search: string = tuple[0].toLowerCase();
     const sortOrder: NewsListSortFilterType = tuple[1];
     const sortDirection: SortDirectionType = tuple[2];

@@ -11,8 +11,8 @@ import { AppService } from '../../../services/app.service';
 })
 export class CharacterListComponent implements OnInit, OnDestroy {
 
-  subscriptions: Subscription[] = [];
   characters: SimpleCharacter[] = [];
+  private subscriptions: Subscription[] = [];
 
   constructor(private appService: AppService, private characterService: CharacterService) { }
 

@@ -11,11 +11,11 @@ import { AppService } from '../../../services/app.service';
 })
 export class CharacterDetailsComponent implements OnInit {
   //TODO: I should show a link in the character deaths when any of the involved appear in the text
-  private isPageLoaded: boolean;
-  private character: Character;
-  private isInFavorites: boolean = false;
-  private displayedColumns: string[] = ['name', 'world', 'status'];
-  private characterNotFound: boolean = false;
+  isPageLoaded: boolean;
+  character: Character;
+  isInFavorites: boolean = false;
+  displayedColumns: string[] = ['name', 'world', 'status'];
+  characterNotFound: boolean = false;
   //dataSource: MatTableDataSource<OtherCharacter>;
   //@ViewChild(MatSort) sort: MatSort;
 

@@ -14,10 +14,10 @@ import { SortDirectionType } from 'src/app/enums/sort-direction-type.enum';
 })
 export class GuildListFilterComponent implements OnInit, OnDestroy {
 
-  @Output() public worldSelectionChangeEvent: EventEmitter<string> = new EventEmitter<string>();
-  @Output() public sortDirectionChangeEvent: EventEmitter<[string, SortDirectionType]> = new EventEmitter<[string, SortDirectionType]>();
-  @Input() public showAdditionalFilters: boolean = false;
-  @Input() public filteredGuildsOptions: string[] = [];
+  @Output() worldSelectionChangeEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output() sortDirectionChangeEvent: EventEmitter<[string, SortDirectionType]> = new EventEmitter<[string, SortDirectionType]>();
+  @Input() showAdditionalFilters: boolean = false;
+  @Input() filteredGuildsOptions: string[] = [];
   private _isWorldSearchControlEnabled: boolean = true;
   @Input()
   get isWorldSearchControlEnabled(): boolean {
@@ -32,17 +32,17 @@ export class GuildListFilterComponent implements OnInit, OnDestroy {
   }
 
 
-  private isPageLoaded: boolean = false;
+  isPageLoaded: boolean = false;
   private subscriptions: Subscription[] = [];
-  private worldSearchControl = new FormControl();
+  worldSearchControl = new FormControl();
   private worlds: string[] = [];
-  private currentSelectedWorld: string;
-  private filteredWorldOptions: string[] = [];
+  currentSelectedWorld: string;
+  filteredWorldOptions: string[] = [];
 
-  private guildSearchControl = new FormControl();
-  private currentSearch: string = '';
-  private currentSortDirection: ItemModel;
-  private sortDirections: ItemModel[] = [
+  guildSearchControl = new FormControl();
+  currentSearch: string = '';
+  currentSortDirection: ItemModel;
+  sortDirections: ItemModel[] = [
     {
       id: SortDirectionType.ASCENDING,
       text: 'Ascending',

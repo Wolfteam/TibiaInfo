@@ -14,17 +14,17 @@ import { VocationType } from 'src/app/enums/vocation-type.enum';
 })
 export class WorldDetailsPlayerFilterComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Output() public filterChangedEvent: EventEmitter<[string, CharacterSortFilterType, SortDirectionType, number]> = new EventEmitter<[string, CharacterSortFilterType, SortDirectionType, number]>();
-  @Output() public worldPlayerSelectedEvent: EventEmitter<string> = new EventEmitter<string>();
-  @Input() public filteredWorldPlayersOptions: string[] = [];
+  @Output() filterChangedEvent: EventEmitter<[string, CharacterSortFilterType, SortDirectionType, number]> = new EventEmitter<[string, CharacterSortFilterType, SortDirectionType, number]>();
+  @Output() worldPlayerSelectedEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Input() filteredWorldPlayersOptions: string[] = [];
 
   private subscription: Subscription[] = [];
-  private worldPlayersSearchControl: FormControl = new FormControl();
-  private filteredWorldPlayers: SimpleCharacter[] = [];
+  worldPlayersSearchControl: FormControl = new FormControl();
+  filteredWorldPlayers: SimpleCharacter[] = [];
 
-  private currentSearch: string = '';
-  private currentSortOrder: number = CharacterSortFilterType.NAME;
-  private sortOrders: ItemModel[] = [
+  currentSearch: string = '';
+  currentSortOrder: number = CharacterSortFilterType.NAME;
+  sortOrders: ItemModel[] = [
     {
       id: CharacterSortFilterType.NAME,
       text: 'Name',
@@ -38,8 +38,8 @@ export class WorldDetailsPlayerFilterComponent implements OnInit, AfterViewInit,
       text: 'Vocation',
       selected: false
     }];
-  private currentSortDirection: ItemModel;
-  private sortDirections: ItemModel[] = [
+  currentSortDirection: ItemModel;
+  sortDirections: ItemModel[] = [
     {
       id: SortDirectionType.ASCENDING,
       text: 'Ascending',
@@ -49,8 +49,8 @@ export class WorldDetailsPlayerFilterComponent implements OnInit, AfterViewInit,
       text: 'Descending',
       selected: false
     }];
-  private currentSortVocation: ItemModel;
-  private sortVocations: ItemModel[] = [
+  currentSortVocation: ItemModel;
+  sortVocations: ItemModel[] = [
     {
       id: -1,
       selected: true,
@@ -122,19 +122,19 @@ export class WorldDetailsPlayerFilterComponent implements OnInit, AfterViewInit,
     this.subscription.forEach(s => s.unsubscribe());
   }
 
-  private onWorldPlayerSelected(name: string): void {
+  onWorldPlayerSelected(name: string): void {
     this.worldPlayerSelectedEvent.emit(name);
   }
 
-  private onSortOrderChange(sortOrder: number): void {
+  onSortOrderChange(sortOrder: number): void {
     this.filterChangedEvent.emit([this.currentSearch, sortOrder, this.currentSortDirection.id, this.currentSortVocation.id]);
   }
-  
-  private onSortDirectionChange(sortDirection: number): void {
+
+  onSortDirectionChange(sortDirection: number): void {
     this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, sortDirection, this.currentSortVocation.id]);
   }
 
-  private onSortVocationChange(vocation: number): void {
+  onSortVocationChange(vocation: number): void {
     this.filterChangedEvent.emit([this.currentSearch, this.currentSortOrder, this.currentSortDirection.id, vocation]);
   }
 }

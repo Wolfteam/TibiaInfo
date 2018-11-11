@@ -10,7 +10,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-mini-fab color="accent" (click)="searchNews()">
+    <button mat-mini-fab color="accent" (click)="searchNews()" [disabled]="!isNewsTypeSelectControlEnabled">
       <mat-icon>search</mat-icon>
     </button>
   </div>

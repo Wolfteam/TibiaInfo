@@ -9,14 +9,14 @@ import { Router } from '@angular/router';
 })
 export class NewsComponent implements OnInit {
 
-  @Input() public news: SimpleNews;
+  @Input() news: SimpleNews;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  private showDetails(): void {
+  showDetails(): void {
     this.router.navigate(['/news', this.news.id])
   }
 }

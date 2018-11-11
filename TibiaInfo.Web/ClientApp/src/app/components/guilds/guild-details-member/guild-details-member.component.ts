@@ -8,10 +8,13 @@ import { GuildMemberCharacter } from 'src/app/models/guilds/guild-member-charact
 })
 export class GuildDetailsMemberComponent implements OnInit {
 
-  @Input() public character: GuildMemberCharacter;
+  @Input() character: GuildMemberCharacter;
   constructor() { }
 
   ngOnInit() {
   }
 
+  removeCharacter(): void {
+    //TODO: IMPLEMENT THIS
+  }
 }

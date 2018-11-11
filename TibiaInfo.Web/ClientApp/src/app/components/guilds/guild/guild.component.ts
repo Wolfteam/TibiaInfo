@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class GuildComponent implements OnInit {
 
-  @Input() public guild: BaseGuild;
+  @Input() guild: BaseGuild;
 
   constructor(private router: Router) { }
 
@@ -17,7 +17,7 @@ export class GuildComponent implements OnInit {
 
   }
 
-  private showDetails(): void {
+  showDetails(): void {
     this.router.navigate(['guild', this.guild.name])
   }
 }

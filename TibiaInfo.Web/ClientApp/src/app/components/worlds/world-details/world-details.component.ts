@@ -24,11 +24,11 @@ export class WorldDetailsComponent implements OnInit, OnDestroy {
   //TODO: Implement a way to add/ remove the char from the cookies, maybe you will find trouble with this
   //TODO: When going back to the world list component the filter should be as they were left
   //TODO: maybe use query params to filter
-  private isPageLoaded: boolean;
-  private world: World;
+  isPageLoaded: boolean;
+  world: World;
   private subscription: Subscription[] = [];
-  private filteredWorldPlayers: SimpleCharacter[] = [];
-  private filteredWorldPlayersOptions: string[] = [];
+  filteredWorldPlayers: SimpleCharacter[] = [];
+  filteredWorldPlayersOptions: string[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -91,14 +91,14 @@ export class WorldDetailsComponent implements OnInit, OnDestroy {
     this.subscription.forEach(s => s.unsubscribe());
   }
 
-  private onWorldPlayerSelected(name: string): void {
+  onWorldPlayerSelected(name: string): void {
     this.worldPlayersViewPort.scrollTo({
       start: 0,
       top: 0
     });
   }
 
-  private filterWorldPlayers(tuple: [string, CharacterSortFilterType, SortDirectionType, number]): void {
+  filterWorldPlayers(tuple: [string, CharacterSortFilterType, SortDirectionType, number]): void {
     const search: string = tuple[0].toLowerCase();
     const sortOrder: CharacterSortFilterType = tuple[1];
     const sortDirection: SortDirectionType = tuple[2];

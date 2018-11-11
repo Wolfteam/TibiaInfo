@@ -13,14 +13,14 @@ import { BaseGuild } from 'src/app/models/guilds/base-guild.model';
 })
 export class GuildListComponent implements OnInit {
 
-  private isPageLoaded: boolean = false;
-  private showAdditionalFilters: boolean = false;
+  isPageLoaded: boolean = false;
+  showAdditionalFilters: boolean = false;
   private subscriptions: Subscription[] = [];
-  private guilds: AllGuilds;
-  private filteredActiveGuilds: BaseGuild[] = [];
-  private filteredFormationGuilds: BaseGuild[] = [];
-  private filteredGuildsOptions: string[] = [];
-  private isWorldSearchControlEnabled: boolean = true;
+  guilds: AllGuilds;
+  filteredActiveGuilds: BaseGuild[] = [];
+  filteredFormationGuilds: BaseGuild[] = [];
+  filteredGuildsOptions: string[] = [];
+  isWorldSearchControlEnabled: boolean = true;
 
   constructor(
     private appService: AppService,
@@ -32,7 +32,7 @@ export class GuildListComponent implements OnInit {
     this.appService.showBackButton(false);
   }
 
-  private getAllGuilds(world: string): void {
+  getAllGuilds(world: string): void {
     this.showAdditionalFilters = false;
     this.isWorldSearchControlEnabled = false;
     this.appService.showMainProgressBar(true);
@@ -58,7 +58,7 @@ export class GuildListComponent implements OnInit {
     );
   }
 
-  private sortGuilds(tuple: [string, SortDirectionType]): void {
+  sortGuilds(tuple: [string, SortDirectionType]): void {
     const search: string = tuple[0].toLowerCase();
     const sortDirection: SortDirectionType = tuple[1];
 

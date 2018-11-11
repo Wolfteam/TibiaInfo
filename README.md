@@ -1,6 +1,8 @@
 <h1 align="center">Tibia Info</h1>
+<p align="center">
+  A simple Tibia app that provides data in a convenient way.
+</p>
 
-A simple Tibia app that provides data in a convenient way.
 ## Screenshots
 
 ### Characters

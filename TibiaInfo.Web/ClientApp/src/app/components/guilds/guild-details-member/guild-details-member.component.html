@@ -1,0 +1,35 @@
+<mat-card class="guild-member-card mat-elevation-z8">
+  <!-- Card header -->
+  <mat-card-header class="row">
+    <a [routerLink]="['/character', character.name]">
+      <p><strong>{{character.name}} </strong> <span *ngIf="character.nick">(<small>{{character.nick}}</small>)</span></p>
+    </a>
+  </mat-card-header>
+
+  <!-- Card content -->
+  <mat-card-content>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <p><b>Level</b>: {{character.level}}</p>
+        </div>
+        <div class="col-sm-6">
+          <button class="float-right" [color]="character.isInFavorites ? 'warn': 'accent'" mat-icon-button (click)="removeCharacter()"
+            [matTooltip]="character.isInFavorites ?  'Remove from your favorite list' : 'Add this character to your favorite list'">
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </div>
+        <div class="col-12">
+          <p><b>Joined On</b>: {{character.joinedOn | date:'MMMM dd yyyy'}}</p>
+        </div>
+      </div>
+      <mat-chip-list>
+        <mat-chip selectable="false" color="primary" selected>
+          <span class="text-overflow" [matTooltip]="character.vocation | vocationTitle">Vocation:
+            {{character.vocation | vocationTitle}}</span>
+        </mat-chip>
+      </mat-chip-list>
+
+    </div>
+  </mat-card-content>
+</mat-card>

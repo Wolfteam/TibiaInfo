@@ -1,0 +1,13 @@
+mat-radio-button {
+  margin-right: 10px;
+}
+
+label {
+  text-align: center;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.selected-sort-mode-icon {
+  vertical-align: bottom;
+}

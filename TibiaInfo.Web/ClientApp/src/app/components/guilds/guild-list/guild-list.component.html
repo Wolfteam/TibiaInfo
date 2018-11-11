@@ -1,0 +1,32 @@
+<app-guild-list-filter (worldSelectionChangeEvent)="getAllGuilds($event)" (sortDirectionChangeEvent)="sortGuilds($event)"
+  [showAdditionalFilters]="showAdditionalFilters" [filteredGuildsOptions]="filteredGuildsOptions" [isWorldSearchControlEnabled]="isWorldSearchControlEnabled"></app-guild-list-filter>
+
+<div class="row" *ngIf="isPageLoaded">
+  <mat-accordion class="col-12" multi="true">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h4>Active - Total: {{guilds.active.length}}</h4>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <div class="col-md-4" *ngFor="let guild of filteredActiveGuilds">
+          <app-guild [guild]="guild"></app-guild>
+        </div>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel expanded="true" *ngIf="guilds.formation.length > 0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h4>Formation - Total: {{guilds.formation.length}}</h4>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <div class="col-md-4" *ngFor="let guild of filteredFormationGuilds">
+          <app-guild [guild]="guild"></app-guild>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

@@ -1,0 +1,86 @@
+<form *ngIf="isPageLoaded" [formGroup]="highScoreFilterForm">
+  <div class="row">
+    <div class="col-12">
+      <h4>Highscores Information</h4>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <!-- World Autocomplete -->
+    <div class="col-12 col-md-3">
+      <mat-form-field class="full-width">
+        <input type="text" placeholder="Select the world..." matInput formControlName="worldSearchControl"
+          [matAutocomplete]="world_auto">
+        <mat-autocomplete #world_auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredWorldOptions" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <!-- Highscore types -->
+    <div class="col-12 col-md-3">
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Select the category..." [(value)]="currentHighscore" formControlName="highscoresTypesControl">
+          <mat-option *ngFor="let option of highscoresOptions" [value]="option">
+            {{option | highscoreType}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- Vocation types -->
+    <div class="col-12 col-md-3">
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Select the vocation..." [(value)]="currentVocation" formControlName="vocationTypesControl">
+          <mat-option *ngFor="let option of vocationOptions" [value]="option">
+            {{option | vocationTitle}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-2">
+      <button class="search-button" mat-mini-fab color="accent" (click)="searchHighScores()" [disabled]="!isMainFilterEnabled">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+  </div>
+</form>
+
+<form class="row" *ngIf="showAdditionalFilters" [formGroup]="additionalFiltersForm">
+  <!-- Character autocomplete -->
+  <div class="col-12 col-md-3">
+    <mat-form-field class="full-width">
+      <input type="text" placeholder="Type the character..." matInput formControlName="characterSearchControl"
+        [matAutocomplete]="character_auto">
+      <mat-autocomplete #character_auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredCharacterOptions" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <!-- Sort Direction -->
+  <div class="col-12 col-md-3 align-self-center float-left">
+    <mat-form-field class="full-width">
+      <mat-select [(value)]="currentSortDirection" placeholder="Sort direction" formControlName="sortDirectionControl">
+        <mat-option *ngFor="let option of sortDirections" [value]="option">
+          <mat-icon>{{option.id === 0 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon> {{option.text}}
+        </mat-option>
+        <mat-select-trigger>
+          {{currentSortDirection.text}}
+        </mat-select-trigger>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <!-- Sort order -->
+  <div class="col-12 col-md-6 align-self-center">
+    <mat-icon>sort</mat-icon>
+    <label>Sort by: </label>
+    <mat-radio-group name="currentSortOrder" formControlName="sortOrderControl">
+      <mat-radio-button (click)="onSortOrderChange(order.id)" [checked]="order.selected" *ngFor="let order of sortOrders"
+        [value]="order.id">
+        {{order.text}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+</form>

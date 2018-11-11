@@ -1,0 +1,24 @@
+.character-card {
+  margin-bottom: 10px;
+}
+
+.character-img {
+  height: 50px;
+  margin-right: 20px;
+}
+
+.character-status-online {
+  background-color: green;
+}
+
+.character-status-offline {
+  background-color: red;
+}
+
+.character-status {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}

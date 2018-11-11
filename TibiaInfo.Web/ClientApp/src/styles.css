@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
+}
+
+.allButFooter {
+  margin-top: 20px;
+  min-height: calc(80vh - 60px);
+}
+
+.p-without-margin {
+  margin-bottom: initial;
+  margin-top: initial;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.medium-width {
+  width: 50%;
+}
+
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0px !important;
+}
+
+.custom-card-margin-bottom {
+  margin-bottom: 10px;
+}

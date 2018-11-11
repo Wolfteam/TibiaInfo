@@ -1,0 +1,30 @@
+<mat-card class="custom-card-margin-bottom mat-elevation-z8 ">
+  <!-- Card header -->
+  <mat-card-header class="row">
+    <span class="text-overflow" [matTooltip]="highscore.name">
+      <a [routerLink]="['/character', highscore.name]">{{highscore.name}}</a>
+    </span>
+  </mat-card-header>
+
+  <!-- Card content -->
+  <mat-card-content>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <p class="text-overflow p-without-margin"><strong>Rank #</strong>: {{highscore.rankPosition}}</p>
+        </div>
+        <div class="col-12">
+          <p class="text-overflow p-without-margin"><strong>Vocation</strong>: {{highscore.vocation | vocationTitle}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <p class="text-overflow p-without-margin"><strong>Level</strong>: {{highscore.levelPoints | number}}</p>
+        </div>
+        <div class="col-12" *ngIf="currentHighScoreType === 0 || currentHighScoreType === 9">
+          <p class="text-overflow p-without-margin"><strong>Points</strong>: {{highscore.points | number}}</p>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

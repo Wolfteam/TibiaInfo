@@ -1,0 +1,52 @@
+<mat-card class="character-card mat-elevation-z8">
+  <!-- Card header -->
+  <mat-card-header class="row">
+    <div class="col-sm-12">
+      <img class="float-left character-img" [src]='character.vocation | vocationImage:character.sex'>
+      <div class="row">
+        <div class="col-9">
+          <p class="text-overflow"><span [matTooltip]='character.status == 1 ? "Online" : "Offline"'
+              [class.character-status-online]="character.status == 1" [class.character-status-offline]="character.status == 0"
+              class="character-status"></span>
+            <span [matTooltip]="character.name"><strong>{{character.name}}</strong></span></p>
+          <p>Level: {{character.level}}</p>
+        </div>
+        <div class="col-3">
+          <button class="float-right" [color]="character.isInFavorites ? 'warn': 'accent'" mat-icon-button (click)="removeCharacter()"
+            [matTooltip]="character.isInFavorites ?  'Remove from your favorite list' : 'Add this character to your favorite list'">
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card-header>
+
+  <!-- Card content -->
+  <mat-card-content class="no-margin-bottom">
+    <mat-chip-list>
+      <div class="container">
+        <div class="row justify-content-center">
+          <mat-chip class="col-5" selectable="false" color="primary" selected>
+            <span class="text-overflow" [matTooltip]="character.vocation | vocationTitle">Vocation: {{character.vocation | vocationTitle}}</span>
+          </mat-chip>
+          <mat-chip class="col-5" *ngIf="character.world" matTooltip="Click to see world details" color="accent"
+            selected (click)="showWorld()">
+            <span class="text-overflow">World: {{character.world}}</span>
+          </mat-chip>
+        </div>
+      </div>
+    </mat-chip-list>
+  </mat-card-content>
+
+  <!-- Card Actions -->
+  <mat-card-actions>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" mat-stroked-button matTooltip="Get more details about this character" (click)="showDetails()">
+          <mat-icon>chevron_right</mat-icon>
+          Details
+        </button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

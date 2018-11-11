@@ -1,0 +1,7 @@
+<app-character-search></app-character-search>
+
+<div class="row">
+  <div class="col-md-4" *ngFor="let char of characters">
+    <app-character [character]="char" (characterRemoved)="onCharacterRemoved($event)"></app-character>
+  </div>
+</div>

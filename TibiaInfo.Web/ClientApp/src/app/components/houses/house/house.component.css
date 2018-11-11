@@ -1,0 +1,15 @@
+.house-rented {
+  background-color: #b71c1c;
+}
+
+.house-auctioned {
+  background-color: #827717;
+}
+
+.house-auctioned-no-bid-yet {
+  background-color: #4caf50;
+}
+
+.house-transferred {
+  background-color: #3f51b5;
+}

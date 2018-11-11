@@ -1,0 +1,13 @@
+<app-highscore-list-filter 
+  (searchHighScoresEvent)="searchHighScores($event)"
+  (filterChangeEvent)="sortHighScores($event)"
+  [showAdditionalFilters]="showAdditionalFilters"
+  [isMainFilterEnabled]="isMainFilterEnabled"
+  [filteredCharacterOptions]="filteredCharacterOptions">
+</app-highscore-list-filter>
+
+<div class="row" *ngIf="isPageLoaded">
+  <div class="col-12 col-md-3" *ngFor="let highscore of filteredHighScores">
+    <app-highscore [highscore]="highscore" [currentHighScoreType]="allHighScores.highScoreType"></app-highscore>
+  </div>
+</div>

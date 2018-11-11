@@ -1,0 +1,27 @@
+.favorite-row {
+  margin-bottom: 30px;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.offline-status {
+  color: red;
+}
+
+.online-status {
+  color: green;
+}
+
+mat-expansion-panel {
+  margin-bottom: 5px;
+}
+
+mat-list-item {
+  height: auto !important;
+}

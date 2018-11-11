@@ -1,0 +1,41 @@
+<mat-card 
+  [class.open-pvp]="world.pvpType === 0"
+  [class.optional-pvp]="world.pvpType === 1"
+  [class.hardcore-pvp]="world.pvpType === 2"
+  [class.retro-open-pvp]="world.pvpType === 3"
+  [class.retro-hardcore-pvp]="world.pvpType === 4"
+  class="world-card mat-elevation-z8">
+  <!-- Card header -->
+  <mat-card-header class="row">
+    <b>{{world.name}}</b>
+  </mat-card-header>
+
+  <!-- Card content -->
+  <mat-card-content class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <p class="p-without-margin text-overflow" [matTooltip]="world.pvpType | worldPvp:false"><b>Type</b>: {{world.pvpType | worldPvp:false}}</p>
+      </div>
+      <div class="col-md-6">
+        <p class="p-without-margin text-overflow" [matTooltip]="world.numberOfPlayersOnline"><b>Players Online</b>: {{world.numberOfPlayersOnline}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p class="p-without-margin text-overflow" [matTooltip]="world.location | worldLocation"> <b>Location</b>: {{world.location | worldLocation}}</p>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <!-- Card Actions -->
+  <mat-card-actions>
+    <div class="row">
+      <div class="col-md-12">
+        <button class="float-right" mat-stroked-button matTooltip="Get more details about this world" (click)="showDetails()">
+          <mat-icon>chevron_right</mat-icon>
+          Details
+        </button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

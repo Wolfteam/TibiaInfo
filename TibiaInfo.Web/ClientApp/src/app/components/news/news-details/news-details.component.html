@@ -1,0 +1,9 @@
+<div class="row" *ngIf="isPageLoaded">
+  <div class="col-12">
+    <section>
+      <h4>{{news.title}}</h4>
+    </section>
+    <section [innerHTML]="news.content">
+    </section>
+  </div>
+</div>

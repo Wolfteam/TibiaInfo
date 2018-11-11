@@ -1,0 +1,124 @@
+<div class="row" *ngIf="isPageLoaded">
+  <div class="col-md-6">
+    <!--House information-->
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>House Information</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="position-relative">
+        <img class="float-left" [src]='house.imageUrl'>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.name"><strong>Name</strong>: {{house.name}}</p>
+        </div>
+        <div class="col-12 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.world"><strong>World</strong>: {{house.world}}</p>
+        </div>
+        <div class="col-12 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.type | houseType"><strong>Type</strong>: {{house.type |
+            houseType}}</p>
+        </div>
+        <div class="col-12 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.numberOfBeds"><strong>Numbers of beds</strong>:
+            {{house.numberOfBeds}}</p>
+        </div>
+        <div class="col-12 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.size"><strong>Size</strong>: {{house.size}} SQM</p>
+        </div>
+        <div class="col-12 col-md-6">
+          <p class="text-overflow" [matTooltip]="house.rent"><strong>Rent</strong>: {{house.rent}} Gold Coins</p>
+        </div>
+        <div class="col-12">
+          <p>{{house.status.description}}</p>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <div class="col-md-6" *ngIf="house.status.currentOwner && !house.status.isAuctioned">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>Owner Information</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="position-relative">
+        <img class="float-left" [src]='1 | vocationImage:2'>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p>
+            <strong>Name</strong>:
+            <a [routerLink]="['/character', house.status.currentOwner]">{{house.status.currentOwner}}</a>
+          </p>
+        </div>
+        <div class="col-md-8">
+          <p><strong>Paid Until</strong>: {{house.status.paidUntil.date | date:'MMMM dd yyyy, H:mm:ss'}}
+            {{house.status.paidUntil.timezone}}</p>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <div class="col-md-6" *ngIf="house.status.isAuctioned">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>Auction Information</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <p *ngIf="house.status.currentOwner" class="col-md-6">
+          <strong>Current Owner</strong>:
+          <a [routerLink]="['/character', house.status.currentOwner]">{{house.status.currentOwner}}</a>
+        </p>
+        <p *ngIf="house.status.currentBid" class="col-md-6">
+          <strong>Current Bid</strong>: {{house.status.currentBid}} Gold Coins
+        </p>
+        <p *ngIf="!house.status.currentBid" class="col-md-6">
+          <strong>No bid yet</strong>
+        </p>
+        <p *ngIf="house.status.auctionEndsOn" class="col-md-12">
+          <strong>Auction Ends On</strong>: {{house.status.auctionEndsOn.date | date:'MMMM dd yyyy, H:mm:ss'}}
+          {{house.status.auctionEndsOn.timezone}}
+        </p>
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <div class="col-md-6" *ngIf="house.status.isTransferAccepted">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>Transfer Information</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="position-relative">
+            <img class="float-left" [src]='1 | vocationImage:2'>
+          </div>
+          <p>
+            <strong>Current Owner</strong>:{{house.status.currentOwner}}
+          </p>
+          <p>
+            <strong>Moving Date</strong>: {{house.status.movingOn.date | date:'MMMM dd yyyy, H:mm:ss'}}
+            {{house.status.movingOn.timezone}}
+          </p>
+        </div>
+        <mat-divider class="col-md-1" [vertical]="true"></mat-divider>
+        <div class="col-md-5">
+          <div class="position-relative">
+            <img class="float-left" [src]='1 | vocationImage:2'>
+          </div>
+          <p>
+            <strong>New Owner</strong>:{{house.status.newOwner}}
+          </p>
+          <p>
+            <strong>Transfer Bid</strong>:{{house.status.transferBid}}
+          </p>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>

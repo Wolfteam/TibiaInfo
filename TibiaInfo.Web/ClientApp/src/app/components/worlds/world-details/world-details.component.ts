@@ -20,7 +20,7 @@ import { CharacterService } from 'src/app/services/character.service';
 })
 export class WorldDetailsComponent implements OnInit, OnDestroy {
 
-  @ViewChild('worldPlayersViewPort') worldPlayersViewPort: CdkVirtualScrollViewport;
+  @ViewChild('worldPlayersViewPort', { static: false }) worldPlayersViewPort: CdkVirtualScrollViewport;
   //TODO: Implement a way to add/ remove the char from the cookies, maybe you will find trouble with this
   //TODO: When going back to the world list component the filter should be as they were left
   //TODO: maybe use query params to filter

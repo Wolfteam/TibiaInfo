@@ -16,6 +16,7 @@
         SVARGROND,
         THAIS,
         VENORE,
-        YALAHAR
+        YALAHAR,
+        NA
     }
 }

@@ -38,7 +38,7 @@ export class TownPipe implements PipeTransform {
             case TownsType.YALAHAR:
                 return "Yalahar";
             default:
-                throw new Error('The provided status enum value does not exists');
+                "N/A";
         }
     }
 }

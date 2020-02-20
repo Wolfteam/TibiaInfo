@@ -172,7 +172,7 @@ namespace TibiaInfo.Web.Helpers
                 case "yalahar":
                     return TownType.YALAHAR;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, "Couldnt find the town type enum value");
+                    return TownType.NA;
             }
         }
 

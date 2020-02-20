@@ -86,6 +86,10 @@ namespace TibiaInfo.Web.Controllers
                     }
                     else
                     {
+                        if (!string.IsNullOrEmpty(r.Response.Error))
+                        {
+                            continue;
+                        }
                         response.Result.Add(_mapper.Map<SimpleCharacterDTO>(r.Response));
                     }
                 }

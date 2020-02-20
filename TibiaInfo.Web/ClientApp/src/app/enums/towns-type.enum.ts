@@ -13,5 +13,6 @@ export enum TownsType{
   SVARGROND,
   THAIS,
   VENORE,
-  YALAHAR
+  YALAHAR,
+  NA,
 }

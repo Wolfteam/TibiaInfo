@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import { WorldService } from 'src/app/services/world.service';
 import { SimpleWorld } from 'src/app/models/worlds/simple-world.model';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { SortDirectionType } from 'src/app/enums/sort-direction-type.enum';
 import { WorldListSortFilterType } from 'src/app/enums/world-list-sort-filter-type.enum';
 

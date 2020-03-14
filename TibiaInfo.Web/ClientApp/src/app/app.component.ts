@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { SideNavItem } from './models/side-nav-item.model';
 import { AppService } from './services/app.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, NavigationEnd } from '@angular/router';
 import { WorldService } from './services/world.service';
 

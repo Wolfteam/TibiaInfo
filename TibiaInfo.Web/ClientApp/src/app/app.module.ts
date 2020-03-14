@@ -1,14 +1,30 @@
 // Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Route } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './modules/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { ScrollDispatchModule } from '@angular/cdk/scrolling';
-import { ScrollingModule } from '@angular/cdk-experimental/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Components
 import { AppComponent } from './app.component';
@@ -60,117 +76,135 @@ import { HighscoreComponent } from './components/highscores/highscore/highscore.
 import { HighscoreTypePipe } from './pipes/highscore-type.pipe';
 
 const appRoutes: Route[] = [
-  {
-    path: 'characters',
-    component: CharacterListComponent
-  },
-  {
-    path: 'character/:name',
-    component: CharacterDetailsComponent
-  },
-  {
-    path: 'worlds',
-    component: WorldListComponent
-  },
-  {
-    path: 'world/:name',
-    component: WorldDetailsComponent
-  },
-  {
-    path: 'guilds',
-    component: GuildListComponent
-  },
-  {
-    path: 'guild/:name',
-    component: GuildDetailsComponent
-  },
-  {
-    path: 'houses',
-    component: HouseListComponent
-  },
-  {
-    path: 'house/:world/:id',
-    component: HouseDetailsComponent
-  },
-  {
-    path: 'news',
-    component: NewsListComponent
-  },
-  {
-    path: 'news/:id',
-    component: NewsDetailsComponent
-  },
-  {
-    path: 'highscores',
-    component: HighscoreListComponent
-  },
-  {
-    path: '',
-    redirectTo: '/characters',
-    pathMatch: 'full'
-  }];
+    {
+        path: 'characters',
+        component: CharacterListComponent
+    },
+    {
+        path: 'character/:name',
+        component: CharacterDetailsComponent
+    },
+    {
+        path: 'worlds',
+        component: WorldListComponent
+    },
+    {
+        path: 'world/:name',
+        component: WorldDetailsComponent
+    },
+    {
+        path: 'guilds',
+        component: GuildListComponent
+    },
+    {
+        path: 'guild/:name',
+        component: GuildDetailsComponent
+    },
+    {
+        path: 'houses',
+        component: HouseListComponent
+    },
+    {
+        path: 'house/:world/:id',
+        component: HouseDetailsComponent
+    },
+    {
+        path: 'news',
+        component: NewsListComponent
+    },
+    {
+        path: 'news/:id',
+        component: NewsDetailsComponent
+    },
+    {
+        path: 'highscores',
+        component: HighscoreListComponent
+    },
+    {
+        path: '',
+        redirectTo: '/characters',
+        pathMatch: 'full'
+    }];
 
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CharacterListComponent,
-    FooterComponent,
-    AccountStatusPipe,
-    StatusPipe,
-    SexPipe,
-    TownPipe,
-    VocationImagePipe,
-    VocationTtitlePipe,
-    CharacterComponent,
-    CharacterSearchComponent,
-    CharacterDetailsComponent,
-    WorldComponent,
-    WorldListComponent,
-    WorldLocationPipe,
-    WorldPvpPipe,
-    WorldDetailsComponent,
-    WorldListFilterComponent,
-    WorldDetailsPlayerFilterComponent,
-    GuildListComponent,
-    GuildComponent,
-    GuildListFilterComponent,
-    GuildDetailsComponent,
-    GuildDetailsMemberComponent,
-    GuildDetailsMemberFilterComponent,
-    HouseListComponent,
-    HouseComponent,
-    HouseDetailsComponent,
-    NewsComponent,
-    NewsListComponent,
-    NewsDetailsComponent,
-    NewsTypePipe,
-    NewsListFilterComponent,
-    HouseListFilterComponent,
-    ScrollToTopComponent,
-    HouseTypePipe,
-    HighscoreListFilterComponent,
-    HighscoreListComponent,
-    HighscoreComponent,
-    HighscoreTypePipe
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ScrollDispatchModule,
-    ScrollingModule,
-    RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' })
-  ],
-  providers: [
-    AppService,
-    CharacterService,
-    CookieService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        CharacterListComponent,
+        FooterComponent,
+        AccountStatusPipe,
+        StatusPipe,
+        SexPipe,
+        TownPipe,
+        VocationImagePipe,
+        VocationTtitlePipe,
+        CharacterComponent,
+        CharacterSearchComponent,
+        CharacterDetailsComponent,
+        WorldComponent,
+        WorldListComponent,
+        WorldLocationPipe,
+        WorldPvpPipe,
+        WorldDetailsComponent,
+        WorldListFilterComponent,
+        WorldDetailsPlayerFilterComponent,
+        GuildListComponent,
+        GuildComponent,
+        GuildListFilterComponent,
+        GuildDetailsComponent,
+        GuildDetailsMemberComponent,
+        GuildDetailsMemberFilterComponent,
+        HouseListComponent,
+        HouseComponent,
+        HouseDetailsComponent,
+        NewsComponent,
+        NewsListComponent,
+        NewsDetailsComponent,
+        NewsTypePipe,
+        NewsListFilterComponent,
+        HouseListFilterComponent,
+        ScrollToTopComponent,
+        HouseTypePipe,
+        HighscoreListFilterComponent,
+        HighscoreListComponent,
+        HighscoreComponent,
+        HighscoreTypePipe
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        ScrollingModule,
+
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatCardModule,
+        MatChipsModule,
+        MatExpansionModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatProgressBarModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatSnackBarModule,
+        MatSlideToggleModule,
+        MatToolbarModule,
+        MatTooltipModule,
+
+        RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' })
+    ],
+    providers: [
+        AppService,
+        CharacterService,
+        CookieService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

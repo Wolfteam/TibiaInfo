@@ -41,32 +41,33 @@ namespace TibiaInfo.Web.Helpers
             CreateMap<Achievement, AchievementDTO>();
             CreateMap<CharacterHouse, CharacterHouseDTO>()
                 .ForMember(d => d.Town, opt => opt.MapFrom(s => s.Town.GetTownType()));
-            CreateMap<Guid, GuildMemberDTO>();
+            CreateMap<CharacterGuild, GuildMemberDTO>();
             CreateMap<OtherCharacter, BaseCharacterBDTO>();
             CreateMap<CharacterResponse, CharacterDTO>()
-                .ForMember(d => d.AccountInformation, opt => opt.ResolveUsing(s => s.AccountInformation?.FirstOrDefault()))
-                .ForMember(d => d.Achievements, opt => opt.MapFrom(s => s.Achievements))
-                .ForMember(d => d.AchievementPoints, opt => opt.ResolveUsing(s => s.Character?.AchievementPoints ?? 0))
-                .ForMember(d => d.AccountStatus, opt => opt.ResolveUsing(s => s.Character?.AccountStatus.GetAccountStatusType() ?? 0))
-                .ForMember(d => d.Comment, opt => opt.ResolveUsing(s => s.Character?.Comment))
-                .ForMember(d => d.Guild, opt => opt.ResolveUsing(s => s.Character?.Guild ?? null))
-                .ForMember(d => d.House, opt => opt.ResolveUsing(s => s.Character?.House ?? null))
-                .ForMember(d => d.LastLogin, opt => opt.ResolveUsing(s => s.Character?.LastLogin?.FirstOrDefault()))
-                .ForMember(d => d.Level, opt => opt.ResolveUsing(s => s.Character?.Level ?? null))
-                .ForMember(d => d.MarriedTo, opt => opt.ResolveUsing(s => s.Character?.MarriedTo ?? null))
-                .ForMember(d => d.Name, opt => opt.ResolveUsing(s => s.Character?.Name ?? null))
+                .ForMember(d => d.AccountInformation, opt => opt.MapFrom((s, d, r) => s.AccountInformation?.FirstOrDefault()))
+                .ForMember(d => d.Achievements, opt => opt.MapFrom((s, d, r) => s.Achievements))
+                .ForMember(d => d.AchievementPoints, opt => opt.MapFrom((s, d, r) => s.Character?.AchievementPoints ?? 0))
+                .ForMember(d => d.AccountStatus, opt => opt.MapFrom((s, d, r) => s.Character?.AccountStatus.GetAccountStatusType() ?? 0))
+                .ForMember(d => d.Comment, opt => opt.MapFrom((s, d, r) => s.Character?.Comment))
+                .ForMember(d => d.Guild, opt => opt.MapFrom((s, d, r) => s.Character?.Guild ?? null))
+                .ForMember(d => d.House, opt => opt.MapFrom((s, d, r) => s.Character?.House ?? null))
+                .ForMember(d => d.LastLogin, opt => opt.MapFrom((s, d, r) => s.Character?.LastLogin?.FirstOrDefault()))
+                .ForMember(d => d.Level, opt => opt.MapFrom((s, d, r) => s.Character?.Level ?? null))
+                .ForMember(d => d.MarriedTo, opt => opt.MapFrom((s, d, r) => s.Character?.MarriedTo ?? null))
+                .ForMember(d => d.Name, opt => opt.MapFrom((s, d, r) => s.Character?.Name ?? null))
                 .ForMember(d => d.OtherCharacters, opt => opt.MapFrom(s => s.OtherCharacters))
-                .ForMember(d => d.Residence, opt => opt.ResolveUsing(s => s.Character?.Residence ?? null))
-                .ForMember(d => d.Status, opt => opt.ResolveUsing(s => s.Character?.Status?.GetStatusType() ?? null))
-                .ForMember(d => d.Sex, opt => opt.ResolveUsing(s => s.Character?.Sex?.GetSexType() ?? null))
-                .ForMember(d => d.Vocation, opt => opt.ResolveUsing(s => s.Character?.Vocation?.GetVocationType() ?? null))
-                .ForMember(d => d.World, opt => opt.ResolveUsing(s => s.Character?.World ?? null));
+                .ForMember(d => d.Residence, opt => opt.MapFrom((s, d, r) => s.Character?.Residence ?? null))
+                .ForMember(d => d.Status, opt => opt.MapFrom((s, d, r) => s.Character?.Status?.GetStatusType() ?? null))
+                .ForMember(d => d.Sex, opt => opt.MapFrom((s, d, r) => s.Character?.Sex?.GetSexType() ?? null))
+                .ForMember(d => d.Vocation, opt => opt.MapFrom((s, d, r) => s.Character?.Vocation?.GetVocationType() ?? null))
+                .ForMember(d => d.World, opt => opt.MapFrom((s, d, r) => s.Character?.World ?? null));
 
             #endregion
 
             #region Guilds related
             CreateMap<BaseGuild, BaseGuildDTO>();
             CreateMap<GuildsResponse, AllGuildsDTO>();
+            CreateMap<GuildCharacterInvited, GuildCharacterInvitedDTO>();
             CreateMap<GuildCharacterInvitedDTO, GuildCharacterInvited>();
 
             CreateMap<GuildCharacterMember, GuildCharacterMemberDTO>()
@@ -103,18 +104,18 @@ namespace TibiaInfo.Web.Helpers
 
             #region Highscores related
             CreateMap<HighScore, HighScoreDTO>()
-                .ForMember(d => d.Vocation, opt => opt.ResolveUsing(s => s.Vocation?.GetVocationType() ?? null));
+                .ForMember(d => d.Vocation, opt => opt.MapFrom((s, d, r) => s.Vocation?.GetVocationType() ?? null));
 
             CreateMap<HighScoreResponse, AllHighScoresDTO>()
-                .ForMember(d => d.HighScoreType, opt => opt.ResolveUsing(s => s.HighScoreType?.GetHighScoreType() ?? null));
+                .ForMember(d => d.HighScoreType, opt => opt.MapFrom((s, d, r) => s.HighScoreType?.GetHighScoreType() ?? null));
             #endregion
 
             #region News related
             CreateMap<News, NewsDTO>();
             CreateMap<SimpleNews, SimpleNewsDTO>()
-                .ForMember(d => d.Type, opt => opt.ResolveUsing(s => s.Type?.GetNewsType() ?? null));
+                .ForMember(d => d.Type, opt => opt.MapFrom((s, d, r) => s.Type?.GetNewsType() ?? null));
             CreateMap<AllNewsResponse, AllNewsDTO>()
-                .ForMember(d => d.Type, opt => opt.ResolveUsing(s => s.Type?.GetNewsType() ?? null));
+                .ForMember(d => d.Type, opt => opt.MapFrom((s, d, r) => s.Type?.GetNewsType() ?? null));
             #endregion
 
             #region House related

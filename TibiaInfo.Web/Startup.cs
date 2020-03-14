@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Refit;
+using System;
+using TibiaInfo.Web.Helpers;
 using TibiaInfo.Web.Interfaces.TibiaDataApi;
 
 namespace TibiaInfo.Web
@@ -39,9 +35,9 @@ namespace TibiaInfo.Web
             services.AddRefitClient<IWorldService>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(BASE_URL));
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(MappingProfile));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -50,7 +46,7 @@ namespace TibiaInfo.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -62,13 +58,17 @@ namespace TibiaInfo.Web
             }
 
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
 
-            app.UseMvc(routes =>
+            if (!env.IsDevelopment())
             {
-                routes.MapRoute(
+                app.UseSpaStaticFiles();
+            }
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                    pattern: "{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>
@@ -77,7 +77,7 @@ namespace TibiaInfo.Web
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
                 spa.Options.SourcePath = "ClientApp";
-                
+
                 if (env.IsDevelopment())
                 {
                     // https://docs.microsoft.com/es-es/aspnet/core/client-side/spa/angular?tabs=visual-studio&view=aspnetcore-2.1#run-ng-serve-independently

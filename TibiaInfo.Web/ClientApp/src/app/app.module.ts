@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
@@ -195,6 +196,7 @@ const appRoutes: Route[] = [
         MatSidenavModule,
         MatSnackBarModule,
         MatSlideToggleModule,
+        MatTableModule,
         MatToolbarModule,
         MatTooltipModule,
 

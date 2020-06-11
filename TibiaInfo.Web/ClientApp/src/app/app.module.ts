@@ -75,6 +75,8 @@ import { HighscoreListFilterComponent } from './components/highscores/highscore-
 import { HighscoreListComponent } from './components/highscores/highscore-list/highscore-list.component';
 import { HighscoreComponent } from './components/highscores/highscore/highscore.component';
 import { HighscoreTypePipe } from './pipes/highscore-type.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 const appRoutes: Route[] = [
     {
@@ -200,7 +202,9 @@ const appRoutes: Route[] = [
         MatToolbarModule,
         MatTooltipModule,
 
-        RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' })
+        RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' }),
+
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         AppService,

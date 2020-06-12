@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TibiaInfo.Web.Interfaces.TibiaDataApi;
 using TibiaInfo.Web.Models;
@@ -75,25 +76,24 @@ namespace TibiaInfo.Web.Controllers
 
             try
             {
-                //var responses = List
+                var tasks = new List<Task<CharacterWrapperResponse>>();
                 foreach (string name in names.Split(','))
                 {
-                    var r = await _characterService.GetCharacter(name);
-                    if (!string.IsNullOrEmpty(r.Response.Character.Error))
-                    {
-                        response.Message = r.Response.Character.Error;
-                        return Ok(response);
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(r.Response.Error))
-                        {
-                            continue;
-                        }
-                        response.Result.Add(_mapper.Map<SimpleCharacterDTO>(r.Response));
-                    }
+                    tasks.Add(_characterService.GetCharacter(name));
                 }
-                response.Succeed = true;
+
+                var characters = (await Task.WhenAll(tasks)).ToList();
+                if (characters.Any(c => !string.IsNullOrEmpty(c?.Response?.Character?.Error)))
+                {
+                    response.Message = characters.First(c => !string.IsNullOrEmpty(c?.Response?.Character?.Error)).Response.Character.Error;
+                    return Ok(response);
+                }
+                else
+                {
+                    characters.RemoveAll(r => !string.IsNullOrEmpty(r?.Response?.Error));
+                    response.Result = _mapper.Map<List<SimpleCharacterDTO>>(characters.Select(c => c.Response));
+                    response.Succeed = true;
+                }
             }
             catch (Exception ex)
             {
